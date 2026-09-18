@@ -1,73 +1,26 @@
 \section{Background and Motivation}
 \label{sec:background}
 
-\subsection{Expert parallelism in MoE}
+\subsection{Expert-Parallel Communication}
 \label{sec:epbackground}
-A Mixture-of-Experts layer routes each input token to a subset of expert networks.
-Under expert parallelism (EP), the experts are partitioned across GPU ranks. Dispatch
-transfers token activations to the selected expert ranks, the experts compute their
-outputs, and Combine returns and merges these contributions at the token
-owner~\cite{deepep,ncclep}. Each token selects up to $\topk$ experts, so a single
-input may require contributions from several ranks.
+An MoE layer selects up to $\topk$ experts for each input token. Under expert parallelism, experts are distributed across GPU ranks. Dispatch moves activations to the selected expert ranks; after expert computation, Combine returns and merges their contributions at the token owner~\cite{deepep,ncclep}.
 
-Two properties of this pattern matter for what follows. First, routing is
-input-dependent: the number of records a rank sends to a particular destination is not
-known until the gate has run, so communication carries metadata describing valid
-counts, destinations, and output placement alongside the payload. Second, the
-communication is genuinely many-to-many and it straddles a hardware boundary. Within a
-node, ranks exchange data over a scale-up interconnect such as NVLink; across nodes,
-they use a scale-out transport such as RDMA. Communication libraries manage both paths
-together with the staging buffers that prepare data for expert computation.
+Routing determines the amount of traffic sent to each destination. Communication therefore involves both activations or partial outputs and metadata describing destinations, valid counts, and output placement. Within a node, ranks may use NVLink; across nodes, they use a network transport such as RDMA. Communication staging provides known landing addresses, while the final expert layout may depend on exchanged counts.
 
-\subsection{Three dependencies, two synchronization points}
+Three events must remain distinct. Receive resources must be writable before remote delivery. Required input must be complete and visible before a consumer reads it. A buffer becomes reusable only after its last consumer finishes. A notification that establishes data arrival does not necessarily establish safe buffer reuse.
+
+\subsection{Synchronization in DeepEP V2 Direct}
 \label{sec:epsynchronization}
-Correctness here rests on three distinct dependencies, and conflating them is the
-source of most confusion in this area. Before a sender writes, the destination's
-communication resources must be ready to receive. Before a consumer reads, the
-required data must be visible to it. Before a buffer is reused, its previous consumers
-must have finished reading it. These are not one condition observed at three times: a
-transport operation's local progress, the arrival of its data at the destination, and
-the end of its consumers' reads are separate events, and a given barrier or completion
-signal enforces some combination of them rather than all three.
+Cross-node DeepEP V2 Direct exposes coordination at both ends of Dispatch and Combine~\cite{deepepcode}. An entry barrier coordinates participating ranks before payload injection. Dispatch then exchanges counts and computes layout information alongside data movement. Combine reuses routing established during Dispatch.
 
-DeepEP V2's cross-node Direct paths make both transfer boundaries
-explicit~\cite{deepepcode}. An entry barrier coordinates the participating ranks
-before payload injection. Dispatch then overlaps count exchange and prefix computation
-with data movement, and Combine reuses the routing Dispatch established. After the
-data-transfer loop, a separate tail stage waits for outstanding asynchronous memory
-operations, flushes the GIN queues, joins the local workers, and only then exchanges
-completion signals across the EP group; those signals release the subsequent copy or
-reduction epilogue. Because staging provides known landing addresses, an unknown final
-compact layout is not by itself the reason for the entry barrier.
+After the data loop, the tail path waits for asynchronous writes and joins the local workers. It flushes GIN queues and performs the required visibility fence and local join before exchanging completion signals across the EP group. Subsequent copy or reduction work depends on this path. The data-loop exit, sender-side completion, and destination data visibility are different events.
 
-This organization is specific to the implementation, and we are careful not to
-generalize it. Direct handles cross-node communication, including local NVLink access
-where available, while Hybrid performs hierarchical scale-out transfer with scale-up
-forwarding and ends Dispatch with a scale-up-only barrier. NCCL EP HT instead performs
-a routing AllGather and metadata scan before Dispatch, and LL can begin data transfer
-with no independent readiness barrier at
-all~\cite{deepepcode,ncclhtcode,ncclllcode}. Our subject is cross-node Direct
-Dispatch and Combine, the path that exposes both boundaries; Table~\ref{tab:paths}
-records where each other path falls.
+The entry barrier is not explained solely by an unknown compact output address: Direct already uses a reserved communication buffer. Our design retains such landing resources and changes when a sender can upload to the network. Similarly, the tail mechanism must preserve the buffer-lifetime and visibility obligations that the original barrier helps enforce.
 
-\subsection{Why small batches change the accounting}
+Other EP paths use different control structures. Hybrid Dispatch finishes with scale-up coordination after forwarding; LL can transfer into reserved slots without an independent entry barrier; NCCL EP HT exchanges routing metadata before Dispatch~\cite{deepepcode,ncclllcode,ncclhtcode}. Their costs cannot be inferred from the two-boundary Direct schedule. We use single-node Direct as a scale-up reference and cross-node Direct as the primary design scenario.
+
+\subsection{Synchronization at Small Batch Sizes}
 \label{sec:smallbatch}
-Payload transmission time falls with batch size. Readiness announcements, local joins,
-and completion notifications do not: their cost is set by traversal and endpoint
-processing, not by payload bytes. Fixed coordination therefore grows as a fraction of
-a shrinking operator, and decode sits squarely in that regime, because each active
-request contributes roughly one token per step spread across data-parallel ranks.
-Since $T/\text{rank} \approx \text{concurrency}/\text{EP}$, raising concurrency does
-not leave the region: it is a property of the serving configuration rather than a
-tuning oversight.
+Reducing the number of tokens reduces payload work without reducing the EP participant count. The readiness and completion exchanges can therefore remain significant when the transfer is short. Decode commonly operates in this regime because each active request contributes one token per step and the requests are distributed across serving ranks.
 
-Our H200 measurements (\secref{sec:evidence}) quantify both boundaries on the Direct
-path itself. At EP8 and eight tokens per rank, entry synchronization takes about
-15.1\us{} and the completion-signal window 13.5--14.3\us{}, amounting to roughly
-20\% and 18\% of the corresponding traced operator. Sweeping to 32, 64, and 128 tokens
-per rank leaves the absolute durations essentially where they were---entry stays within
-14.8--15.4\us{}---while their shares fall monotonically to about 5\%. The cost did not
-go away; the denominator grew. This frames the
-question the rest of the paper addresses: must readiness and completion coordination
-remain sequential with payload transfer, or can they overlap it while preserving data
-visibility and buffer-lifetime guarantees?
+Our EP8 measurements illustrate the effect: entry synchronization is close to 15\us{} across the measured small-batch points, but its share falls from about 20\% at eight tokens per rank to about 5\% at 128. Section~\ref{sec:evidence} gives the measurement boundaries, uncertainty, and serving results. The observation motivates overlapping control with transfer. It does not imply that the entire measured interval can be removed.

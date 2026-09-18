@@ -1,0 +1,18 @@
+\begin{figure*}[t]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+\path[use as bounding box] (0,0) rectangle (17.2,3.9);
+\node[draw=black!55,rounded corners,fill=datablue!5,text width=3cm,minimum height=1.5cm,align=center] (source) at (1.6,2.3) {Source rank\\Local readiness\\Upload reservation};
+\node[draw=incgreen,rounded corners,fill=incgreen!5,text width=5.1cm,minimum height=2.0cm,align=center] (inc) at (8.5,2.3) {\sys{} node\\READY aggregation and staging\\Traffic plan and output progress\\Release data; append ordered DONE};
+\node[draw=black!55,rounded corners,fill=datablue!5,text width=2.9cm,minimum height=1.5cm,align=center] (destination) at (15.5,2.3) {Destination rank\\Receive slot and epoch\\Visibility and consumption};
+\draw[ctrlarrow] ([yshift=4mm]source.east)--([yshift=4mm]inc.west) node[midway,above,font=\footnotesize] {READY + plan};
+\draw[dataarrow] ([yshift=-3.5mm]source.east)--([yshift=-3.5mm]inc.west) node[midway,below,font=\footnotesize] {admitted DATA};
+\draw[dataarrow] ([yshift=4mm]inc.east)--([yshift=4mm]destination.west) node[midway,above,font=\footnotesize] {DATA};
+\draw[-{Stealth[length=1.7mm]},incgreen,dashed,line width=.7pt] ([yshift=-3.5mm]inc.east)--([yshift=-3.5mm]destination.west) node[midway,below,font=\footnotesize] {ordered DONE};
+\draw[-{Stealth[length=1.7mm]},black!60,dotted,line width=.6pt] (15.5,1.5)--(15.5,.55)--(8.5,.55)--(8.5,1.25);
+\node[fill=white,font=\footnotesize] at (11.8,.55) {release receive slot after last consumer};
+\end{tikzpicture}
+\caption{Protocol overview. Readiness aggregation can overlap admitted upload. Delivery waits for writable destination resources, and observing DONE must imply visibility of the covered data. Buffer reuse follows consumption.}
+\Description{Three boxes show a source, an in-network node, and a destination. READY and DATA travel to the node. DATA and an ordered completion notification travel to the destination. Receive-buffer release returns after consumption.}
+\label{fig:design-overview}
+\end{figure*}

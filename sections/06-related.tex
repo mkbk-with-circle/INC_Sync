@@ -1,0 +1,17 @@
+\section{Related Work}
+\label{sec:related}
+
+\subsection{EP Communication}
+DeepEP~\cite{deepep}, NCCL EP~\cite{ncclep}, and GPU-initiated networking~\cite{gin} provide the communication paths and transport primitives considered here. SwiftEP~\cite{swiftep} optimizes buffer movement and GPU work, while COMET~\cite{comet} overlaps communication and computation. These optimizations affect how payload moves and when computation can proceed. Our design targets readiness aggregation before delivery and completion notification after managed output.
+
+Perseus~\cite{perseus} reorganizes PUT, fence, and signal processing within the transfer pipeline. UBEP~\cite{ubep} uses point-to-point signals and Data-as-Flag to reduce stage synchronization in a scale-up EP implementation. Both motivate examining the dependencies enforced by existing synchronization. \sys{} instead considers an explicit network rendezvous with bounded early-data staging and destination notification. The applicable ordering and resource contracts differ across these systems.
+
+\subsection{In-Network Computation}
+DySHARP~\cite{dysharp} combines dynamic addressing, multicast, and reduction in the network for MoE. MultiWrite~\cite{multiwrite} reduces duplicate upstream traffic through multicast writes. Their data-plane techniques can complement the proposed coordination. We do not claim multicast arithmetic or bandwidth reduction as a new contribution.
+
+SHARP~\cite{sharp} and SwitchML~\cite{switchml} demonstrate network-assisted collectives and reduction state management. They provide useful precedents for the Combine data plane. The question here is how readiness aggregation and output completion change the timing of an EP operation with routing-dependent traffic.
+
+\subsection{Synchronization Offload}
+EPIC~\cite{epic} provides protocol and resource abstractions for Ethernet in-network computing. Such interfaces are relevant to a possible implementation of \sys{}, which requires programmable progress tracking, bounded storage, and an ordered delivery contract. GPU-initiated networking~\cite{gin} exposes the endpoint PUT, signal, and fence operations used by our baseline; the proposed node must coordinate with these transport semantics.
+
+Swift's endpoint/fabric decomposition~\cite{swift} informs the latency model, while tools such as FabricPerf~\cite{fabricperf} motivate explicit observation boundaries. Our measured signal window characterizes endpoint coordination. It does not by itself identify the fabric propagation or the delay exposed after destination visibility.

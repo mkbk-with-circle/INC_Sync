@@ -1,31 +1,3 @@
-Expert-parallel (EP) communication in Mixture-of-Experts inference coordinates its
-participants twice per collective: once before payload injection, to establish that
-peers are ready to receive, and once after it, to establish that a destination's
-input is complete. Both exchanges sit on the critical path, and neither shrinks with
-the payload. At the batch sizes decode actually runs at, they stop being rounding
-error. On two H200 nodes running DeepEP V2's cross-node Direct path at eight tokens
-per rank, the entry exchange occupies 19.8--20.6\% of the traced operator and the
-completion-signal window a further 17.7--19.3\%. Sweeping the batch sixteen-fold leaves
-both windows flat in absolute terms, at 14.8--15.4\us{} and 11.2--14.3\us{}, while
-their shares fall monotonically below 5\% of a now much longer operator. The same asymmetry appears in serving: under Qwen3-30B-A3B decode at fixed
-EP8, entry synchronization consumes 15.2--16.7\% of a cross-node GPU step against
-7.9--9.3\% within a single node.
+Some expert-parallel communication paths place readiness coordination before payload injection and a completion exchange after sender-side transfer work. At small batches, these stages can occupy a substantial fraction of the operator. We study cross-node DeepEP V2 Direct Dispatch and Combine on two H200 nodes. At eight tokens per rank and EP8, entry synchronization occupies about 20\% of the traced operator. In Qwen3-30B-A3B decode, the entry component accounts for 15.2--16.7\% of the sampled cross-node GPU step, compared with 7.9--9.3\% within one node.
 
-We argue this cost is a placement artifact rather than an intrinsic one, and that the
-fan-in point of the network is where it should be resolved. We present \sys{}, an
-in-network coordination design with two mechanisms. At the head, a rank announces
-readiness and uploads immediately into bounded network staging; the in-network node
-aggregates readiness and releases buffered data once the synchronization domain is
-ready, overlapping peer announcement with transfer instead of serializing it before
-transfer. At the tail, the node seals a traffic plan for each destination and appends
-an ordered notification behind that destination's final data unit, so the destination
-learns its input is complete without waiting for a sender to return through its own
-completion path and originate a fresh exchange. Adapting Swift's
-endpoint--fabric delay decomposition, we separate the existence of a synchronization
-stage from its exposed latency, and show that under a symmetric reference each
-eligible boundary yields approximately one one-way traversal, approaching one fabric
-RTT across both before added overhead. We state the visibility, buffer-ownership,
-counting, and admission conditions the design requires, and identify which baseline
-paths satisfy them. This is a design and measurement study: the baselines are
-measured, the latency opportunity is analytical, and no in-network prototype is
-evaluated.
+We propose \sys{}, a design that coordinates these transfer boundaries in the network. A rank announces readiness and uploads into reserved network staging; the network releases data after the required readiness conditions hold. At completion, a sealed traffic plan lets the network append an ordered notification after a destination's final data unit. We specify the visibility, buffer-lifetime, and progress requirements for these operations and analyze their effect on the communication critical path. Under a symmetric reference schedule with an exposed control traversal at each boundary, the opportunity approaches one fabric RTT before added overhead. The measurements characterize the baseline; the design's net benefit remains to be evaluated on an implementation.

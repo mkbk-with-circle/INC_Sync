@@ -2,26 +2,20 @@
 
 **Overlapping MoE Synchronization with Data Transfer through In-Network Coordination**
 
-Compile `main.tex` using PDFLaTeX and BibTeX, or run:
+Compile with PDFLaTeX and BibTeX using `make`; the output is `build/main.pdf`.
+`make check` additionally checks references and layout, with optional Poppler font
+and paper-size checks. Overleaf should use the root `main.tex` and pdfLaTeX.
 
-```sh
-make
-```
+The seven section files are ordered in `main.tex`. Figures are native TikZ/PGFPlots
+sources compiled with the paper. No experiment runner or external plot-generation
+step is required.
 
-The PDF is written to `build/main.pdf`. The document uses the `acmart` class in its
-`sigplan` two-column configuration, which is part of a standard TeX Live installation.
-This package includes `main.bbl`, the section sources, editable TikZ/PGFPlots figures,
-and the tabulated baseline measurements. No network access or shell escape is required.
-`make check` additionally uses Python 3; Poppler enables optional PDF dimension and font
-checks.
+Evaluation uses entry costs, narrow completion-signal observations, and GPU-step entry
+shares. Numeric sources and aggregation rules are listed in `data/PROVENANCE.md`.
+The broad post envelope is excluded from synchronization fitting.
 
-Figure 1 is a schematic timing model with no measured time scale. Figure 2 is an
-analytical sensitivity plot in which the added-overhead parameter is swept independently
-rather than fitted. Neither represents measured in-network hardware performance. Figure 3
-plots measured baseline durations only.
-
-This is a design and measurement study. The baselines in Section 5 are measured on
-unmodified DeepEP V2, the synchronization stages are established from source, and the
-latency opportunity is analytical. No in-network prototype was built or evaluated, and no
-number anywhere in the paper is a speedup. `data/PROVENANCE.md` records the source of
-every printed value and the measurement conventions that constrain how each may be read.
+The `make archive` target packages manuscript sources and the generated `main.bbl`
+for arXiv. The Git repository itself builds the bibliography from `references.bib`.
+Author identities and affiliations remain to be supplied by the authors.
+The baseline measurements motivate and characterize the proposed design; they do not
+report measured INC acceleration.

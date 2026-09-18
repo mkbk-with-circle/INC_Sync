@@ -1,0 +1,94 @@
+\section{Latency Analysis}
+\label{sec:model}
+We compare when data becomes consumable under the baseline and the design. All required local dependencies are retained. Ranks may become ready at different times, and staging and output capacity are finite.
+
+\subsection{Delay Model}
+\label{sec:delay-model}
+Swift separates a measured packet round trip into endpoint and fabric components~\cite{swift}. If $t_1$ and $t_6$ are local stack transmission and acknowledgment reception, $t_2$ and $t_4$ delimit remote endpoint processing, and $t_5$ is local NIC acknowledgment reception, then
+\begin{align}
+ R_{\rm e2e}&=t_6-t_1,\\
+ D_{\rm endpoint}&=(t_4-t_2)+(t_6-t_5),\\
+ D_{\rm fabric}&=R_{\rm e2e}-D_{\rm endpoint}.
+ \label{eq:swift}
+\end{align}
+The remote duration can be returned to the sender without comparing clock origins across machines. Clock units still need to be compatible, and unmeasured transmit queuing can remain in the fabric residual.
+
+For EP communication we use the same separation of event boundaries:
+\begin{equation}
+ d_{i,d}=p_i^{\rm tx}+\ell_{i,d}+p_d^{\rm rx}.
+ \label{eq:message}
+\end{equation}
+Here $\ell$ includes propagation, serialization, and network queuing; the endpoint terms include initiation and observation outside those boundaries. A collective waits for its required messages, so concurrent peer transfers enter a maximum rather than a sum. A measured barrier also contains readiness skew and local work. Its duration cannot be substituted for a one-way propagation delay.
+
+\subsection{Readiness Overlap}
+\label{sec:readiness-analysis}
+Let $r_i$ denote source $i$'s local readiness and $\mathcal{R}_i$ the peers whose announcements it requires. If $u_{j,i}$ includes announcement initiation and delivery and $v_i$ is final observation or local joining, the baseline source starts at
+\begin{equation}
+ g_i=\max\left\{r_i,\max_{j\in\mathcal{R}_i}(r_j+u_{j,i})\right\}+v_i.
+ \label{eq:gate}
+\end{equation}
+An empty peer set contributes no remote wait. This expression preserves local readiness even when all remote announcements arrive earlier.
+
+With network capacity reserved, \sys{} can start uploading at $r_i+\delta_i$, where $\delta_i$ includes the announcement and upload preparation. If $a_i$ is the readiness delay to the node and $\lambda_d$ is destination $d$'s write/layout readiness, delivery opens at
+\begin{equation}
+ o_d=\max\left\{\max_i(r_i+a_i),\lambda_d\right\}.
+ \label{eq:release}
+\end{equation}
+The source-to-node transfer can overlap this wait. Delivery still waits for the required participants and a writable destination.
+
+For an ordered output sequence, let $A_k$ be unit $k$'s arrival at the node, $s_k$ its service time, and $E_k$ its output completion. A non-preemptive service model gives
+\begin{equation}
+ E_k=\max\{A_k,o_d,E_{k-1}\}+s_k.
+ \label{eq:queue}
+\end{equation}
+The modeled units must match the implementation's packet or fragment boundaries. Downstream propagation and visibility then determine consumption time. Finite staging constrains $A_k$ through admission and backpressure.
+
+Applying the same service model with baseline injections delayed to $g_i$ gives the comparison schedule. Early upload can advance completion, but a late source or a saturated output may consume the head start. The amount buffered is therefore not a latency saving by itself. Figure~\ref{fig:timing} illustrates both aligned and unequal readiness.
+
+\input{figures/timing}
+
+\subsection{Completion Overlap}
+\label{sec:directtail}
+Direct waits for applicable asynchronous operations, GIN completion, and local coordination before its tail signals~\cite{deepepcode,gdakicode}. GIN flush establishes completion obligations such as safe reuse of PUT source buffers; it does not itself timestamp destination GPU visibility~\cite{ginheader,gindocs}.
+
+Let $c_j$ be sender $j$'s completion of the waits preceding tail signaling, $w_{j,d}$ the subsequent signal delay, and $v_d$ final observation overhead. Baseline notification releases $d$ at
+\begin{equation}
+ z_d=\max_{j\in\mathcal{R}_d\cup\{d\}}(c_j+w_{j,d})+v_d.
+ \label{eq:tailsignal}
+\end{equation}
+The local term has no network propagation. Let $\tau_d$ be the time all required data is visible at $d$. With other local dependencies unchanged, baseline consumption is no earlier than $\max(\tau_d,z_d)$.
+
+For \sys{}, let $\tau'_d$ be data visibility and $\eta_d$ the notification lag that preserves Equation~\eqref{eq:visible}. The tail comparison is
+\begin{equation}
+ \Delta T_{\rm tail,d}=\max(\tau_d,z_d)-(\tau'_d+\eta_d).
+ \label{eq:tailgain}
+\end{equation}
+If payload arrival is unchanged, the saving is the exposed control wait $\max(0,z_d-\tau_d)$ less the notification lag. Staging, output congestion, a completion-domain join, or a required acknowledgment can increase the lag and reduce or reverse the saving.
+
+The measured signal window in Section~\ref{sec:completion-eval} starts at local signal initiation and ends after the expected signals are observed. It does not measure $\tau_d$, and it is not the exposed wait in Equation~\eqref{eq:tailgain}. Estimating that wait requires observing data visibility and successor release on a common, valid timing basis.
+
+\paragraph{Symmetric reference.}
+\label{sec:ideal}
+To illustrate the two opportunities, assume simultaneous readiness, one-way fabric delay $L$, payload injection duration $S$, unchanged service and local work $P$, and an exposed tail-control delay of $L$. The baseline schedule is
+\begin{equation}
+ T_{\rm base}=P+L+(S+L)+L=P+S+3L.
+ \label{eq:base}
+\end{equation}
+If readiness reaches the network node before the following data and the node can sustain the same service rate, early upload removes the first serialized $L$. Ordered output notification removes the separate tail traversal in this reference. With incremental overhead $\epsilon$,
+\begin{align}
+ T_{\rm INC}&=P+S+L+\epsilon,\\
+ \Delta T&=2L-\epsilon.
+ \label{eq:gain}
+\end{align}
+The reference opportunity is one fabric RTT before added cost. It requires the stated readiness, service, and exposed-tail conditions; geometric placement alone does not establish it.
+
+\paragraph{Added overhead.}
+\label{sec:sensitivity}
+For $k\in\{0,1,2\}$ eligible boundaries the same reference yields
+\begin{equation}
+ \Delta T_k\simeq kL-\epsilon_k.
+ \label{eq:eligible}
+\end{equation}
+Figure~\ref{fig:analytical} sweeps the extra cost instead of fitting it to a baseline measurement. It shows the break-even overhead in this schedule. Across general schedules, the full readiness, service, and release equations determine the result; benefits at independently measured boundaries cannot simply be added.
+
+\input{figures/analytical}

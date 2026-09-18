@@ -4,7 +4,7 @@
 %   \acmSubmissionID{<PAPER_ID>}
 % and rename the system, since EuroSys requires a submission title and system name
 % substantially different from any public preprint.
-\documentclass[sigplan,twocolumn]{acmart}
+\documentclass[sigplan,twocolumn,balance=false]{acmart}
 \settopmatter{printfolios=true,printacmref=false}
 \renewcommand\footnotetextcopyrightpermission[1]{}
 \setcopyright{none}
@@ -24,6 +24,7 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \input{macros}
+\hypersetup{colorlinks=true,linkcolor=incgreen,citecolor=incgreen,urlcolor=incgreen}
 
 % acmart leaves \headheight at 13pt, which fancyhdr reports as too small for the
 % running head and which shows up as an overfull \vbox on every page.
@@ -73,19 +74,18 @@
 synchronization, collective communication, datacenter networks}
 
 \maketitle
+\pagestyle{plain}
 
 \input{sections/01-introduction}
 \input{sections/02-background}
-\input{sections/03-model}
-\input{sections/04-design}
-\input{sections/05-evidence}
-\input{sections/06-discussion}
-\input{sections/07-related}
-\input{sections/08-conclusion}
+\input{sections/03-design}
+\input{sections/04-analysis}
+\input{sections/05-evaluation}
+\input{sections/06-related}
+\input{sections/07-conclusion}
 \label{end:body}
 
-% \balance would balance the final reference columns, but with this bibliography it
-% forces a 1.2pt overfull \vbox; the columns are close to even without it.
+% Keep normal two-column pagination rather than forcing the bibliography to balance.
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{references}
 

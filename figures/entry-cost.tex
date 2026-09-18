@@ -1,0 +1,46 @@
+% Frozen values: data/h200/numbers/paired_control_share.json.
+\begin{figure*}[t]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth,height=5.0cm,
+ title={(a) Entry duration},xlabel={Tokens per rank},ylabel={Duration (\(\mu\mathrm{s}\))},
+ xmode=log,log basis x=2,xtick={8,32,64,128},xticklabels={8,32,64,128},
+ xmin=6,xmax=170,ymin=0,ymax=18,
+ grid=major,grid style={black!10},axis lines=left,
+ tick label style={font=\footnotesize},label style={font=\footnotesize},
+ title style={font=\small},legend style={font=\footnotesize,at={(.97,.12)},anchor=south east,draw=none}]
+\addplot+[datablue,mark=*,solid,error bars/.cd,y dir=both,y explicit]
+ coordinates {(8,15.09) +- (0,0.06) (32,15.35) +- (0,0.46) (64,14.90) +- (0,0.10) (128,15.05) +- (0,0.21)};
+\addlegendentry{Dispatch}
+\addplot+[controlorange,mark=square*,dashed,error bars/.cd,y dir=both,y explicit]
+ coordinates {(8,15.15) +- (0,0.03) (32,15.04) +- (0,0.22) (64,14.82) +- (0,0.13) (128,14.95) +- (0,0.23)};
+\addlegendentry{Combine}
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.49\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth,height=5.0cm,
+ title={(b) Share of operator},xlabel={Tokens per rank},ylabel={Entry share (\%)},
+ xmode=log,log basis x=2,xtick={8,32,64,128},xticklabels={8,32,64,128},
+ xmin=6,xmax=170,ymin=0,ymax=24,
+ grid=major,grid style={black!10},axis lines=left,
+ tick label style={font=\footnotesize},label style={font=\footnotesize},
+ title style={font=\small},legend style={font=\footnotesize,at={(.97,.97)},anchor=north east,draw=none}]
+\addplot+[datablue,mark=*,solid,error bars/.cd,y dir=both,y explicit]
+ coordinates {(8,20.57) +- (0,0.06) (32,12.25) +- (0,0.17) (64,8.29) +- (0,0.51) (128,4.88) +- (0,0.04)};
+\addlegendentry{Dispatch}
+\addplot+[controlorange,mark=square*,dashed,error bars/.cd,y dir=both,y explicit]
+ coordinates {(8,19.84) +- (0,0.13) (32,12.26) +- (0,0.26) (64,8.20) +- (0,0.16) (128,5.05) +- (0,0.19)};
+\addlegendentry{Combine}
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+\caption{H200 cross-node EP8 Direct. Entry duration stays close to 15\us{} while its operator share decreases. Both use the selected rank's trace-on measurements; error bars are standard deviations across three run means. Lines connect measured points.}
+\label{fig:entry-cost}
+\Description{Two panels show entry synchronization versus tokens per rank. Duration stays near fifteen microseconds for Dispatch and Combine, while operator share declines from about twenty percent to about five percent. Error bars describe three process runs.}
+\end{figure*}

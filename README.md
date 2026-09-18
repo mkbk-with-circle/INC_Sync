@@ -44,6 +44,10 @@ EuroSys 允许公开预印本；但双盲投稿版本需要使用与公开版本
 
 ## 目录说明
 
+正文按七章组织：引言、背景与动机、设计、时延分析、实验评估、相关工作、结论。三个
+eval 图分别报告前同步开销、完成 signal 窗口和真实推理中的前同步占比；解析敏感性图
+放在时延分析章。旧宽 post 拟合不再进入正文。
+
 | 路径 | 内容 |
 |:---|:---|
 | `main.tex`、`sections/`、`figures/` | 可直接编译的论文正文与图形源码 |
@@ -54,8 +58,10 @@ EuroSys 允许公开预印本；但双盲投稿版本需要使用与公开版本
 | `outline/` | 当前 Markdown/PDF outline，以及可编辑和渲染后的图 |
 | `SOURCE_README.md` | arXiv 源码与编译细节 |
 
+章节源文件依次为 `sections/01-introduction.tex`、`02-background.tex`、`03-design.tex`、
+`04-analysis.tex`、`05-evaluation.tex`、`06-related.tex` 和 `07-conclusion.tex`。
+
 ## 结论边界
 
 本文测量的是现有 DeepEP V2 基线中的同步成本与阶段边界，并据此提出 INC 的时序重叠设计。
 当前没有 INC 硬件原型的 A/B 测量，因此论文不声称已经观测到 INC 加速比。
-

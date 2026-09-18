@@ -1,0 +1,23 @@
+% Source: outline_shares.json, e2e[].pre_share_percent only.
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\columnwidth,height=5.4cm,
+ ybar,bar width=12pt,symbolic x coords={64,128},xtick=data,
+ xlabel={Request concurrency},ylabel={Entry share of GPU step (\%)},
+ enlarge x limits=0.45,ymin=0,ymax=22,
+ grid=major,grid style={black!10},
+ tick label style={font=\footnotesize},label style={font=\footnotesize},
+ legend style={font=\footnotesize,at={(.5,.98)},anchor=north,legend columns=2,draw=none}]
+\addplot+[fill=datablue!45,draw=datablue,error bars/.cd,y dir=both,y explicit]
+ coordinates {(64,9.33) +- (0,0.12) (128,7.94) +- (0,0.15)};
+\addlegendentry{1 node}
+\addplot+[pattern=north east lines,pattern color=controlorange,draw=controlorange,error bars/.cd,y dir=both,y explicit]
+ coordinates {(64,16.72) +- (0,0.10) (128,15.19) +- (0,0.05)};
+\addlegendentry{2 nodes}
+\end{axis}
+\end{tikzpicture}
+\caption{Qwen3-30B-A3B decode at fixed EP8. Entry intervals for Dispatch and Combine are paired with the same rank's GPU step. Error bars describe three client windows, not server restarts.}
+\label{fig:inference-share}
+\Description{Grouped bars compare one-node and two-node EP8 decode at request concurrency sixty-four and one hundred twenty-eight. Single-node entry shares are around eight to nine percent, and cross-node shares around fifteen to seventeen percent.}
+\end{figure}

@@ -1,0 +1,27 @@
+% Main refit plus probes; T32 pools all six run means, including the slow run.
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\columnwidth,height=5.4cm,
+ xlabel={Tokens per rank},ylabel={Signal window (\(\mu\mathrm{s}\))},
+ xmode=log,log basis x=2,xtick={8,16,32,64,128},xticklabels={8,16,32,64,128},
+ xmin=6,xmax=170,ymin=9,ymax=16,
+ grid=major,grid style={black!10},axis lines=left,
+ tick label style={font=\footnotesize},label style={font=\footnotesize},
+ legend style={font=\footnotesize,at={(.97,.97)},anchor=north east,draw=none}]
+\addplot+[datablue,mark=*,only marks,error bars/.cd,y dir=both,y explicit]
+ coordinates {(8,13.97) +- (0,0.04) (16,13.98) +- (0,0.23)
+ (32,11.67) +- (0,0.94) (64,11.81) +- (0,0.42)
+ (96,11.12) +- (0,0.22) (128,11.73) +- (0,0.07)};
+\addlegendentry{Dispatch}
+\addplot+[controlorange,mark=square*,only marks,error bars/.cd,y dir=both,y explicit]
+ coordinates {(8,13.56) +- (0,0.24) (16,13.78) +- (0,0.18)
+ (32,11.70) +- (0,1.43) (64,11.76) +- (0,0.29)
+ (96,11.24) +- (0,0.92) (128,11.88) +- (0,0.18)};
+\addlegendentry{Combine}
+\end{axis}
+\end{tikzpicture}
+\caption{EP8 completion-signal observations, without a fitted curve. Each point has three runs except $T=32$, which pools six runs from two batches. Error bars show between-run standard deviation.}
+\label{fig:completion-cost}
+\Description{Dispatch and Combine completion-signal points with error bars at six token counts. Means are near fourteen microseconds at eight and sixteen tokens, and around eleven to twelve microseconds at higher measured counts. The thirty-two-token point has the largest run variation. No fitted curve is shown.}
+\end{figure}
