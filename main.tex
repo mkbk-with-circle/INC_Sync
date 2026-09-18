@@ -1,0 +1,92 @@
+% EuroSys uses the SIGPLAN acmart template. This is the non-anonymous arXiv build.
+% For a EuroSys submission, replace the class line with the following two lines:
+%   \documentclass[sigplan,twocolumn,review,anonymous]{acmart}
+%   \acmSubmissionID{<PAPER_ID>}
+% and rename the system, since EuroSys requires a submission title and system name
+% substantially different from any public preprint.
+\documentclass[sigplan,twocolumn]{acmart}
+\settopmatter{printfolios=true,printacmref=false}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+\setcopyright{none}
+\acmConference{}{}{}
+\acmYear{}
+\copyrightyear{}
+\acmDOI{}
+\acmISBN{}
+
+% acmart's newtxmath already supplies the AMS symbol set; loading amssymb here
+% would clash with its \Bbbk definition.
+\usepackage{amsmath}
+\usepackage{booktabs,tabularx,array}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,patterns,calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\input{macros}
+
+% acmart leaves \headheight at 13pt, which fancyhdr reports as too small for the
+% running head and which shows up as an overfull \vbox on every page.
+\setlength{\headheight}{18.5pt}
+
+\begin{document}
+
+\title{Overlapping MoE Synchronization with Data Transfer\\through In-Network Coordination}
+
+% Author identities and affiliations are supplied by the authors before release.
+% Replace with, per author:
+%   \author{Name}
+%   \affiliation{\institution{Institution}\country{Country}}
+\author{}
+\affiliation{\institution{}\country{}}
+
+\begin{abstract}
+\input{sections/00-abstract}
+\end{abstract}
+
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10003033.10003068.10003073</concept_id>
+<concept_desc>Networks~Network protocol design</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10003033.10003058.10003065</concept_id>
+<concept_desc>Networks~In-network processing</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10010520.10010553.10010562</concept_id>
+<concept_desc>Computer systems organization~Distributed architectures</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+\ccsdesc[500]{Networks~Network protocol design}
+\ccsdesc[500]{Networks~In-network processing}
+\ccsdesc[300]{Computer systems organization~Distributed architectures}
+
+% "in-network" carries an explicit hyphen, which suppresses further hyphenation in the
+% word and leaves the keyword line overfull; \- restores a legal break point.
+\keywords{expert parallelism, mixture-of-experts, in-net\-work computing,
+synchronization, collective communication, datacenter networks}
+
+\maketitle
+
+\input{sections/01-introduction}
+\input{sections/02-background}
+\input{sections/03-model}
+\input{sections/04-design}
+\input{sections/05-evidence}
+\input{sections/06-discussion}
+\input{sections/07-related}
+\input{sections/08-conclusion}
+\label{end:body}
+
+% \balance would balance the final reference columns, but with this bibliography it
+% forces a 1.2pt overfull \vbox; the columns are close to even without it.
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\end{document}

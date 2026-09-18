@@ -1,0 +1,375 @@
+{
+  "summary": [
+    {
+      "tokens": 8,
+      "operation": "dispatch",
+      "phases_us": {
+        "post_total_us": {
+          "mean": 53.31786666666667,
+          "std": 0.14023380096586324
+        },
+        "before_first_signal_us": {
+          "mean": 37.23168,
+          "std": 0.2721669134924386
+        },
+        "signal_issue_observe_envelope_us": {
+          "mean": 15.914133333333332,
+          "std": 0.16492153447422586
+        },
+        "after_signals_us": {
+          "mean": 0.17205333333333334,
+          "std": 0.0002444040370643136
+        }
+      },
+      "off_operation_us": 74.25436360677084,
+      "on_off_delta_percent": [
+        3.9229809986016217,
+        4.948982009757352,
+        3.857781725943954
+      ]
+    },
+    {
+      "tokens": 8,
+      "operation": "combine",
+      "phases_us": {
+        "post_total_us": {
+          "mean": 49.03637333333333,
+          "std": 0.5952002007168098
+        },
+        "before_first_signal_us": {
+          "mean": 31.982026666666666,
+          "std": 0.5307778161654211
+        },
+        "signal_issue_observe_envelope_us": {
+          "mean": 16.87888,
+          "std": 0.06546581397951318
+        },
+        "after_signals_us": {
+          "mean": 0.17546666666666666,
+          "std": 0.0010653324989567004
+        }
+      },
+      "off_operation_us": 78.41607096354167,
+      "on_off_delta_percent": [
+        1.744334667351577,
+        2.3387152635968356,
+        3.746335608221729
+      ]
+    },
+    {
+      "tokens": 128,
+      "operation": "dispatch",
+      "phases_us": {
+        "post_total_us": {
+          "mean": 286.07882666666666,
+          "std": 2.0056886607181386
+        },
+        "before_first_signal_us": {
+          "mean": 248.70698666666667,
+          "std": 2.783645445622225
+        },
+        "signal_issue_observe_envelope_us": {
+          "mean": 37.20106666666667,
+          "std": 4.3077851677786025
+        },
+        "after_signals_us": {
+          "mean": 0.17077333333333333,
+          "std": 0.0003330665599145832
+        }
+      },
+      "off_operation_us": 311.74525227864586,
+      "on_off_delta_percent": [
+        0.21305823823309922,
+        1.6105558186197078,
+        -0.4730242344975766
+      ]
+    },
+    {
+      "tokens": 128,
+      "operation": "combine",
+      "phases_us": {
+        "post_total_us": {
+          "mean": 266.25429333333335,
+          "std": 9.911608324572404
+        },
+        "before_first_signal_us": {
+          "mean": 223.79045333333335,
+          "std": 5.047417427767726
+        },
+        "signal_issue_observe_envelope_us": {
+          "mean": 42.28794666666666,
+          "std": 7.77190994711939
+        },
+        "after_signals_us": {
+          "mean": 0.17589333333333335,
+          "std": 0.0004026578365477716
+        }
+      },
+      "off_operation_us": 304.93556315104166,
+      "on_off_delta_percent": [
+        -6.5028942456906265,
+        0.745648631775464,
+        0.44058171486873743
+      ]
+    }
+  ],
+  "runs": [
+    {
+      "tokens": 8,
+      "repeat": 1,
+      "operation": "dispatch",
+      "phases_us": {
+        "post_total_us": 53.30704,
+        "before_first_signal_us": 37.36672,
+        "signal_issue_observe_envelope_us": 15.76832,
+        "after_signals_us": 0.17200000000000001
+      },
+      "operation_us": {
+        "untraced": 74.200439453125,
+        "traced": 77.11130859375
+      },
+      "on_off_delta_percent": 3.9229809986016217
+    },
+    {
+      "tokens": 8,
+      "repeat": 1,
+      "operation": "combine",
+      "phases_us": {
+        "post_total_us": 48.616,
+        "before_first_signal_us": 31.617919999999998,
+        "signal_issue_observe_envelope_us": 16.82192,
+        "after_signals_us": 0.17616
+      },
+      "operation_us": {
+        "untraced": 78.4106494140625,
+        "traced": 79.7783935546875
+      },
+      "on_off_delta_percent": 1.744334667351577
+    },
+    {
+      "tokens": 8,
+      "repeat": 2,
+      "operation": "dispatch",
+      "phases_us": {
+        "post_total_us": 53.4632,
+        "before_first_signal_us": 37.40992,
+        "signal_issue_observe_envelope_us": 15.88096,
+        "after_signals_us": 0.17232
+      },
+      "operation_us": {
+        "untraced": 74.1830078125,
+        "traced": 77.8543115234375
+      },
+      "on_off_delta_percent": 4.948982009757352
+    },
+    {
+      "tokens": 8,
+      "repeat": 2,
+      "operation": "combine",
+      "phases_us": {
+        "post_total_us": 48.77568,
+        "before_first_signal_us": 31.73712,
+        "signal_issue_observe_envelope_us": 16.86432,
+        "after_signals_us": 0.17424
+      },
+      "operation_us": {
+        "untraced": 78.66794921875,
+        "traced": 80.5077685546875
+      },
+      "on_off_delta_percent": 2.3387152635968356
+    },
+    {
+      "tokens": 8,
+      "repeat": 3,
+      "operation": "dispatch",
+      "phases_us": {
+        "post_total_us": 53.18336,
+        "before_first_signal_us": 36.9184,
+        "signal_issue_observe_envelope_us": 16.09312,
+        "after_signals_us": 0.17184
+      },
+      "operation_us": {
+        "untraced": 74.3796435546875,
+        "traced": 77.2490478515625
+      },
+      "on_off_delta_percent": 3.857781725943954
+    },
+    {
+      "tokens": 8,
+      "repeat": 3,
+      "operation": "combine",
+      "phases_us": {
+        "post_total_us": 49.717439999999996,
+        "before_first_signal_us": 32.59104,
+        "signal_issue_observe_envelope_us": 16.950400000000002,
+        "after_signals_us": 0.176
+      },
+      "operation_us": {
+        "untraced": 78.1696142578125,
+        "traced": 81.0981103515625
+      },
+      "on_off_delta_percent": 3.746335608221729
+    },
+    {
+      "tokens": 128,
+      "repeat": 1,
+      "operation": "dispatch",
+      "phases_us": {
+        "post_total_us": 285.56896,
+        "before_first_signal_us": 251.62752,
+        "signal_issue_observe_envelope_us": 33.7704,
+        "after_signals_us": 0.17104
+      },
+      "operation_us": {
+        "untraced": 312.2083203125,
+        "traced": 312.873505859375
+      },
+      "on_off_delta_percent": 0.21305823823309922
+    },
+    {
+      "tokens": 128,
+      "repeat": 1,
+      "operation": "combine",
+      "phases_us": {
+        "post_total_us": 257.77408,
+        "before_first_signal_us": 224.0888,
+        "signal_issue_observe_envelope_us": 33.50976,
+        "after_signals_us": 0.17552
+      },
+      "operation_us": {
+        "untraced": 311.0217431640625,
+        "traced": 290.796328125
+      },
+      "on_off_delta_percent": -6.5028942456906265
+    },
+    {
+      "tokens": 128,
+      "repeat": 2,
+      "operation": "dispatch",
+      "phases_us": {
+        "post_total_us": 284.37728,
+        "before_first_signal_us": 248.40928,
+        "signal_issue_observe_envelope_us": 35.79712,
+        "after_signals_us": 0.17088
+      },
+      "operation_us": {
+        "untraced": 306.034560546875,
+        "traced": 310.96341796875
+      },
+      "on_off_delta_percent": 1.6105558186197078
+    },
+    {
+      "tokens": 128,
+      "repeat": 2,
+      "operation": "combine",
+      "phases_us": {
+        "post_total_us": 277.15056,
+        "before_first_signal_us": 228.68208,
+        "signal_issue_observe_envelope_us": 48.29264,
+        "after_signals_us": 0.17584
+      },
+      "operation_us": {
+        "untraced": 307.637724609375,
+        "traced": 309.93162109375
+      },
+      "on_off_delta_percent": 0.745648631775464
+    },
+    {
+      "tokens": 128,
+      "repeat": 3,
+      "operation": "dispatch",
+      "phases_us": {
+        "post_total_us": 288.29024,
+        "before_first_signal_us": 246.08416,
+        "signal_issue_observe_envelope_us": 42.03568,
+        "after_signals_us": 0.1704
+      },
+      "operation_us": {
+        "untraced": 316.9928759765625,
+        "traced": 315.4934228515625
+      },
+      "on_off_delta_percent": -0.4730242344975766
+    },
+    {
+      "tokens": 128,
+      "repeat": 3,
+      "operation": "combine",
+      "phases_us": {
+        "post_total_us": 263.83824,
+        "before_first_signal_us": 218.60048,
+        "signal_issue_observe_envelope_us": 45.06144,
+        "after_signals_us": 0.17632
+      },
+      "operation_us": {
+        "untraced": 296.1472216796875,
+        "traced": 297.4519921875
+      },
+      "on_off_delta_percent": 0.44058171486873743
+    }
+  ],
+  "sources": [
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r1-node0.json.gz",
+      "sha256": "4a58820b9f6ce50371cfcca605be8db98aeb4ad5a9344cc705714e2ae1b2b48a",
+      "remote_case": "/export/home/yinjinrun.montyyin/.borrow/yuanmingyu/inc-sync-h200-20260912/results/deepep/h200_post_stage_abi_anchor_2n4_t8_r1/2n4g/direct/uniform/balanced/t8"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r1-node1.json.gz",
+      "sha256": "64411d19b70c1936be69cc2d7f4a5c0f32bdc45a7ccec1f0be553bedac3a79fc",
+      "remote_case": "/export/home/yinjinrun.montyyin/.borrow/yuanmingyu/inc-sync-h200-20260912/results/deepep/h200_post_stage_abi_anchor_2n4_t8_r1/2n4g/direct/uniform/balanced/t8"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r2-node0.json.gz",
+      "sha256": "54930d71ac11f53cc3341575299306d150b586f5da32670263b28227fb9767b9",
+      "remote_case": "/export/home/yinjinrun.montyyin/.borrow/yuanmingyu/inc-sync-h200-20260912/results/deepep/h200_post_stage_abi_anchor_2n4_t8_r2/2n4g/direct/uniform/balanced/t8"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r2-node1.json.gz",
+      "sha256": "2de3e78e264f33d954f182d8799799fd2ac4d5d2a9b165726540abd2b8716eaa",
+      "remote_case": "/export/home/yinjinrun.montyyin/.borrow/yuanmingyu/inc-sync-h200-20260912/results/deepep/h200_post_stage_abi_anchor_2n4_t8_r2/2n4g/direct/uniform/balanced/t8"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r3-node0.json.gz",
+      "sha256": "77c0305d9a710c0d2ebe6e8b681b9cfbea146bd048f1cc18bbe342f4ef20da1d",
+      "remote_case": "/export/home/yinjinrun.montyyin/.borrow/yuanmingyu/inc-sync-h200-20260912/results/deepep/h200_post_stage_abi_anchor_2n4_t8_r3/2n4g/direct/uniform/balanced/t8"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r3-node1.json.gz",
+      "sha256": "99f5c7948da9c7e2a6977d92e1f6c811ca1c54e242fcd32534cfb7b3e117e015",
+      "remote_case": "/export/home/yinjinrun.montyyin/.borrow/yuanmingyu/inc-sync-h200-20260912/results/deepep/h200_post_stage_abi_anchor_2n4_t8_r3/2n4g/direct/uniform/balanced/t8"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r1-node0.json.gz",
+      "sha256": "dac8c2d7cf5bd2cbca86e112d736c24a0670c733a381d2c97a7404d25b0db940",
+      "remote_case": "/export/home/yinjinrun.montyyin/.borrow/yuanmingyu/inc-sync-h200-20260912/results/deepep/h200_post_stage_abi_anchor_2n4_t128_r1/2n4g/direct/uniform/balanced/t128"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r1-node1.json.gz",
+      "sha256": "237c2c50f9354c45f921fc72937773183816f71b3d7748cc18c5c0245626ea2d",
+      "remote_case": "/export/home/yinjinrun.montyyin/.borrow/yuanmingyu/inc-sync-h200-20260912/results/deepep/h200_post_stage_abi_anchor_2n4_t128_r1/2n4g/direct/uniform/balanced/t128"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r2-node0.json.gz",
+      "sha256": "460efea0c0b8c548f373c0b6cafa439452c567005c8b5db74e95fabcdabf5c24",
+      "remote_case": "/export/home/yinjinrun.montyyin/.borrow/yuanmingyu/inc-sync-h200-20260912/results/deepep/h200_post_stage_abi_anchor_2n4_t128_r2/2n4g/direct/uniform/balanced/t128"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r2-node1.json.gz",
+      "sha256": "223ca9a5fe1ae4e26a02d5c9578cc5fce30850253e849959f943ac30ee86fb17",
+      "remote_case": "/export/home/yinjinrun.montyyin/.borrow/yuanmingyu/inc-sync-h200-20260912/results/deepep/h200_post_stage_abi_anchor_2n4_t128_r2/2n4g/direct/uniform/balanced/t128"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r3-node0.json.gz",
+      "sha256": "a4e62a26f7d8cc69e625a4370c33407ac4017719a8c1ef6cbb896fddbe33b466",
+      "remote_case": "/export/home/yinjinrun.montyyin/.borrow/yuanmingyu/inc-sync-h200-20260912/results/deepep/h200_post_stage_abi_anchor_2n4_t128_r3/2n4g/direct/uniform/balanced/t128"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r3-node1.json.gz",
+      "sha256": "c68bf32a3c4585926753b91fc9e8db146a4186c34b2ddc17c3c186b5d65e4efb",
+      "remote_case": "/export/home/yinjinrun.montyyin/.borrow/yuanmingyu/inc-sync-h200-20260912/results/deepep/h200_post_stage_abi_anchor_2n4_t128_r3/2n4g/direct/uniform/balanced/t128"
+    }
+  ],
+  "scope": "2n4 H200 EP8 Direct, T8/128 H7168 topk8 E256 BF16 GDAKI3 TC162, three process repeats",
+  "semantics": "Select maximum-post rank for each iteration and keep its same-rank additive partition. The signal interval includes issue/poll and peer readiness, not bare network RTT. Instrumented values are not baseline removable time.",
+  "instrumentation": "Private ABI-rebuilt measurement image; trace CTA/warp width 4/11. No added barriers; added timestamp stores and layout can perturb execution. Paired off/on reported, with run-order variability retained."
+}

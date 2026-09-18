@@ -1,0 +1,20 @@
+% System name. A EuroSys submission must use a name substantially different from any
+% public preprint, so it is defined once here and used everywhere.
+\newcommand{\sys}{RendezEP}
+\newcommand{\ready}{\textsc{Ready}}
+\newcommand{\done}{\textsc{Done}}
+\newcommand{\data}{\textsc{Data}}
+\newcommand{\recycle}{\textsc{Recycle}}
+\newcommand{\us}{\ensuremath{\,\mu\mathrm{s}}}
+\newcommand{\topk}{\ensuremath{\mathit{topk}}}
+\newcommand{\secref}[1]{\S\ref{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\definecolor{datablue}{HTML}{0072B2}
+\definecolor{controlorange}{HTML}{B86B00}
+\definecolor{incgreen}{HTML}{007F65}
+\definecolor{rankred}{HTML}{B43B3B}
+\tikzset{dataarrow/.style={-{Stealth[length=1.7mm]},draw=datablue,line width=.7pt},
+  ctrlarrow/.style={-{Stealth[length=1.7mm]},draw=controlorange,dashed,line width=.7pt},
+  lifeline/.style={draw=black!50,line width=.4pt},
+  paneltitle/.style={font=\small\bfseries,anchor=west},
+  smalllabel/.style={font=\footnotesize,fill=white,inner sep=1pt}}

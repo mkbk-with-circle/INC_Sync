@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="630" viewBox="0 0 1500 630">
+  <title>INC readiness aggregation and ordered completion</title>
+  <desc>Each rank announces readiness and a traffic plan, then uploads data. INC stages early arrivals, releases after readiness, counts destination output, and appends ordered DONE. Buffers are recycled after consumption.</desc>
+  <defs>
+    <marker id="data-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#0072B2"/></marker>
+    <marker id="ctrl-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#B66A00"/></marker>
+    <marker id="return-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#65717A"/></marker>
+  </defs>
+  <rect width="1500" height="630" fill="white"/>
+  <g font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" fill="#172934">
+    <text x="35" y="43" font-size="25" font-weight="600">INC：就绪汇总与上传重叠，完成通知随尾包送达</text>
+    <text x="35" y="80" font-size="18" fill="#52646F">资源前提：预留端点缓冲区和有界网络暂存；本轮可写状态由 READY 确认</text>
+    <rect x="350" y="117" width="785" height="351" rx="15" fill="#F4F8FA" stroke="#CBD9DF" stroke-width="1.5"/>
+    <text x="155" y="148" font-size="21" font-weight="600" text-anchor="middle">发送 rank</text>
+    <text x="742" y="148" font-size="21" font-weight="600" text-anchor="middle">INC 会合点</text>
+    <text x="1320" y="148" font-size="21" font-weight="600" text-anchor="middle">目标 rank / owner</text>
+
+    <rect x="35" y="310" width="245" height="118" rx="10" fill="#FFFFFF" stroke="#8BA3B1" stroke-width="1.8"/>
+    <text x="157" y="345" font-size="21" font-weight="600" text-anchor="middle">各 rank 独立就绪</text>
+    <text x="157" y="377" font-size="18" text-anchor="middle">先发 READY 与计划</text>
+    <text x="157" y="407" font-size="18" text-anchor="middle">随即上传 DATA</text>
+
+    <rect x="390" y="180" width="310" height="88" rx="10" fill="#FFF7E9" stroke="#B66A00" stroke-width="1.8"/>
+    <text x="545" y="215" font-size="21" font-weight="600" text-anchor="middle">① 汇总 READY 与发送计划</text>
+    <text x="545" y="245" font-size="18" text-anchor="middle">记录本轮参与者及目标数量</text>
+    <path d="M280 340 H323 V223 H388" fill="none" stroke="#B66A00" stroke-width="2.4" stroke-dasharray="8 6" marker-end="url(#ctrl-arrow)"/>
+    <text x="252" y="204" font-size="17" fill="#986000">控制</text>
+
+    <rect x="390" y="340" width="310" height="88" rx="10" fill="#EDF6FC" stroke="#0072B2" stroke-width="1.8"/>
+    <text x="545" y="375" font-size="21" font-weight="600" text-anchor="middle">② 暂存早到数据</text>
+    <text x="545" y="405" font-size="18" text-anchor="middle">READY 收齐后流式放行</text>
+    <path d="M280 390 H387" fill="none" stroke="#0072B2" stroke-width="3.2" marker-end="url(#data-arrow)"/>
+    <path d="M545 268 V337" fill="none" stroke="#B66A00" stroke-width="2.4" stroke-dasharray="8 6" marker-end="url(#ctrl-arrow)"/>
+    <text x="560" y="310" font-size="17" fill="#986000">控制放行</text>
+
+    <rect x="780" y="340" width="310" height="88" rx="10" fill="#EDF6FC" stroke="#0072B2" stroke-width="1.8"/>
+    <text x="935" y="375" font-size="21" font-weight="600" text-anchor="middle">③ 按目标有序写出并计数</text>
+    <text x="935" y="405" font-size="18" text-anchor="middle">最后 DATA 后追加 DONE</text>
+    <path d="M700 384 H777" fill="none" stroke="#0072B2" stroke-width="3.2" marker-end="url(#data-arrow)"/>
+    <path d="M700 223 H935 V337" fill="none" stroke="#B66A00" stroke-width="2.4" stroke-dasharray="8 6" marker-end="url(#ctrl-arrow)"/>
+    <text x="788" y="210" font-size="17" fill="#986000">预期数量已确定</text>
+
+    <rect x="1200" y="340" width="265" height="88" rx="10" fill="#EDF8F3" stroke="#008566" stroke-width="1.8"/>
+    <text x="1332" y="375" font-size="21" font-weight="600" text-anchor="middle">④ 接收数据与 DONE</text>
+    <text x="1332" y="405" font-size="18" text-anchor="middle">满足本地条件后消费</text>
+    <path d="M1090 384 H1197" fill="none" stroke="#0072B2" stroke-width="3.2" marker-end="url(#data-arrow)"/>
+
+    <path d="M1332 428 V525 H157 V431" fill="none" stroke="#65717A" stroke-width="2" stroke-dasharray="4 5" marker-end="url(#return-arrow)"/>
+    <rect x="456" y="504" width="595" height="38" fill="white"/>
+    <text x="751" y="529" font-size="19" text-anchor="middle" fill="#52646F">消费完成后回收本轮 buffer；DONE 不等于允许覆盖</text>
+    <line x1="35" y1="564" x2="1465" y2="564" stroke="#DDE5EA"/>
+    <text x="35" y="602" font-size="19">Dispatch：转发 activation，可结合组播</text>
+    <text x="715" y="602" font-size="19">Combine：按 contributor 集合归约，再有序写回结果</text>
+  </g>
+</svg>

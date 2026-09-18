@@ -1,0 +1,531 @@
+{
+  "scope": "Two-node H200 DeepEP V2 Direct, rank-min pre span, H7168/topk8/E256/BF16, TC162/GDAKI3.",
+  "method": "Equal-weight mean of three process-run means per token count. All available T8/32/96/128 measurements enter the fit; EP8 additionally includes later T64. No independent validation is claimed.",
+  "qualification": "EP8/T64 used the same post-stage ABI instrumented image as paired-control measurements, acquired in a later session; the other training points come from the original cross-node campaign. Do not treat the cross-EP coefficients as a universal rank-scaling law.",
+  "sources": [
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/cross_min_node.json",
+      "sha256": "8d36986ea33e992af2e93d46bfcc29df3e06f490f0fead5243ac2c2af76488d5"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/paired_control_share.json",
+      "sha256": "8656f622ea49a51189f4e34af21796f7f116bee09996f50ab6e373cc2178fb01"
+    }
+  ],
+  "results": [
+    {
+      "world": 4,
+      "operation": "dispatch",
+      "training_tokens": [
+        8,
+        32,
+        96,
+        128
+      ],
+      "training_run_means": [
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n2_t128_r1",
+          "pre_us": 11.87264
+        },
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n2_t128_r2",
+          "pre_us": 11.80464
+        },
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n2_t128_r3_retry1",
+          "pre_us": 11.42304
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n2_t32_r1",
+          "pre_us": 11.46016
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n2_t32_r2",
+          "pre_us": 11.90048
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n2_t32_r3",
+          "pre_us": 11.40528
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n2_t8_r1",
+          "pre_us": 11.53648
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n2_t8_r2",
+          "pre_us": 11.71072
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n2_t8_r3",
+          "pre_us": 11.62816
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n2_t96_r1_retry1",
+          "pre_us": 11.76528
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n2_t96_r2",
+          "pre_us": 11.3936
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n2_t96_r3",
+          "pre_us": 11.9304
+        }
+      ],
+      "coefficient_us": 11.652573333333333,
+      "training_token_means_us": {
+        "8": 11.625119999999999,
+        "32": 11.58864,
+        "96": 11.696426666666667,
+        "128": 11.700106666666667
+      },
+      "max_training_token_mean_deviation_us": 0.06393333333333295
+    },
+    {
+      "world": 4,
+      "operation": "combine",
+      "training_tokens": [
+        8,
+        32,
+        96,
+        128
+      ],
+      "training_run_means": [
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n2_t128_r1",
+          "pre_us": 11.69488
+        },
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n2_t128_r2",
+          "pre_us": 11.700479999999999
+        },
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n2_t128_r3_retry1",
+          "pre_us": 11.276159999999999
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n2_t32_r1",
+          "pre_us": 11.43248
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n2_t32_r2",
+          "pre_us": 11.69312
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n2_t32_r3",
+          "pre_us": 11.343359999999999
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n2_t8_r1",
+          "pre_us": 11.41152
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n2_t8_r2",
+          "pre_us": 11.66016
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n2_t8_r3",
+          "pre_us": 11.6144
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n2_t96_r1_retry1",
+          "pre_us": 11.58656
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n2_t96_r2",
+          "pre_us": 11.27248
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n2_t96_r3",
+          "pre_us": 11.76288
+        }
+      ],
+      "coefficient_us": 11.537373333333333,
+      "training_token_means_us": {
+        "8": 11.562026666666666,
+        "32": 11.489653333333333,
+        "96": 11.54064,
+        "128": 11.557173333333333
+      },
+      "max_training_token_mean_deviation_us": 0.047719999999999985
+    },
+    {
+      "world": 8,
+      "operation": "dispatch",
+      "training_tokens": [
+        8,
+        32,
+        64,
+        96,
+        128
+      ],
+      "training_run_means": [
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n4_t128_r1",
+          "pre_us": 14.77648
+        },
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n4_t128_r2",
+          "pre_us": 15.17776
+        },
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n4_t128_r3",
+          "pre_us": 15.00608
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n4_t32_r1",
+          "pre_us": 15.01984
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n4_t32_r2",
+          "pre_us": 15.2696
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n4_t32_r3",
+          "pre_us": 15.06272
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n4_t8_r1",
+          "pre_us": 15.10096
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n4_t8_r2",
+          "pre_us": 15.02048
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n4_t8_r3",
+          "pre_us": 14.671520000000001
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n4_t96_r1",
+          "pre_us": 15.07936
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n4_t96_r2",
+          "pre_us": 14.74032
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n4_t96_r3",
+          "pre_us": 14.7864
+        },
+        {
+          "tokens": 64,
+          "run_id": "h200_post_stage_abi_mid_20260914_2n4_t64_r1",
+          "pre_us": 14.94256
+        },
+        {
+          "tokens": 64,
+          "run_id": "h200_post_stage_abi_mid_20260914_2n4_t64_r2",
+          "pre_us": 14.78816
+        },
+        {
+          "tokens": 64,
+          "run_id": "h200_post_stage_abi_mid_20260914_2n4_t64_r3",
+          "pre_us": 14.97776
+        }
+      ],
+      "coefficient_us": 14.961333333333334,
+      "training_token_means_us": {
+        "8": 14.930986666666668,
+        "32": 15.117386666666667,
+        "64": 14.902826666666666,
+        "96": 14.868693333333333,
+        "128": 14.986773333333334
+      },
+      "max_training_token_mean_deviation_us": 0.1560533333333325
+    },
+    {
+      "world": 8,
+      "operation": "combine",
+      "training_tokens": [
+        8,
+        32,
+        64,
+        96,
+        128
+      ],
+      "training_run_means": [
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n4_t128_r1",
+          "pre_us": 14.86192
+        },
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n4_t128_r2",
+          "pre_us": 15.07616
+        },
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n4_t128_r3",
+          "pre_us": 14.93408
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n4_t32_r1",
+          "pre_us": 15.0352
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n4_t32_r2",
+          "pre_us": 15.228959999999999
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n4_t32_r3",
+          "pre_us": 15.04208
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n4_t8_r1",
+          "pre_us": 15.16208
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n4_t8_r2",
+          "pre_us": 15.01392
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n4_t8_r3",
+          "pre_us": 14.54208
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n4_t96_r1",
+          "pre_us": 15.17104
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n4_t96_r2",
+          "pre_us": 14.76384
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n4_t96_r3",
+          "pre_us": 14.81456
+        },
+        {
+          "tokens": 64,
+          "run_id": "h200_post_stage_abi_mid_20260914_2n4_t64_r1",
+          "pre_us": 14.67808
+        },
+        {
+          "tokens": 64,
+          "run_id": "h200_post_stage_abi_mid_20260914_2n4_t64_r2",
+          "pre_us": 14.91552
+        },
+        {
+          "tokens": 64,
+          "run_id": "h200_post_stage_abi_mid_20260914_2n4_t64_r3",
+          "pre_us": 14.87088
+        }
+      ],
+      "coefficient_us": 14.940693333333334,
+      "training_token_means_us": {
+        "8": 14.906026666666667,
+        "32": 15.102079999999999,
+        "64": 14.821493333333333,
+        "96": 14.91648,
+        "128": 14.957386666666666
+      },
+      "max_training_token_mean_deviation_us": 0.16138666666666523
+    },
+    {
+      "world": 16,
+      "operation": "dispatch",
+      "training_tokens": [
+        8,
+        32,
+        96,
+        128
+      ],
+      "training_run_means": [
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n8_t128_r1",
+          "pre_us": 18.0504
+        },
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n8_t128_r2",
+          "pre_us": 18.3552
+        },
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n8_t128_r3",
+          "pre_us": 18.556639999999998
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n8_t32_r1",
+          "pre_us": 18.19088
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n8_t32_r2",
+          "pre_us": 18.44176
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n8_t32_r3",
+          "pre_us": 18.603839999999998
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n8_t8_r1",
+          "pre_us": 18.351679999999998
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n8_t8_r2",
+          "pre_us": 18.60992
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n8_t8_r3",
+          "pre_us": 18.37488
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n8_t96_r1_retry1",
+          "pre_us": 18.3232
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n8_t96_r2_retry1",
+          "pre_us": 18.352159999999998
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n8_t96_r3",
+          "pre_us": 18.1616
+        }
+      ],
+      "coefficient_us": 18.364346666666666,
+      "training_token_means_us": {
+        "8": 18.44549333333333,
+        "32": 18.41216,
+        "96": 18.278986666666665,
+        "128": 18.320746666666665
+      },
+      "max_training_token_mean_deviation_us": 0.08536000000000143
+    },
+    {
+      "world": 16,
+      "operation": "combine",
+      "training_tokens": [
+        8,
+        32,
+        96,
+        128
+      ],
+      "training_run_means": [
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n8_t128_r1",
+          "pre_us": 18.10352
+        },
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n8_t128_r2",
+          "pre_us": 18.30352
+        },
+        {
+          "tokens": 128,
+          "run_id": "h200_cross_tc162_small_2n8_t128_r3",
+          "pre_us": 18.50304
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n8_t32_r1",
+          "pre_us": 18.290399999999998
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n8_t32_r2",
+          "pre_us": 18.31568
+        },
+        {
+          "tokens": 32,
+          "run_id": "h200_cross_tc162_small_2n8_t32_r3",
+          "pre_us": 18.45536
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n8_t8_r1",
+          "pre_us": 18.29568
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n8_t8_r2",
+          "pre_us": 18.00928
+        },
+        {
+          "tokens": 8,
+          "run_id": "h200_cross_tc162_small_2n8_t8_r3",
+          "pre_us": 18.424799999999998
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n8_t96_r1_retry1",
+          "pre_us": 18.41264
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n8_t96_r2_retry1",
+          "pre_us": 18.16848
+        },
+        {
+          "tokens": 96,
+          "run_id": "h200_cross_tc162_holdout_2n8_t96_r3",
+          "pre_us": 18.09856
+        }
+      ],
+      "coefficient_us": 18.281746666666667,
+      "training_token_means_us": {
+        "8": 18.24325333333333,
+        "32": 18.35381333333333,
+        "96": 18.22656,
+        "128": 18.303359999999998
+      },
+      "max_training_token_mean_deviation_us": 0.0720666666666645
+    }
+  ]
+}

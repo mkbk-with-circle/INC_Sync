@@ -1,0 +1,333 @@
+{
+  "source_sha256": "8d36986ea33e992af2e93d46bfcc29df3e06f490f0fead5243ac2c2af76488d5",
+  "results": [
+    {
+      "world": 4,
+      "operation": "dispatch",
+      "metric": "pre",
+      "intercept_us": 11.637955555555555,
+      "slope_us_per_token": 0.0,
+      "holdout_T96_observed_us": 11.696426666666667,
+      "holdout_predicted_us": 11.637955555555555,
+      "holdout_abs_error_us": 0.05847111111111225,
+      "holdout_relative_error_percent": 0.4999057641916185,
+      "train_run_ids": [
+        "h200_cross_tc162_small_2n2_t128_r1",
+        "h200_cross_tc162_small_2n2_t128_r2",
+        "h200_cross_tc162_small_2n2_t128_r3_retry1",
+        "h200_cross_tc162_small_2n2_t32_r1",
+        "h200_cross_tc162_small_2n2_t32_r2",
+        "h200_cross_tc162_small_2n2_t32_r3",
+        "h200_cross_tc162_small_2n2_t8_r1",
+        "h200_cross_tc162_small_2n2_t8_r2",
+        "h200_cross_tc162_small_2n2_t8_r3"
+      ],
+      "test_run_ids": [
+        "h200_cross_tc162_holdout_2n2_t96_r1_retry1",
+        "h200_cross_tc162_holdout_2n2_t96_r2",
+        "h200_cross_tc162_holdout_2n2_t96_r3"
+      ]
+    },
+    {
+      "world": 4,
+      "operation": "dispatch",
+      "metric": "post",
+      "intercept_us": 40.86742222222222,
+      "slope_us_per_token": 0.5464011111111111,
+      "holdout_T96_observed_us": 91.76384,
+      "holdout_predicted_us": 93.32192888888889,
+      "holdout_abs_error_us": 1.5580888888888893,
+      "holdout_relative_error_percent": 1.6979334004427988,
+      "train_run_ids": [
+        "h200_cross_tc162_small_2n2_t128_r1",
+        "h200_cross_tc162_small_2n2_t128_r2",
+        "h200_cross_tc162_small_2n2_t128_r3_retry1",
+        "h200_cross_tc162_small_2n2_t32_r1",
+        "h200_cross_tc162_small_2n2_t32_r2",
+        "h200_cross_tc162_small_2n2_t32_r3",
+        "h200_cross_tc162_small_2n2_t8_r1",
+        "h200_cross_tc162_small_2n2_t8_r2",
+        "h200_cross_tc162_small_2n2_t8_r3"
+      ],
+      "test_run_ids": [
+        "h200_cross_tc162_holdout_2n2_t96_r1_retry1",
+        "h200_cross_tc162_holdout_2n2_t96_r2",
+        "h200_cross_tc162_holdout_2n2_t96_r3"
+      ]
+    },
+    {
+      "world": 4,
+      "operation": "combine",
+      "metric": "pre",
+      "intercept_us": 11.536284444444444,
+      "slope_us_per_token": 0.0,
+      "holdout_T96_observed_us": 11.54064,
+      "holdout_predicted_us": 11.536284444444444,
+      "holdout_abs_error_us": 0.004355555555555668,
+      "holdout_relative_error_percent": 0.037741022643074114,
+      "train_run_ids": [
+        "h200_cross_tc162_small_2n2_t128_r1",
+        "h200_cross_tc162_small_2n2_t128_r2",
+        "h200_cross_tc162_small_2n2_t128_r3_retry1",
+        "h200_cross_tc162_small_2n2_t32_r1",
+        "h200_cross_tc162_small_2n2_t32_r2",
+        "h200_cross_tc162_small_2n2_t32_r3",
+        "h200_cross_tc162_small_2n2_t8_r1",
+        "h200_cross_tc162_small_2n2_t8_r2",
+        "h200_cross_tc162_small_2n2_t8_r3"
+      ],
+      "test_run_ids": [
+        "h200_cross_tc162_holdout_2n2_t96_r1_retry1",
+        "h200_cross_tc162_holdout_2n2_t96_r2",
+        "h200_cross_tc162_holdout_2n2_t96_r3"
+      ]
+    },
+    {
+      "world": 4,
+      "operation": "combine",
+      "metric": "post",
+      "intercept_us": 33.36523555555555,
+      "slope_us_per_token": 0.6128106349206349,
+      "holdout_T96_observed_us": 91.96613333333333,
+      "holdout_predicted_us": 92.1950565079365,
+      "holdout_abs_error_us": 0.22892317460316747,
+      "holdout_relative_error_percent": 0.24892116946292636,
+      "train_run_ids": [
+        "h200_cross_tc162_small_2n2_t128_r1",
+        "h200_cross_tc162_small_2n2_t128_r2",
+        "h200_cross_tc162_small_2n2_t128_r3_retry1",
+        "h200_cross_tc162_small_2n2_t32_r1",
+        "h200_cross_tc162_small_2n2_t32_r2",
+        "h200_cross_tc162_small_2n2_t32_r3",
+        "h200_cross_tc162_small_2n2_t8_r1",
+        "h200_cross_tc162_small_2n2_t8_r2",
+        "h200_cross_tc162_small_2n2_t8_r3"
+      ],
+      "test_run_ids": [
+        "h200_cross_tc162_holdout_2n2_t96_r1_retry1",
+        "h200_cross_tc162_holdout_2n2_t96_r2",
+        "h200_cross_tc162_holdout_2n2_t96_r3"
+      ]
+    },
+    {
+      "world": 8,
+      "operation": "dispatch",
+      "metric": "pre",
+      "intercept_us": 15.011715555555556,
+      "slope_us_per_token": 0.0,
+      "holdout_T96_observed_us": 14.868693333333333,
+      "holdout_predicted_us": 15.011715555555556,
+      "holdout_abs_error_us": 0.14302222222222305,
+      "holdout_relative_error_percent": 0.9619017556948944,
+      "train_run_ids": [
+        "h200_cross_tc162_small_2n4_t128_r1",
+        "h200_cross_tc162_small_2n4_t128_r2",
+        "h200_cross_tc162_small_2n4_t128_r3",
+        "h200_cross_tc162_small_2n4_t32_r1",
+        "h200_cross_tc162_small_2n4_t32_r2",
+        "h200_cross_tc162_small_2n4_t32_r3",
+        "h200_cross_tc162_small_2n4_t8_r1",
+        "h200_cross_tc162_small_2n4_t8_r2",
+        "h200_cross_tc162_small_2n4_t8_r3"
+      ],
+      "test_run_ids": [
+        "h200_cross_tc162_holdout_2n4_t96_r1",
+        "h200_cross_tc162_holdout_2n4_t96_r2",
+        "h200_cross_tc162_holdout_2n4_t96_r3"
+      ]
+    },
+    {
+      "world": 8,
+      "operation": "dispatch",
+      "metric": "post",
+      "intercept_us": 36.995795555555546,
+      "slope_us_per_token": 1.9004903174603174,
+      "holdout_T96_observed_us": 223.55354666666668,
+      "holdout_predicted_us": 219.442866031746,
+      "holdout_abs_error_us": 4.110680634920669,
+      "holdout_relative_error_percent": 1.838790167373175,
+      "train_run_ids": [
+        "h200_cross_tc162_small_2n4_t128_r1",
+        "h200_cross_tc162_small_2n4_t128_r2",
+        "h200_cross_tc162_small_2n4_t128_r3",
+        "h200_cross_tc162_small_2n4_t32_r1",
+        "h200_cross_tc162_small_2n4_t32_r2",
+        "h200_cross_tc162_small_2n4_t32_r3",
+        "h200_cross_tc162_small_2n4_t8_r1",
+        "h200_cross_tc162_small_2n4_t8_r2",
+        "h200_cross_tc162_small_2n4_t8_r3"
+      ],
+      "test_run_ids": [
+        "h200_cross_tc162_holdout_2n4_t96_r1",
+        "h200_cross_tc162_holdout_2n4_t96_r2",
+        "h200_cross_tc162_holdout_2n4_t96_r3"
+      ]
+    },
+    {
+      "world": 8,
+      "operation": "combine",
+      "metric": "pre",
+      "intercept_us": 14.988497777777777,
+      "slope_us_per_token": 0.0,
+      "holdout_T96_observed_us": 14.91648,
+      "holdout_predicted_us": 14.988497777777777,
+      "holdout_abs_error_us": 0.07201777777777707,
+      "holdout_relative_error_percent": 0.4828067867068978,
+      "train_run_ids": [
+        "h200_cross_tc162_small_2n4_t128_r1",
+        "h200_cross_tc162_small_2n4_t128_r2",
+        "h200_cross_tc162_small_2n4_t128_r3",
+        "h200_cross_tc162_small_2n4_t32_r1",
+        "h200_cross_tc162_small_2n4_t32_r2",
+        "h200_cross_tc162_small_2n4_t32_r3",
+        "h200_cross_tc162_small_2n4_t8_r1",
+        "h200_cross_tc162_small_2n4_t8_r2",
+        "h200_cross_tc162_small_2n4_t8_r3"
+      ],
+      "test_run_ids": [
+        "h200_cross_tc162_holdout_2n4_t96_r1",
+        "h200_cross_tc162_holdout_2n4_t96_r2",
+        "h200_cross_tc162_holdout_2n4_t96_r3"
+      ]
+    },
+    {
+      "world": 8,
+      "operation": "combine",
+      "metric": "post",
+      "intercept_us": 31.142071111111107,
+      "slope_us_per_token": 1.8463598412698414,
+      "holdout_T96_observed_us": 201.68053333333333,
+      "holdout_predicted_us": 208.3926158730159,
+      "holdout_abs_error_us": 6.712082539682569,
+      "holdout_relative_error_percent": 3.328076551934232,
+      "train_run_ids": [
+        "h200_cross_tc162_small_2n4_t128_r1",
+        "h200_cross_tc162_small_2n4_t128_r2",
+        "h200_cross_tc162_small_2n4_t128_r3",
+        "h200_cross_tc162_small_2n4_t32_r1",
+        "h200_cross_tc162_small_2n4_t32_r2",
+        "h200_cross_tc162_small_2n4_t32_r3",
+        "h200_cross_tc162_small_2n4_t8_r1",
+        "h200_cross_tc162_small_2n4_t8_r2",
+        "h200_cross_tc162_small_2n4_t8_r3"
+      ],
+      "test_run_ids": [
+        "h200_cross_tc162_holdout_2n4_t96_r1",
+        "h200_cross_tc162_holdout_2n4_t96_r2",
+        "h200_cross_tc162_holdout_2n4_t96_r3"
+      ]
+    },
+    {
+      "world": 16,
+      "operation": "dispatch",
+      "metric": "pre",
+      "intercept_us": 18.392799999999998,
+      "slope_us_per_token": 0.0,
+      "holdout_T96_observed_us": 18.278986666666665,
+      "holdout_predicted_us": 18.392799999999998,
+      "holdout_abs_error_us": 0.11381333333333288,
+      "holdout_relative_error_percent": 0.6226457484149353,
+      "train_run_ids": [
+        "h200_cross_tc162_small_2n8_t128_r1",
+        "h200_cross_tc162_small_2n8_t128_r2",
+        "h200_cross_tc162_small_2n8_t128_r3",
+        "h200_cross_tc162_small_2n8_t32_r1",
+        "h200_cross_tc162_small_2n8_t32_r2",
+        "h200_cross_tc162_small_2n8_t32_r3",
+        "h200_cross_tc162_small_2n8_t8_r1",
+        "h200_cross_tc162_small_2n8_t8_r2",
+        "h200_cross_tc162_small_2n8_t8_r3"
+      ],
+      "test_run_ids": [
+        "h200_cross_tc162_holdout_2n8_t96_r1_retry1",
+        "h200_cross_tc162_holdout_2n8_t96_r2_retry1",
+        "h200_cross_tc162_holdout_2n8_t96_r3"
+      ]
+    },
+    {
+      "world": 16,
+      "operation": "dispatch",
+      "metric": "post",
+      "intercept_us": 37.776639999999986,
+      "slope_us_per_token": 2.73126126984127,
+      "holdout_T96_observed_us": 313.75482666666664,
+      "holdout_predicted_us": 299.97772190476195,
+      "holdout_abs_error_us": 13.777104761904695,
+      "holdout_relative_error_percent": 4.391041536563038,
+      "train_run_ids": [
+        "h200_cross_tc162_small_2n8_t128_r1",
+        "h200_cross_tc162_small_2n8_t128_r2",
+        "h200_cross_tc162_small_2n8_t128_r3",
+        "h200_cross_tc162_small_2n8_t32_r1",
+        "h200_cross_tc162_small_2n8_t32_r2",
+        "h200_cross_tc162_small_2n8_t32_r3",
+        "h200_cross_tc162_small_2n8_t8_r1",
+        "h200_cross_tc162_small_2n8_t8_r2",
+        "h200_cross_tc162_small_2n8_t8_r3"
+      ],
+      "test_run_ids": [
+        "h200_cross_tc162_holdout_2n8_t96_r1_retry1",
+        "h200_cross_tc162_holdout_2n8_t96_r2_retry1",
+        "h200_cross_tc162_holdout_2n8_t96_r3"
+      ]
+    },
+    {
+      "world": 16,
+      "operation": "combine",
+      "metric": "pre",
+      "intercept_us": 18.30014222222222,
+      "slope_us_per_token": 0.0,
+      "holdout_T96_observed_us": 18.22656,
+      "holdout_predicted_us": 18.30014222222222,
+      "holdout_abs_error_us": 0.0735822222222211,
+      "holdout_relative_error_percent": 0.4037087756670546,
+      "train_run_ids": [
+        "h200_cross_tc162_small_2n8_t128_r1",
+        "h200_cross_tc162_small_2n8_t128_r2",
+        "h200_cross_tc162_small_2n8_t128_r3",
+        "h200_cross_tc162_small_2n8_t32_r1",
+        "h200_cross_tc162_small_2n8_t32_r2",
+        "h200_cross_tc162_small_2n8_t32_r3",
+        "h200_cross_tc162_small_2n8_t8_r1",
+        "h200_cross_tc162_small_2n8_t8_r2",
+        "h200_cross_tc162_small_2n8_t8_r3"
+      ],
+      "test_run_ids": [
+        "h200_cross_tc162_holdout_2n8_t96_r1_retry1",
+        "h200_cross_tc162_holdout_2n8_t96_r2_retry1",
+        "h200_cross_tc162_holdout_2n8_t96_r3"
+      ]
+    },
+    {
+      "world": 16,
+      "operation": "combine",
+      "metric": "post",
+      "intercept_us": 31.96760888888889,
+      "slope_us_per_token": 2.4243073015873016,
+      "holdout_T96_observed_us": 265.71269333333333,
+      "holdout_predicted_us": 264.70110984126984,
+      "holdout_abs_error_us": 1.0115834920634938,
+      "holdout_relative_error_percent": 0.3807057462604824,
+      "train_run_ids": [
+        "h200_cross_tc162_small_2n8_t128_r1",
+        "h200_cross_tc162_small_2n8_t128_r2",
+        "h200_cross_tc162_small_2n8_t128_r3",
+        "h200_cross_tc162_small_2n8_t32_r1",
+        "h200_cross_tc162_small_2n8_t32_r2",
+        "h200_cross_tc162_small_2n8_t32_r3",
+        "h200_cross_tc162_small_2n8_t8_r1",
+        "h200_cross_tc162_small_2n8_t8_r2",
+        "h200_cross_tc162_small_2n8_t8_r3"
+      ],
+      "test_run_ids": [
+        "h200_cross_tc162_holdout_2n8_t96_r1_retry1",
+        "h200_cross_tc162_holdout_2n8_t96_r2_retry1",
+        "h200_cross_tc162_holdout_2n8_t96_r3"
+      ]
+    }
+  ],
+  "rank_statistic": "min phase duration",
+  "scope": "Two-node H200 Direct, GDAKI3/TC162, H7168/topk8/E256/BF16, default resource settings. T8\u2013128 only; ranks are categorical, not a universal rank-scaling formula.",
+  "policy": "Constant pre and linear post chosen before evaluating T96. No refit or candidate selection using holdout. Each response is a run mean of iteration-wise min-rank durations.",
+  "warning": "Post includes data drain and local join, not pure signaling or removable INC time. Three process repeats; not a robust population confidence interval."
+}

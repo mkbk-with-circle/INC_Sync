@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1760" height="1260" viewBox="0 0 1760 1260">
+<rect width="1760" height="1260" fill="white"/>
+<defs>
+<marker id="a19313F" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#19313F"/></marker>
+<marker id="a627580" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#627580"/></marker>
+<marker id="aCCD9E0" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#CCD9E0"/></marker>
+<marker id="a0072B2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#0072B2"/></marker>
+<marker id="aC56824" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#C56824"/></marker>
+<marker id="a00846E" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#00846E"/></marker>
+</defs>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="32" fill="#19313F" font-weight="600" text-anchor="start"><tspan x="48" y="55.4">INC 的两项收益：提前上传，随尾包通知完成</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="20" fill="#627580" font-weight="400" text-anchor="start"><tspan x="48" y="100.5">上排：一般到达情况    下排：理想参考    颜色区分两个发送方向，线型区分数据与控制</tspan></text>
+<polyline points="50,138 105,138" fill="none" stroke="#0072B2" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="19" fill="#19313F" font-weight="400" text-anchor="start"><tspan x="120" y="143.675">实线：DATA</tspan></text>
+<polyline points="332,138 387,138" fill="none" stroke="#C56824" stroke-width="1.7" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#aC56824)"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="19" fill="#19313F" font-weight="400" text-anchor="start"><tspan x="402" y="143.675">虚线：READY / 完成 signal</tspan></text>
+<polyline points="765,138 820,138" fill="none" stroke="#00846E" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#a00846E)"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="19" fill="#19313F" font-weight="400" text-anchor="start"><tspan x="835" y="143.675">绿色尾标：DONE</tspan></text>
+<rect x="1140" y="126" width="22" height="24" rx="0" fill="#E9F6F0" stroke="#00846E" stroke-width="1.2"/>
+<polyline points="1140,142 1148,150" fill="none" stroke="#00846E" stroke-width="0.8" stroke-linejoin="round"/>
+<polyline points="1140,134 1156,150" fill="none" stroke="#00846E" stroke-width="0.8" stroke-linejoin="round"/>
+<polyline points="1140,126 1162,148" fill="none" stroke="#00846E" stroke-width="0.8" stroke-linejoin="round"/>
+<polyline points="1148,126 1162,140" fill="none" stroke="#00846E" stroke-width="0.8" stroke-linejoin="round"/>
+<polyline points="1156,126 1162,132" fill="none" stroke="#00846E" stroke-width="0.8" stroke-linejoin="round"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="19" fill="#19313F" font-weight="400" text-anchor="start"><tspan x="1177" y="143.675">斜线区：暂存等待</tspan></text>
+<rect x="48" y="183" width="800" height="462" rx="12" fill="white" stroke="#CCD9E0" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="25" fill="#19313F" font-weight="600" text-anchor="start"><tspan x="72" y="222.125">A  不同时间就绪 · 端点协调</tspan></text>
+<rect x="144" y="243" width="116" height="37" rx="6" fill="#F2F6F8" stroke="#CCD9E0" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="21" fill="#19313F" font-weight="600" text-anchor="middle"><tspan x="202.0" y="268.325">Rank 0</tspan></text>
+<rect x="638" y="243" width="116" height="37" rx="6" fill="#F2F6F8" stroke="#CCD9E0" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="21" fill="#19313F" font-weight="600" text-anchor="middle"><tspan x="696.0" y="268.325">Rank 1</tspan></text>
+<polyline points="202,282 202,593" fill="none" stroke="#CCD9E0" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="696,282 696,593" fill="none" stroke="#CCD9E0" stroke-width="1.5" stroke-linejoin="round"/>
+<circle cx="202" cy="294" r="3" fill="#627580"/>
+<circle cx="696" cy="338" r="3" fill="#627580"/>
+<rect x="194" y="294" width="16" height="90" rx="0" fill="#FFF1DE" stroke="#F0D9B4" stroke-width="1"/>
+<rect x="688" y="338" width="16" height="2" rx="0" fill="#FFF1DE" stroke="#F0D9B4" stroke-width="1"/>
+<polyline points="202,294 696,340" fill="none" stroke="#0072B2" stroke-width="1.7" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#a0072B2)"/>
+<polyline points="696,338 202,384" fill="none" stroke="#C56824" stroke-width="1.7" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#aC56824)"/>
+<polyline points="202,388 696,434" fill="none" stroke="#0072B2" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="202,404 696,450" fill="none" stroke="#0072B2" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="202,420 696,466" fill="none" stroke="#0072B2" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="202,474 696,520" fill="none" stroke="#0072B2" stroke-width="2.6" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="696,344 202,390" fill="none" stroke="#C56824" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="696,360 202,406" fill="none" stroke="#C56824" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="696,376 202,422" fill="none" stroke="#C56824" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="696,430 202,476" fill="none" stroke="#C56824" stroke-width="2.6" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="202,527 696,573" fill="none" stroke="#0072B2" stroke-width="1.7" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#a0072B2)"/>
+<polyline points="696,483 202,529" fill="none" stroke="#C56824" stroke-width="1.7" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#aC56824)"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="18" fill="#627580" font-weight="400" text-anchor="end"><tspan x="180" y="332.35">等待 READY</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="18" fill="#627580" font-weight="400" text-anchor="end"><tspan x="180" y="512.85">尾部协调</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="20" fill="#627580" font-weight="400" text-anchor="middle"><tspan x="449.0" y="624.0">控制交换串行位于 payload 两端</tspan></text>
+<rect x="912" y="183" width="800" height="462" rx="12" fill="white" stroke="#CCD9E0" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="25" fill="#19313F" font-weight="600" text-anchor="start"><tspan x="936" y="222.125">B  不同时间就绪 · INC</tspan></text>
+<rect x="1008" y="243" width="116" height="37" rx="6" fill="#F2F6F8" stroke="#CCD9E0" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="21" fill="#19313F" font-weight="600" text-anchor="middle"><tspan x="1066.0" y="268.325">Rank 0</tspan></text>
+<rect x="1502" y="243" width="116" height="37" rx="6" fill="#F2F6F8" stroke="#CCD9E0" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="21" fill="#19313F" font-weight="600" text-anchor="middle"><tspan x="1560.0" y="268.325">Rank 1</tspan></text>
+<rect x="1261" y="243" width="104" height="37" rx="6" fill="#E9F6F0" stroke="#00846E" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="21" fill="#00846E" font-weight="600" text-anchor="middle"><tspan x="1313.0" y="268.325">INC</tspan></text>
+<polyline points="1066,282 1066,593" fill="none" stroke="#CCD9E0" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="1560,282 1560,593" fill="none" stroke="#CCD9E0" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="1313,282 1313,593" fill="none" stroke="#CCD9E0" stroke-width="1.5" stroke-linejoin="round"/>
+<circle cx="1066" cy="294" r="3" fill="#627580"/>
+<circle cx="1560" cy="338" r="3" fill="#627580"/>
+<rect x="1304" y="321.0" width="18" height="40.0" rx="0" fill="#E9F6F0" stroke="#00846E" stroke-width="1.2"/>
+<polyline points="1304,353.0 1312.0,361.0" fill="none" stroke="#00846E" stroke-width="0.8" stroke-linejoin="round"/>
+<polyline points="1304,345.0 1320.0,361.0" fill="none" stroke="#00846E" stroke-width="0.8" stroke-linejoin="round"/>
+<polyline points="1304,337.0 1322,355.0" fill="none" stroke="#00846E" stroke-width="0.8" stroke-linejoin="round"/>
+<polyline points="1304,329.0 1322,347.0" fill="none" stroke="#00846E" stroke-width="0.8" stroke-linejoin="round"/>
+<polyline points="1304,321.0 1322,339.0" fill="none" stroke="#00846E" stroke-width="0.8" stroke-linejoin="round"/>
+<polyline points="1312,321.0 1322,331.0" fill="none" stroke="#00846E" stroke-width="0.8" stroke-linejoin="round"/>
+<polyline points="1320,321.0 1322,323.0" fill="none" stroke="#00846E" stroke-width="0.8" stroke-linejoin="round"/>
+<polyline points="1066,294 1313,317.0" fill="none" stroke="#0072B2" stroke-width="1.7" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#a0072B2)"/>
+<polyline points="1560,338 1313,361.0" fill="none" stroke="#C56824" stroke-width="1.7" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#aC56824)"/>
+<circle cx="1313" cy="361.0" r="4" fill="#00846E"/>
+<polyline points="1325,361.0 1605,361.0" fill="none" stroke="#00846E" stroke-width="1" stroke-linejoin="round" stroke-dasharray="7 6"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="17" fill="#00846E" font-weight="400" text-anchor="start"><tspan x="1577" y="329.55">READY 齐</tspan><tspan x="1577" y="352.5">开始放行</tspan></text>
+<polyline points="1066,298 1313,321.0 1313,361.0 1560,384.0" fill="none" stroke="#0072B2" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="1066,314 1313,337.0 1313,377.0 1560,400.0" fill="none" stroke="#0072B2" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="1066,330 1313,353.0 1313,393.0 1560,416.0" fill="none" stroke="#0072B2" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="1066,384 1313,407.0 1313,409.0 1560,432.0" fill="none" stroke="#0072B2" stroke-width="2.6" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="1313,414.0 1560,437.0" fill="none" stroke="#00846E" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#a00846E)"/>
+<circle cx="1560" cy="437.0" r="3" fill="#00846E"/>
+<polyline points="1560,342 1313,365.0 1066,388.0" fill="none" stroke="#C56824" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="1560,358 1313,381.0 1066,404.0" fill="none" stroke="#C56824" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="1560,374 1313,397.0 1066,420.0" fill="none" stroke="#C56824" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="1560,428 1313,451.0 1066,474.0" fill="none" stroke="#C56824" stroke-width="2.6" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="1313,456.0 1066,479.0" fill="none" stroke="#00846E" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#a00846E)"/>
+<circle cx="1066" cy="479.0" r="3" fill="#00846E"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="17" fill="#00846E" font-weight="400" text-anchor="end"><tspan x="1044" y="333.05">早到 DATA</tspan><tspan x="1044" y="356.0">暂存</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="19" fill="#00846E" font-weight="600" text-anchor="middle"><tspan x="1313.0" y="528.675">最后 DATA 后追加 DONE</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="20" fill="#627580" font-weight="400" text-anchor="middle"><tspan x="1313.0" y="624.0">上传不等全局放行；目标观察有序 DONE</tspan></text>
+<rect x="48" y="681" width="800" height="462" rx="12" fill="white" stroke="#CCD9E0" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="25" fill="#19313F" font-weight="600" text-anchor="start"><tspan x="72" y="720.125">C  同时开始（理想） · 端点协调</tspan></text>
+<rect x="144" y="741" width="116" height="37" rx="6" fill="#F2F6F8" stroke="#CCD9E0" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="21" fill="#19313F" font-weight="600" text-anchor="middle"><tspan x="202.0" y="766.325">Rank 0</tspan></text>
+<rect x="638" y="741" width="116" height="37" rx="6" fill="#F2F6F8" stroke="#CCD9E0" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="21" fill="#19313F" font-weight="600" text-anchor="middle"><tspan x="696.0" y="766.325">Rank 1</tspan></text>
+<polyline points="202,780 202,1091" fill="none" stroke="#CCD9E0" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="696,780 696,1091" fill="none" stroke="#CCD9E0" stroke-width="1.5" stroke-linejoin="round"/>
+<circle cx="202" cy="792" r="3" fill="#627580"/>
+<circle cx="696" cy="792" r="3" fill="#627580"/>
+<rect x="194" y="792" width="16" height="46" rx="0" fill="#FFF1DE" stroke="#F0D9B4" stroke-width="1"/>
+<rect x="688" y="792" width="16" height="46" rx="0" fill="#FFF1DE" stroke="#F0D9B4" stroke-width="1"/>
+<polyline points="202,792 696,838" fill="none" stroke="#0072B2" stroke-width="1.7" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#a0072B2)"/>
+<polyline points="696,792 202,838" fill="none" stroke="#C56824" stroke-width="1.7" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#aC56824)"/>
+<polyline points="202,842 696,888" fill="none" stroke="#0072B2" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="202,858 696,904" fill="none" stroke="#0072B2" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="202,874 696,920" fill="none" stroke="#0072B2" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="202,928 696,974" fill="none" stroke="#0072B2" stroke-width="2.6" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="696,842 202,888" fill="none" stroke="#C56824" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="696,858 202,904" fill="none" stroke="#C56824" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="696,874 202,920" fill="none" stroke="#C56824" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="696,928 202,974" fill="none" stroke="#C56824" stroke-width="2.6" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="202,981 696,1027" fill="none" stroke="#0072B2" stroke-width="1.7" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#a0072B2)"/>
+<polyline points="696,981 202,1027" fill="none" stroke="#C56824" stroke-width="1.7" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#aC56824)"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="18" fill="#627580" font-weight="400" text-anchor="end"><tspan x="180" y="818.2">前侧暴露</tspan><tspan x="180" y="842.5">≈ L</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="18" fill="#627580" font-weight="400" text-anchor="end"><tspan x="180" y="998.7">后侧暴露</tspan><tspan x="180" y="1023.0">≈ L</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="20" fill="#627580" font-weight="400" text-anchor="middle"><tspan x="449.0" y="1122.0">控制交换串行位于 payload 两端</tspan></text>
+<rect x="912" y="681" width="800" height="462" rx="12" fill="white" stroke="#CCD9E0" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="25" fill="#19313F" font-weight="600" text-anchor="start"><tspan x="936" y="720.125">D  同时开始（理想） · INC</tspan></text>
+<rect x="1008" y="741" width="116" height="37" rx="6" fill="#F2F6F8" stroke="#CCD9E0" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="21" fill="#19313F" font-weight="600" text-anchor="middle"><tspan x="1066.0" y="766.325">Rank 0</tspan></text>
+<rect x="1502" y="741" width="116" height="37" rx="6" fill="#F2F6F8" stroke="#CCD9E0" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="21" fill="#19313F" font-weight="600" text-anchor="middle"><tspan x="1560.0" y="766.325">Rank 1</tspan></text>
+<rect x="1261" y="741" width="104" height="37" rx="6" fill="#E9F6F0" stroke="#00846E" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="21" fill="#00846E" font-weight="600" text-anchor="middle"><tspan x="1313.0" y="766.325">INC</tspan></text>
+<polyline points="1066,780 1066,1091" fill="none" stroke="#CCD9E0" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="1560,780 1560,1091" fill="none" stroke="#CCD9E0" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="1313,780 1313,1091" fill="none" stroke="#CCD9E0" stroke-width="1.5" stroke-linejoin="round"/>
+<circle cx="1066" cy="792" r="3" fill="#627580"/>
+<circle cx="1560" cy="792" r="3" fill="#627580"/>
+<polyline points="1066,792 1313,815.0" fill="none" stroke="#0072B2" stroke-width="1.7" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#a0072B2)"/>
+<polyline points="1560,792 1313,815.0" fill="none" stroke="#C56824" stroke-width="1.7" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#aC56824)"/>
+<circle cx="1313" cy="815.0" r="4" fill="#00846E"/>
+<polyline points="1325,815.0 1605,815.0" fill="none" stroke="#00846E" stroke-width="1" stroke-linejoin="round" stroke-dasharray="7 6"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="17" fill="#00846E" font-weight="400" text-anchor="start"><tspan x="1577" y="783.55">READY 齐</tspan><tspan x="1577" y="806.5">开始放行</tspan></text>
+<polyline points="1066,796 1313,819.0 1560,842.0" fill="none" stroke="#0072B2" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="1066,812 1313,835.0 1560,858.0" fill="none" stroke="#0072B2" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="1066,828 1313,851.0 1560,874.0" fill="none" stroke="#0072B2" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="1066,882 1313,905.0 1560,928.0" fill="none" stroke="#0072B2" stroke-width="2.6" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="1313,910.0 1560,933.0" fill="none" stroke="#00846E" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#a00846E)"/>
+<circle cx="1560" cy="933.0" r="3" fill="#00846E"/>
+<polyline points="1560,796 1313,819.0 1066,842.0" fill="none" stroke="#C56824" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="1560,812 1313,835.0 1066,858.0" fill="none" stroke="#C56824" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="1560,828 1313,851.0 1066,874.0" fill="none" stroke="#C56824" stroke-width="1.9" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="1560,882 1313,905.0 1066,928.0" fill="none" stroke="#C56824" stroke-width="2.6" stroke-linejoin="round" marker-end="url(#aC56824)"/>
+<polyline points="1313,910.0 1066,933.0" fill="none" stroke="#00846E" stroke-width="2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#a00846E)"/>
+<circle cx="1066" cy="933.0" r="3" fill="#00846E"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="19" fill="#00846E" font-weight="600" text-anchor="middle"><tspan x="1313.0" y="982.675">最后 DATA 后追加 DONE</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="20" fill="#627580" font-weight="400" text-anchor="middle"><tspan x="1313.0" y="1122.0">上传不等全局放行；目标观察有序 DONE</tspan></text>
+<polyline points="48,1177 1712,1177" fill="none" stroke="#CCD9E0" stroke-width="1.4" stroke-linejoin="round"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="19" fill="#627580" font-weight="400" text-anchor="start"><tspan x="48" y="1220.675">理想参考：L = RTT_fabric / 2；前后各约减少 L，另计 INC 开销。一般情况由就绪偏斜、尾部暴露与出口服务共同决定。</tspan></text>
+</svg>

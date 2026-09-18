@@ -1,0 +1,299 @@
+{
+  "summary": [
+    {
+      "tokens": 8,
+      "operation": "combine",
+      "mean_signal_us": {
+        "mean": 13.494186666666666,
+        "between_run_std": 0.35115025919587967,
+        "run_means": [
+          13.76144,
+          13.62464,
+          13.09648
+        ]
+      },
+      "mean_share_percent": {
+        "mean": 17.65934879017781,
+        "between_run_std": 0.5665469285481147,
+        "run_means": [
+          18.083398759393763,
+          17.878730388682865,
+          17.015917222456796
+        ]
+      },
+      "mean_share_of_post_percent": {
+        "mean": 28.457631644493524,
+        "between_run_std": 0.9374769362952632,
+        "run_means": [
+          29.113742135193714,
+          28.875231999323848,
+          27.38392079896301
+        ]
+      }
+    },
+    {
+      "tokens": 8,
+      "operation": "dispatch",
+      "mean_signal_us": {
+        "mean": 14.258293333333333,
+        "between_run_std": 0.155318744951578,
+        "run_means": [
+          14.30448,
+          14.38528,
+          14.08512
+        ]
+      },
+      "mean_share_percent": {
+        "mean": 19.333292230270413,
+        "between_run_std": 0.1913604380820573,
+        "run_means": [
+          19.459881006960824,
+          19.426842601082072,
+          19.11315308276834
+        ]
+      },
+      "mean_share_of_post_percent": {
+        "mean": 27.212567776097963,
+        "between_run_std": 0.18619892525700943,
+        "run_means": [
+          27.25523546407738,
+          27.37372952402415,
+          27.008738340192355
+        ]
+      }
+    },
+    {
+      "tokens": 128,
+      "operation": "combine",
+      "mean_signal_us": {
+        "mean": 11.61376,
+        "between_run_std": 0.6962811753882194,
+        "run_means": [
+          11.97344,
+          10.8112,
+          12.05664
+        ]
+      },
+      "mean_share_percent": {
+        "mean": 3.9494165501290355,
+        "between_run_std": 0.3498950387918212,
+        "run_means": [
+          4.179408127868763,
+          3.546750040125228,
+          4.122091482393115
+        ]
+      },
+      "mean_share_of_post_percent": {
+        "mean": 4.4338100170178505,
+        "between_run_std": 0.40780747854571775,
+        "run_means": [
+          4.705822697703837,
+          3.964916660230338,
+          4.6306906931193765
+        ]
+      }
+    },
+    {
+      "tokens": 128,
+      "operation": "dispatch",
+      "mean_signal_us": {
+        "mean": 11.625866666666667,
+        "between_run_std": 0.3773327981150499,
+        "run_means": [
+          11.69552,
+          11.21856,
+          11.963519999999999
+        ]
+      },
+      "mean_share_percent": {
+        "mean": 3.786810723312415,
+        "between_run_std": 0.1031136182129873,
+        "run_means": [
+          3.822565503701991,
+          3.6705787957518115,
+          3.8672878704834424
+        ]
+      },
+      "mean_share_of_post_percent": {
+        "mean": 4.118297285422187,
+        "between_run_std": 0.10689173338205521,
+        "run_means": [
+          4.14905115586047,
+          3.9993998582450794,
+          4.206440842161012
+        ]
+      }
+    }
+  ],
+  "runs": [
+    {
+      "run_id": "h200_post_stage_abi_anchor_2n4_t128_r1",
+      "tokens": 128,
+      "repeat": 1,
+      "operation": "combine",
+      "mean_signal_us": 11.97344,
+      "mean_share_percent": 4.179408127868763,
+      "mean_share_of_post_percent": 4.705822697703837,
+      "audit_sha256": [
+        "a800524df44ef2a4b07ff722e9a5686a0f347334caa393ebe01f8fac1eab2808",
+        "85a38f909e6f86bd546341f9c6e6165ff571695af1db0a0f026a7e7171237a43"
+      ]
+    },
+    {
+      "run_id": "h200_post_stage_abi_anchor_2n4_t128_r1",
+      "tokens": 128,
+      "repeat": 1,
+      "operation": "dispatch",
+      "mean_signal_us": 11.69552,
+      "mean_share_percent": 3.822565503701991,
+      "mean_share_of_post_percent": 4.14905115586047,
+      "audit_sha256": [
+        "a800524df44ef2a4b07ff722e9a5686a0f347334caa393ebe01f8fac1eab2808",
+        "85a38f909e6f86bd546341f9c6e6165ff571695af1db0a0f026a7e7171237a43"
+      ]
+    },
+    {
+      "run_id": "h200_post_stage_abi_anchor_2n4_t128_r2",
+      "tokens": 128,
+      "repeat": 2,
+      "operation": "combine",
+      "mean_signal_us": 10.8112,
+      "mean_share_percent": 3.546750040125228,
+      "mean_share_of_post_percent": 3.964916660230338,
+      "audit_sha256": [
+        "9f7743788a89c2eb1865142017e8db894cc051a8066a85b71ffcb87c841ca1e2",
+        "5d79258c36f9d723062f95dcd075ef312529f784907693446b2dc1163884b6cf"
+      ]
+    },
+    {
+      "run_id": "h200_post_stage_abi_anchor_2n4_t128_r2",
+      "tokens": 128,
+      "repeat": 2,
+      "operation": "dispatch",
+      "mean_signal_us": 11.21856,
+      "mean_share_percent": 3.6705787957518115,
+      "mean_share_of_post_percent": 3.9993998582450794,
+      "audit_sha256": [
+        "9f7743788a89c2eb1865142017e8db894cc051a8066a85b71ffcb87c841ca1e2",
+        "5d79258c36f9d723062f95dcd075ef312529f784907693446b2dc1163884b6cf"
+      ]
+    },
+    {
+      "run_id": "h200_post_stage_abi_anchor_2n4_t128_r3",
+      "tokens": 128,
+      "repeat": 3,
+      "operation": "combine",
+      "mean_signal_us": 12.05664,
+      "mean_share_percent": 4.122091482393115,
+      "mean_share_of_post_percent": 4.6306906931193765,
+      "audit_sha256": [
+        "1c2acf8ebaaec8c80b48f91aa9071f499e3579a94d1a25d0dfb0f9c29bd3ee5c",
+        "3b4457c70b7f18f29371c3cdcdb7783f8d0fd52c27f1afe6bd83ad201d9e0228"
+      ]
+    },
+    {
+      "run_id": "h200_post_stage_abi_anchor_2n4_t128_r3",
+      "tokens": 128,
+      "repeat": 3,
+      "operation": "dispatch",
+      "mean_signal_us": 11.963519999999999,
+      "mean_share_percent": 3.8672878704834424,
+      "mean_share_of_post_percent": 4.206440842161012,
+      "audit_sha256": [
+        "1c2acf8ebaaec8c80b48f91aa9071f499e3579a94d1a25d0dfb0f9c29bd3ee5c",
+        "3b4457c70b7f18f29371c3cdcdb7783f8d0fd52c27f1afe6bd83ad201d9e0228"
+      ]
+    },
+    {
+      "run_id": "h200_post_stage_abi_anchor_2n4_t8_r1",
+      "tokens": 8,
+      "repeat": 1,
+      "operation": "combine",
+      "mean_signal_us": 13.76144,
+      "mean_share_percent": 18.083398759393763,
+      "mean_share_of_post_percent": 29.113742135193714,
+      "audit_sha256": [
+        "7a066215022c020168b4a6db6629bfc69b5d0ebbdaab19838cffca1bd03d0e36",
+        "61db12fae083fdb408135f6cad8a5b56a765919c890a4ae8168e31d166a609b6"
+      ]
+    },
+    {
+      "run_id": "h200_post_stage_abi_anchor_2n4_t8_r1",
+      "tokens": 8,
+      "repeat": 1,
+      "operation": "dispatch",
+      "mean_signal_us": 14.30448,
+      "mean_share_percent": 19.459881006960824,
+      "mean_share_of_post_percent": 27.25523546407738,
+      "audit_sha256": [
+        "7a066215022c020168b4a6db6629bfc69b5d0ebbdaab19838cffca1bd03d0e36",
+        "61db12fae083fdb408135f6cad8a5b56a765919c890a4ae8168e31d166a609b6"
+      ]
+    },
+    {
+      "run_id": "h200_post_stage_abi_anchor_2n4_t8_r2",
+      "tokens": 8,
+      "repeat": 2,
+      "operation": "combine",
+      "mean_signal_us": 13.62464,
+      "mean_share_percent": 17.878730388682865,
+      "mean_share_of_post_percent": 28.875231999323848,
+      "audit_sha256": [
+        "087b02b52085c217a88bdfe8d29c79b7f63b43123edf2cf0b8df8ccc43828563",
+        "58752bf90833a520cded05c207ae936a1a28be23314717fd95bb81096276b88b"
+      ]
+    },
+    {
+      "run_id": "h200_post_stage_abi_anchor_2n4_t8_r2",
+      "tokens": 8,
+      "repeat": 2,
+      "operation": "dispatch",
+      "mean_signal_us": 14.38528,
+      "mean_share_percent": 19.426842601082072,
+      "mean_share_of_post_percent": 27.37372952402415,
+      "audit_sha256": [
+        "087b02b52085c217a88bdfe8d29c79b7f63b43123edf2cf0b8df8ccc43828563",
+        "58752bf90833a520cded05c207ae936a1a28be23314717fd95bb81096276b88b"
+      ]
+    },
+    {
+      "run_id": "h200_post_stage_abi_anchor_2n4_t8_r3",
+      "tokens": 8,
+      "repeat": 3,
+      "operation": "combine",
+      "mean_signal_us": 13.09648,
+      "mean_share_percent": 17.015917222456796,
+      "mean_share_of_post_percent": 27.38392079896301,
+      "audit_sha256": [
+        "b00c764b45165dc7c519735b4404cc6449365d169315715e8c7cf055f66bee52",
+        "4ee47e4656d338d18fc4c17071898e09bdacd38fa0797ba5199ada8e5d78f4ea"
+      ]
+    },
+    {
+      "run_id": "h200_post_stage_abi_anchor_2n4_t8_r3",
+      "tokens": 8,
+      "repeat": 3,
+      "operation": "dispatch",
+      "mean_signal_us": 14.08512,
+      "mean_share_percent": 19.11315308276834,
+      "mean_share_of_post_percent": 27.008738340192355,
+      "audit_sha256": [
+        "b00c764b45165dc7c519735b4404cc6449365d169315715e8c7cf055f66bee52",
+        "4ee47e4656d338d18fc4c17071898e09bdacd38fa0797ba5199ada8e5d78f4ea"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/sources/signal-share-node0.json.gz",
+      "sha256": "298d3a4a2f65b6853b00e7311bf6e07db74f93b70c5a60568dcbb05269664cb3"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/sources/signal-share-node1.json.gz",
+      "sha256": "ccd30b60988e7120b802c7540919ccfcd36c87e724d0198e0a86b5c06e6a63eb"
+    }
+  ],
+  "definition": "At each iteration choose the rank with shortest signal-issue-to-all-expected-signals-observed duration. Divide by SAME rank/iteration trace-on operation span. Average 200 iteration ratios per run and then three run means.",
+  "scope": "H200 two-node EP8 DeepEP V2 Direct, H7168 topk8 E256 BF16, uniform/balanced, GDAKI3 TC162, T8/128, dedicated ABI tracing image; not full-model E2E.",
+  "limits": "Includes GPU signal issue, polling, and possible peer-readiness wait; not bare RTT, not guaranteed INC-removable time. Traced path has measured perturbation and run-order variation; untraced total is not this ratio denominator."
+}

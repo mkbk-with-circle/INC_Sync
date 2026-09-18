@@ -1,0 +1,11 @@
+{
+  "image_tag": "yuanmingyu/inc-sync-h200-e2e:20260913-post-stages-abi",
+  "gpu2_image": "sha256:94b9cef94654aa7dd4b0f8017b47acb2aba1449a1905895f7ea041cc49090d4d",
+  "gpu3_image": "sha256:7973b9be9420d3e5ae3754577e970df273e20b22b7cc2641065f6080d26b6328",
+  "identical_on_both_hosts": {
+    "deep_ep/_C.cpython-312-x86_64-linux-gnu.so": "cdb77ca431a8357af77cd62aa3b59dccedc89108800e53a795c00b4ededdd03f",
+    "deep_ep/buffers/elastic.py": "e1c16c8e0c49481999ac7ba3a6c4c26469e3c6d1d5dd851fa32d2effd81697e1",
+    "deep_ep/include/deep_ep/common/comm.cuh": "e03616cdc1b82d8abd528faf2f63d1030df012b325673c7b500c2ea9d815f375"
+  },
+  "note": "Private measurement ABI: CTA fields 4, warp fields 11; original source trace shape assertion retained and updated consistently. No extra communication barriers. See install_h200_post_stages.py and Dockerfile.h200-post-stages-abi for reproduction. Stage measurements and their paired off results are separate from original baseline fits."
+}

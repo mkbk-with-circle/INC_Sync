@@ -1,0 +1,73 @@
+\section{Background and Motivation}
+\label{sec:background}
+
+\subsection{Expert parallelism in MoE}
+\label{sec:epbackground}
+A Mixture-of-Experts layer routes each input token to a subset of expert networks.
+Under expert parallelism (EP), the experts are partitioned across GPU ranks. Dispatch
+transfers token activations to the selected expert ranks, the experts compute their
+outputs, and Combine returns and merges these contributions at the token
+owner~\cite{deepep,ncclep}. Each token selects up to $\topk$ experts, so a single
+input may require contributions from several ranks.
+
+Two properties of this pattern matter for what follows. First, routing is
+input-dependent: the number of records a rank sends to a particular destination is not
+known until the gate has run, so communication carries metadata describing valid
+counts, destinations, and output placement alongside the payload. Second, the
+communication is genuinely many-to-many and it straddles a hardware boundary. Within a
+node, ranks exchange data over a scale-up interconnect such as NVLink; across nodes,
+they use a scale-out transport such as RDMA. Communication libraries manage both paths
+together with the staging buffers that prepare data for expert computation.
+
+\subsection{Three dependencies, two synchronization points}
+\label{sec:epsynchronization}
+Correctness here rests on three distinct dependencies, and conflating them is the
+source of most confusion in this area. Before a sender writes, the destination's
+communication resources must be ready to receive. Before a consumer reads, the
+required data must be visible to it. Before a buffer is reused, its previous consumers
+must have finished reading it. These are not one condition observed at three times: a
+transport operation's local progress, the arrival of its data at the destination, and
+the end of its consumers' reads are separate events, and a given barrier or completion
+signal enforces some combination of them rather than all three.
+
+DeepEP V2's cross-node Direct paths make both transfer boundaries
+explicit~\cite{deepepcode}. An entry barrier coordinates the participating ranks
+before payload injection. Dispatch then overlaps count exchange and prefix computation
+with data movement, and Combine reuses the routing Dispatch established. After the
+data-transfer loop, a separate tail stage waits for outstanding asynchronous memory
+operations, flushes the GIN queues, joins the local workers, and only then exchanges
+completion signals across the EP group; those signals release the subsequent copy or
+reduction epilogue. Because staging provides known landing addresses, an unknown final
+compact layout is not by itself the reason for the entry barrier.
+
+This organization is specific to the implementation, and we are careful not to
+generalize it. Direct handles cross-node communication, including local NVLink access
+where available, while Hybrid performs hierarchical scale-out transfer with scale-up
+forwarding and ends Dispatch with a scale-up-only barrier. NCCL EP HT instead performs
+a routing AllGather and metadata scan before Dispatch, and LL can begin data transfer
+with no independent readiness barrier at
+all~\cite{deepepcode,ncclhtcode,ncclllcode}. Our subject is cross-node Direct
+Dispatch and Combine, the path that exposes both boundaries; Table~\ref{tab:paths}
+records where each other path falls.
+
+\subsection{Why small batches change the accounting}
+\label{sec:smallbatch}
+Payload transmission time falls with batch size. Readiness announcements, local joins,
+and completion notifications do not: their cost is set by traversal and endpoint
+processing, not by payload bytes. Fixed coordination therefore grows as a fraction of
+a shrinking operator, and decode sits squarely in that regime, because each active
+request contributes roughly one token per step spread across data-parallel ranks.
+Since $T/\text{rank} \approx \text{concurrency}/\text{EP}$, raising concurrency does
+not leave the region: it is a property of the serving configuration rather than a
+tuning oversight.
+
+Our H200 measurements (\secref{sec:evidence}) quantify both boundaries on the Direct
+path itself. At EP8 and eight tokens per rank, entry synchronization takes about
+15.1\us{} and the completion-signal window 13.5--14.3\us{}, amounting to roughly
+20\% and 18\% of the corresponding traced operator. Sweeping to 32, 64, and 128 tokens
+per rank leaves the absolute durations essentially where they were---entry stays within
+14.8--15.4\us{}---while their shares fall monotonically to about 5\%. The cost did not
+go away; the denominator grew. This frames the
+question the rest of the paper addresses: must readiness and completion coordination
+remain sequential with payload transfer, or can they overlap it while preserving data
+visibility and buffer-lifetime guarantees?

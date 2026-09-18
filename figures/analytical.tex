@@ -1,0 +1,20 @@
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\columnwidth,height=4.8cm,
+ xlabel={Added overhead $\epsilon_k/L$},ylabel={Net saving $\Delta T_k/L$},
+ xmin=0,xmax=2.5,ymin=-1.5,ymax=2.15,
+ xtick={0,.5,1,1.5,2,2.5},ytick={-1,0,1,2},
+ tick label style={font=\footnotesize},label style={font=\footnotesize},
+ legend style={font=\footnotesize,at={(.98,.98)},anchor=north east,draw=none,fill=white},
+ grid=major,grid style={black!10},axis lines=left]
+\addplot[black!50,thin,domain=0:2.5,forget plot] {0};
+\addplot[datablue,thick,domain=0:2.5] {2-x};
+\addlegendentry{Two eligible boundaries}
+\addplot[controlorange,thick,dashed,domain=0:2.5] {1-x};
+\addlegendentry{One eligible boundary}
+\end{axis}
+\end{tikzpicture}
+\caption{Analytical sensitivity of net saving $kL-\epsilon_k$ to added overhead. Under the reference assumptions, the break-even overhead is $L$ for one eligible boundary and $2L$ for two.}
+\label{fig:analytical}
+\end{figure}

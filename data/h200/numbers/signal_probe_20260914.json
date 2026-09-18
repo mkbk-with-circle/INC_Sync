@@ -1,0 +1,482 @@
+{
+  "scope": "H200 2n4/EP8 Direct, T16/T32/T96, same image and configuration as same-session T8/32/64/128 refit; three process runs and 200 active iterations per T.",
+  "sources": [
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/sources/signal-probe-node0.json.gz",
+      "sha256": "18a3da96916b85a66ca3fada96cd7326c14498497a629b9c18328d4328715bab"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/sources/signal-probe-node1.json.gz",
+      "sha256": "11e165039e5a5cfa2bb5f09fdeac83dbbdb1b4d136cb69a976d7da127465f2e0"
+    }
+  ],
+  "refit_model_source": {
+    "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/signal_refit_20260914.json",
+    "sha256": "9338c412f2a6622b7fe8eb81b644f7b78696604415ec322fc5f29b2f298b712a"
+  },
+  "runs": [
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t16_r1",
+      "tokens": 16,
+      "repeat": 1,
+      "operation": "combine",
+      "pre_us": 15.12992,
+      "signal_us": 13.92192
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t16_r1",
+      "tokens": 16,
+      "repeat": 1,
+      "operation": "dispatch",
+      "pre_us": 15.24976,
+      "signal_us": 13.92128
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t16_r2",
+      "tokens": 16,
+      "repeat": 2,
+      "operation": "combine",
+      "pre_us": 14.91616,
+      "signal_us": 13.57744
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t16_r2",
+      "tokens": 16,
+      "repeat": 2,
+      "operation": "dispatch",
+      "pre_us": 15.00336,
+      "signal_us": 13.7848
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t16_r3",
+      "tokens": 16,
+      "repeat": 3,
+      "operation": "combine",
+      "pre_us": 14.87248,
+      "signal_us": 13.84
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t16_r3",
+      "tokens": 16,
+      "repeat": 3,
+      "operation": "dispatch",
+      "pre_us": 15.01456,
+      "signal_us": 14.22832
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t32_r1",
+      "tokens": 32,
+      "repeat": 1,
+      "operation": "combine",
+      "pre_us": 14.9608,
+      "signal_us": 10.82096
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t32_r1",
+      "tokens": 32,
+      "repeat": 1,
+      "operation": "dispatch",
+      "pre_us": 14.95472,
+      "signal_us": 11.13184
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t32_r2",
+      "tokens": 32,
+      "repeat": 2,
+      "operation": "combine",
+      "pre_us": 15.07872,
+      "signal_us": 11.8928
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t32_r2",
+      "tokens": 32,
+      "repeat": 2,
+      "operation": "dispatch",
+      "pre_us": 15.12672,
+      "signal_us": 10.928
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t32_r3",
+      "tokens": 32,
+      "repeat": 3,
+      "operation": "combine",
+      "pre_us": 14.80208,
+      "signal_us": 11.530240000000001
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t32_r3",
+      "tokens": 32,
+      "repeat": 3,
+      "operation": "dispatch",
+      "pre_us": 14.81328,
+      "signal_us": 11.3768
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t96_r1",
+      "tokens": 96,
+      "repeat": 1,
+      "operation": "combine",
+      "pre_us": 15.06976,
+      "signal_us": 11.50496
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t96_r1",
+      "tokens": 96,
+      "repeat": 1,
+      "operation": "dispatch",
+      "pre_us": 14.94064,
+      "signal_us": 11.36784
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t96_r2",
+      "tokens": 96,
+      "repeat": 2,
+      "operation": "combine",
+      "pre_us": 15.0584,
+      "signal_us": 10.21264
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t96_r2",
+      "tokens": 96,
+      "repeat": 2,
+      "operation": "dispatch",
+      "pre_us": 15.0992,
+      "signal_us": 10.99232
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t96_r3",
+      "tokens": 96,
+      "repeat": 3,
+      "operation": "combine",
+      "pre_us": 15.23104,
+      "signal_us": 11.98768
+    },
+    {
+      "run_id": "h200_post_stage_abi_probe_20260914_2n4_t96_r3",
+      "tokens": 96,
+      "repeat": 3,
+      "operation": "dispatch",
+      "pre_us": 15.12176,
+      "signal_us": 10.993920000000001
+    }
+  ],
+  "summary": [
+    {
+      "tokens": 16,
+      "operation": "dispatch",
+      "pre_us": {
+        "mean": 15.089226666666667,
+        "between_run_sd": 0.13913868381342892,
+        "run_means": [
+          15.24976,
+          15.00336,
+          15.01456
+        ]
+      },
+      "signal_us": {
+        "mean": 13.978133333333334,
+        "between_run_sd": 0.2271601279567637,
+        "run_means": [
+          13.92128,
+          13.7848,
+          14.22832
+        ]
+      }
+    },
+    {
+      "tokens": 16,
+      "operation": "combine",
+      "pre_us": {
+        "mean": 14.972853333333333,
+        "between_run_sd": 0.13776588450459515,
+        "run_means": [
+          15.12992,
+          14.91616,
+          14.87248
+        ]
+      },
+      "signal_us": {
+        "mean": 13.779786666666666,
+        "between_run_sd": 0.17996069496791092,
+        "run_means": [
+          13.92192,
+          13.57744,
+          13.84
+        ]
+      }
+    },
+    {
+      "tokens": 32,
+      "operation": "dispatch",
+      "pre_us": {
+        "mean": 14.964906666666668,
+        "between_run_sd": 0.15696810036862052,
+        "run_means": [
+          14.95472,
+          15.12672,
+          14.81328
+        ]
+      },
+      "signal_us": {
+        "mean": 11.145546666666666,
+        "between_run_sd": 0.22471373908449166,
+        "run_means": [
+          11.13184,
+          10.928,
+          11.3768
+        ]
+      }
+    },
+    {
+      "tokens": 32,
+      "operation": "combine",
+      "pre_us": {
+        "mean": 14.9472,
+        "between_run_sd": 0.13882054026692184,
+        "run_means": [
+          14.9608,
+          15.07872,
+          14.80208
+        ]
+      },
+      "signal_us": {
+        "mean": 11.414666666666667,
+        "between_run_sd": 0.5451863378087656,
+        "run_means": [
+          10.82096,
+          11.8928,
+          11.530240000000001
+        ]
+      }
+    },
+    {
+      "tokens": 96,
+      "operation": "dispatch",
+      "pre_us": {
+        "mean": 15.053866666666666,
+        "between_run_sd": 0.09870383444088336,
+        "run_means": [
+          14.94064,
+          15.0992,
+          15.12176
+        ]
+      },
+      "signal_us": {
+        "mean": 11.118026666666667,
+        "between_run_sd": 0.21634617198677933,
+        "run_means": [
+          11.36784,
+          10.99232,
+          10.993920000000001
+        ]
+      }
+    },
+    {
+      "tokens": 96,
+      "operation": "combine",
+      "pre_us": {
+        "mean": 15.119733333333334,
+        "between_run_sd": 0.0965616017541822,
+        "run_means": [
+          15.06976,
+          15.0584,
+          15.23104
+        ]
+      },
+      "signal_us": {
+        "mean": 11.235093333333333,
+        "between_run_sd": 0.9177759877733414,
+        "run_means": [
+          11.50496,
+          10.21264,
+          11.98768
+        ]
+      }
+    }
+  ],
+  "predictions": [
+    {
+      "tokens": 16,
+      "operation": "dispatch",
+      "candidate": "constant",
+      "predicted_us": 12.42896,
+      "observed_us": 13.978133333333334,
+      "error_us": -1.549173333333334
+    },
+    {
+      "tokens": 16,
+      "operation": "dispatch",
+      "candidate": "linear_log2_T",
+      "predicted_us": 13.15502476190476,
+      "observed_us": 13.978133333333334,
+      "error_us": -0.8231085714285733
+    },
+    {
+      "tokens": 16,
+      "operation": "dispatch",
+      "candidate": "linear_inverse_T",
+      "predicted_us": 12.767585492227978,
+      "observed_us": 13.978133333333334,
+      "error_us": -1.210547841105356
+    },
+    {
+      "tokens": 16,
+      "operation": "combine",
+      "candidate": "constant",
+      "predicted_us": 12.295386666666666,
+      "observed_us": 13.779786666666666,
+      "error_us": -1.4844000000000008
+    },
+    {
+      "tokens": 16,
+      "operation": "combine",
+      "candidate": "linear_log2_T",
+      "predicted_us": 12.854232380952379,
+      "observed_us": 13.779786666666666,
+      "error_us": -0.9255542857142878
+    },
+    {
+      "tokens": 16,
+      "operation": "combine",
+      "candidate": "linear_inverse_T",
+      "predicted_us": 12.568297340241795,
+      "observed_us": 13.779786666666666,
+      "error_us": -1.2114893264248714
+    },
+    {
+      "tokens": 32,
+      "operation": "dispatch",
+      "candidate": "constant",
+      "predicted_us": 12.42896,
+      "observed_us": 11.145546666666666,
+      "error_us": 1.2834133333333337
+    },
+    {
+      "tokens": 32,
+      "operation": "dispatch",
+      "candidate": "linear_log2_T",
+      "predicted_us": 12.574172952380952,
+      "observed_us": 11.145546666666666,
+      "error_us": 1.4286262857142855
+    },
+    {
+      "tokens": 32,
+      "operation": "dispatch",
+      "candidate": "linear_inverse_T",
+      "predicted_us": 12.165584617156016,
+      "observed_us": 11.145546666666666,
+      "error_us": 1.0200379504893498
+    },
+    {
+      "tokens": 32,
+      "operation": "combine",
+      "candidate": "constant",
+      "predicted_us": 12.295386666666666,
+      "observed_us": 11.414666666666667,
+      "error_us": 0.8807199999999984
+    },
+    {
+      "tokens": 32,
+      "operation": "combine",
+      "candidate": "linear_log2_T",
+      "predicted_us": 12.407155809523807,
+      "observed_us": 11.414666666666667,
+      "error_us": 0.9924891428571403
+    },
+    {
+      "tokens": 32,
+      "operation": "combine",
+      "candidate": "linear_inverse_T",
+      "predicted_us": 12.083122809441564,
+      "observed_us": 11.414666666666667,
+      "error_us": 0.6684561427748967
+    },
+    {
+      "tokens": 96,
+      "operation": "dispatch",
+      "candidate": "constant",
+      "predicted_us": 12.42896,
+      "observed_us": 11.118026666666667,
+      "error_us": 1.3109333333333328
+    },
+    {
+      "tokens": 96,
+      "operation": "dispatch",
+      "candidate": "linear_log2_T",
+      "predicted_us": 11.653544615809686,
+      "observed_us": 11.118026666666667,
+      "error_us": 0.5355179491430189
+    },
+    {
+      "tokens": 96,
+      "operation": "dispatch",
+      "candidate": "linear_inverse_T",
+      "predicted_us": 11.764250700441373,
+      "observed_us": 11.118026666666667,
+      "error_us": 0.6462240337747058
+    },
+    {
+      "tokens": 96,
+      "operation": "combine",
+      "candidate": "constant",
+      "predicted_us": 12.295386666666666,
+      "observed_us": 11.235093333333333,
+      "error_us": 1.0602933333333322
+    },
+    {
+      "tokens": 96,
+      "operation": "combine",
+      "candidate": "linear_log2_T",
+      "predicted_us": 11.69855620885854,
+      "observed_us": 11.235093333333333,
+      "error_us": 0.46346287552520593
+    },
+    {
+      "tokens": 96,
+      "operation": "combine",
+      "candidate": "linear_inverse_T",
+      "predicted_us": 11.759673122241411,
+      "observed_us": 11.235093333333333,
+      "error_us": 0.5245797889080777
+    }
+  ],
+  "checks": [
+    {
+      "operation": "dispatch",
+      "candidate": "constant",
+      "t16_t96_rmse_us": 1.4350059618614057,
+      "t16_t96_max_abs_error_us": 1.549173333333334
+    },
+    {
+      "operation": "dispatch",
+      "candidate": "linear_log2_T",
+      "t16_t96_rmse_us": 0.6943656076641223,
+      "t16_t96_max_abs_error_us": 0.8231085714285733
+    },
+    {
+      "operation": "dispatch",
+      "candidate": "linear_inverse_T",
+      "t16_t96_rmse_us": 0.9703173649463589,
+      "t16_t96_max_abs_error_us": 1.210547841105356
+    },
+    {
+      "operation": "combine",
+      "candidate": "constant",
+      "t16_t96_rmse_us": 1.2898963742702572,
+      "t16_t96_max_abs_error_us": 1.4844000000000008
+    },
+    {
+      "operation": "combine",
+      "candidate": "linear_log2_T",
+      "t16_t96_rmse_us": 0.7319318864464706,
+      "t16_t96_max_abs_error_us": 0.9255542857142878
+    },
+    {
+      "operation": "combine",
+      "candidate": "linear_inverse_T",
+      "t16_t96_rmse_us": 0.9335122770944771,
+      "t16_t96_max_abs_error_us": 1.2114893264248714
+    }
+  ],
+  "warning": "T16/T96 are new token counts for this refit; T32 is a repeat to audit variability. Signal windows include endpoint and peer readiness effects and do not establish removable INC latency."
+}

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="700" viewBox="0 0 1600 700">
+<rect width="1600" height="700" fill="white"/>
+<defs>
+<marker id="a19313F" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#19313F"/></marker>
+<marker id="a627580" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#627580"/></marker>
+<marker id="aCCD9E0" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#CCD9E0"/></marker>
+<marker id="a0072B2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#0072B2"/></marker>
+<marker id="aC56824" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#C56824"/></marker>
+<marker id="a00846E" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#00846E"/></marker>
+</defs>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="32" fill="#19313F" font-weight="600" text-anchor="start"><tspan x="48" y="57.9">时延分解：把端点处理与网络传输分开</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="20" fill="#627580" font-weight="400" text-anchor="start"><tspan x="48" y="102.0">基于 Swift Fig. 2 重绘 · 六个事件时间戳，解释一轮 DATA / ACK 的往返</tspan></text>
+<rect x="285" y="145" width="350" height="454" rx="12" fill="#F6F9FB" stroke="#F6F9FB" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="20" fill="#627580" font-weight="600" text-anchor="middle"><tspan x="460.0" y="172.5">FABRIC</tspan></text>
+<rect x="150" y="142" width="145" height="37" rx="6" fill="#F2F6F8" stroke="#CCD9E0" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="21" fill="#19313F" font-weight="600" text-anchor="middle"><tspan x="222.5" y="167.325">发送端</tspan></text>
+<rect x="617" y="142" width="145" height="37" rx="6" fill="#F2F6F8" stroke="#CCD9E0" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="21" fill="#19313F" font-weight="600" text-anchor="middle"><tspan x="689.5" y="167.325">接收端</tspan></text>
+<polyline points="222,190 222,592" fill="none" stroke="#627580" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="690,190 690,592" fill="none" stroke="#627580" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="61,215 61,566" fill="none" stroke="#627580" stroke-width="1.5" stroke-linejoin="round" marker-end="url(#a627580)"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="18" fill="#627580" font-weight="400" text-anchor="middle"><tspan x="70.0" y="194.85">时间</tspan></text>
+<rect x="678" y="290" width="24" height="65" rx="0" fill="#DCEFE7" stroke="#00846E" stroke-width="1.4"/>
+<rect x="678" y="355" width="24" height="65" rx="0" fill="#ECF7F1" stroke="#00846E" stroke-width="1.4"/>
+<rect x="210" y="510" width="24" height="60" rx="0" fill="#DCEFE7" stroke="#00846E" stroke-width="1.4"/>
+<polyline points="222,205 690,290" fill="none" stroke="#0072B2" stroke-width="2.8" stroke-linejoin="round" marker-end="url(#a0072B2)"/>
+<polyline points="690,420 222,510" fill="none" stroke="#C56824" stroke-width="2.5" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#aC56824)"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="22" fill="#0072B2" font-weight="600" text-anchor="middle"><tspan x="465.0" y="237.65">DATA</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="22" fill="#C56824" font-weight="600" text-anchor="middle"><tspan x="465.0" y="490.65">ACK</tspan></text>
+<circle cx="222" cy="205" r="4" fill="#19313F"/>
+<circle cx="690" cy="290" r="4" fill="#19313F"/>
+<circle cx="690" cy="355" r="4" fill="#19313F"/>
+<circle cx="690" cy="420" r="4" fill="#19313F"/>
+<circle cx="222" cy="510" r="4" fill="#19313F"/>
+<circle cx="222" cy="570" r="4" fill="#19313F"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="18" fill="#19313F" font-weight="400" text-anchor="end"><tspan x="204" y="210.85">t₁  发出 DATA</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="18" fill="#19313F" font-weight="400" text-anchor="end"><tspan x="204" y="515.85">t₅  NIC 到达</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="18" fill="#19313F" font-weight="400" text-anchor="end"><tspan x="204" y="575.85">t₆  协议栈取到</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="20" fill="#19313F" font-weight="400" text-anchor="start"><tspan x="718" y="296.5">t₂  NIC 到达</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="20" fill="#19313F" font-weight="400" text-anchor="start"><tspan x="718" y="361.5">t₃  协议栈取到</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="20" fill="#19313F" font-weight="400" text-anchor="start"><tspan x="718" y="426.5">t₄  ACK 就绪</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="16" fill="#00846E" font-weight="400" text-anchor="start"><tspan x="720" y="325.7">接收排队</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="16" fill="#00846E" font-weight="400" text-anchor="start"><tspan x="720" y="392.7">协议处理</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="18" fill="#00846E" font-weight="400" text-anchor="start"><tspan x="245" y="549.85">本地接收排队</tspan></text>
+<rect x="1040" y="165" width="510" height="134" rx="10" fill="#EDF7F2" stroke="#C9E1D6" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="25" fill="#00846E" font-weight="600" text-anchor="start"><tspan x="1064" y="206.625">端点时延</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="20" fill="#19313F" font-weight="400" text-anchor="start"><tspan x="1064" y="258.5">D_endpoint = (t₄ − t₂) + (t₆ − t₅)</tspan></text>
+<rect x="1040" y="320" width="510" height="134" rx="10" fill="#F0F6FA" stroke="#D0E0E9" stroke-width="1.4"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="25" fill="#0072B2" font-weight="600" text-anchor="start"><tspan x="1064" y="361.625">网络时延（残差）</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="20" fill="#19313F" font-weight="400" text-anchor="start"><tspan x="1064" y="413.5">D_fabric = (t₆ − t₁) − D_endpoint</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="23" fill="#19313F" font-weight="600" text-anchor="start"><tspan x="1043" y="514.475">映射到 EP 的观察位置</tspan></text>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="20" fill="#627580" font-weight="400" text-anchor="start"><tspan x="1043" y="563.0">发送准备与汇合 / fabric 传输</tspan><tspan x="1043" y="590.0">目标可见性与 signal 观察</tspan></text>
+<polyline points="48,630 1550,630" fill="none" stroke="#CCD9E0" stroke-width="1.4" stroke-linejoin="round"/>
+<text font-family="PingFang SC, Noto Sans CJK SC, Arial, sans-serif" font-size="18" fill="#627580" font-weight="400" text-anchor="start"><tspan x="48" y="664.85">Adapted from Swift, SIGCOMM 2020, Fig. 2 · 网络残差仍可能包含未单独测出的发送排队</tspan></text>
+</svg>

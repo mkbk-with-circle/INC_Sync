@@ -1,0 +1,2201 @@
+{
+  "microbenchmark": [
+    {
+      "world": 4,
+      "tokens": 8,
+      "operation": "combine",
+      "pre_share_percent": {
+        "mean": 27.606251552996724,
+        "between_run_std": 0.23930920171284054,
+        "run_values": [
+          27.70946370408881,
+          27.332655989130522,
+          27.776634965770835
+        ]
+      },
+      "post_share_percent": {
+        "mean": 65.89867106354092,
+        "between_run_std": 0.38960760845934184,
+        "run_values": [
+          66.25198713439666,
+          65.48082865024892,
+          65.96319740597717
+        ]
+      },
+      "pre_us": {
+        "mean": 18.991999999999997,
+        "between_run_std": 0.20496168617573365,
+        "run_values": [
+          18.99296,
+          18.786559999999998,
+          19.196479999999998
+        ]
+      },
+      "post_us": {
+        "mean": 44.33354666666667,
+        "between_run_std": 0.5534499295630383,
+        "run_values": [
+          44.66192,
+          43.69456,
+          44.64416
+        ]
+      }
+    },
+    {
+      "world": 4,
+      "tokens": 8,
+      "operation": "dispatch",
+      "pre_share_percent": {
+        "mean": 26.552131028765206,
+        "between_run_std": 0.15139928399597755,
+        "run_values": [
+          26.478355835602308,
+          26.451760988583423,
+          26.726276262109888
+        ]
+      },
+      "post_share_percent": {
+        "mean": 73.98300757637463,
+        "between_run_std": 0.44254260517487815,
+        "run_values": [
+          74.4701811652788,
+          73.60585290367092,
+          73.87298866017417
+        ]
+      },
+      "pre_us": {
+        "mean": 19.049813333333333,
+        "between_run_std": 0.18504304940562782,
+        "run_values": [
+          19.05104,
+          18.86416,
+          19.23424
+        ]
+      },
+      "post_us": {
+        "mean": 48.70709333333333,
+        "between_run_std": 0.3788350085899311,
+        "run_values": [
+          49.09504,
+          48.33808,
+          48.688159999999996
+        ]
+      }
+    },
+    {
+      "world": 4,
+      "tokens": 32,
+      "operation": "combine",
+      "pre_share_percent": {
+        "mean": 22.37301039673677,
+        "between_run_std": 0.3042786318797933,
+        "run_values": [
+          22.373022792763166,
+          22.068725567033155,
+          22.67728283041399
+        ]
+      },
+      "post_share_percent": {
+        "mean": 71.37916690945978,
+        "between_run_std": 0.23182637509961687,
+        "run_values": [
+          71.37946159455849,
+          71.14719333228125,
+          71.61084580153963
+        ]
+      },
+      "pre_us": {
+        "mean": 18.648213333333334,
+        "between_run_std": 0.2839177495919086,
+        "run_values": [
+          18.56944,
+          18.412,
+          18.9632
+        ]
+      },
+      "post_us": {
+        "mean": 58.87685333333334,
+        "between_run_std": 0.3034249016368533,
+        "run_values": [
+          58.84592,
+          58.59008,
+          59.19456
+        ]
+      }
+    },
+    {
+      "world": 4,
+      "tokens": 32,
+      "operation": "dispatch",
+      "pre_share_percent": {
+        "mean": 23.395344328400203,
+        "between_run_std": 0.18842977797862245,
+        "run_values": [
+          23.271907835480075,
+          23.301890556149555,
+          23.612234593570978
+        ]
+      },
+      "post_share_percent": {
+        "mean": 77.41646997838765,
+        "between_run_std": 0.3295292510835293,
+        "run_values": [
+          77.56897597661877,
+          77.038313074532,
+          77.6421208840122
+        ]
+      },
+      "pre_us": {
+        "mean": 18.762506666666667,
+        "between_run_std": 0.27871266733561506,
+        "run_values": [
+          18.6344,
+          18.57088,
+          19.08224
+        ]
+      },
+      "post_us": {
+        "mean": 58.728213333333336,
+        "between_run_std": 0.27717525238255397,
+        "run_values": [
+          58.88896,
+          58.40816,
+          58.88752
+        ]
+      }
+    },
+    {
+      "world": 4,
+      "tokens": 96,
+      "operation": "combine",
+      "pre_share_percent": {
+        "mean": 15.231951884895171,
+        "between_run_std": 0.3011068471893621,
+        "run_values": [
+          14.961703268361447,
+          15.556521692898828,
+          15.17763069342524
+        ]
+      },
+      "post_share_percent": {
+        "mean": 79.87024387171896,
+        "between_run_std": 0.2364199063901959,
+        "run_values": [
+          79.79201285252715,
+          80.1358639129797,
+          79.68285484965003
+        ]
+      },
+      "pre_us": {
+        "mean": 18.67888,
+        "between_run_std": 0.4222205982658833,
+        "run_values": [
+          18.28832,
+          19.12688,
+          18.62144
+        ]
+      },
+      "post_us": {
+        "mean": 97.9208,
+        "between_run_std": 1.8496295014948314,
+        "run_values": [
+          96.81696,
+          100.05616,
+          96.88928
+        ]
+      }
+    },
+    {
+      "world": 4,
+      "tokens": 96,
+      "operation": "dispatch",
+      "pre_share_percent": {
+        "mean": 16.02404279221321,
+        "between_run_std": 0.3342034772196246,
+        "run_values": [
+          15.753437324948145,
+          16.397613179966857,
+          15.92107787172462
+        ]
+      },
+      "post_share_percent": {
+        "mean": 84.15816665523752,
+        "between_run_std": 0.2691566157404431,
+        "run_values": [
+          84.1100665899327,
+          84.44813034226875,
+          83.9163030335111
+        ]
+      },
+      "pre_us": {
+        "mean": 18.770666666666664,
+        "between_run_std": 0.3811727363457845,
+        "run_values": [
+          18.46944,
+          19.199199999999998,
+          18.643359999999998
+        ]
+      },
+      "post_us": {
+        "mean": 96.75093333333334,
+        "between_run_std": 0.295619445458744,
+        "run_values": [
+          96.74208,
+          97.05088,
+          96.45984
+        ]
+      }
+    },
+    {
+      "world": 4,
+      "tokens": 128,
+      "operation": "combine",
+      "pre_share_percent": {
+        "mean": 13.127899454544377,
+        "between_run_std": 0.2589886060821253,
+        "run_values": [
+          13.051218031252267,
+          12.915910248737912,
+          13.416570083642949
+        ]
+      },
+      "post_share_percent": {
+        "mean": 82.43672116601762,
+        "between_run_std": 0.2157209793711164,
+        "run_values": [
+          82.46668286236606,
+          82.20758555253389,
+          82.63589508315293
+        ]
+      },
+      "pre_us": {
+        "mean": 18.738613333333333,
+        "between_run_std": 0.41502909263488214,
+        "run_values": [
+          18.63328,
+          18.3864,
+          19.19616
+        ]
+      },
+      "post_us": {
+        "mean": 117.88821333333334,
+        "between_run_std": 0.2577242598851235,
+        "run_values": [
+          118.01152,
+          117.592,
+          118.06112
+        ]
+      }
+    },
+    {
+      "world": 4,
+      "tokens": 128,
+      "operation": "dispatch",
+      "pre_share_percent": {
+        "mean": 13.728843222704702,
+        "between_run_std": 0.24726750699263084,
+        "run_values": [
+          13.636915472839885,
+          13.540706293243053,
+          14.008907902031167
+        ]
+      },
+      "post_share_percent": {
+        "mean": 85.94255913891536,
+        "between_run_std": 0.2877361265953197,
+        "run_values": [
+          85.79949798065805,
+          85.75439334283512,
+          86.2737860932529
+        ]
+      },
+      "pre_us": {
+        "mean": 18.8904,
+        "between_run_std": 0.4038308715291599,
+        "run_values": [
+          18.76176,
+          18.56656,
+          19.34288
+        ]
+      },
+      "post_us": {
+        "mean": 115.45631999999999,
+        "between_run_std": 1.0162544689200625,
+        "run_values": [
+          115.47232,
+          114.43216,
+          116.46448
+        ]
+      }
+    },
+    {
+      "world": 8,
+      "tokens": 8,
+      "operation": "combine",
+      "pre_share_percent": {
+        "mean": 24.688111096450363,
+        "between_run_std": 0.2593261158093629,
+        "run_values": [
+          24.743220320189547,
+          24.915453060538393,
+          24.40565990862315
+        ]
+      },
+      "post_share_percent": {
+        "mean": 62.87405587524907,
+        "between_run_std": 0.23911061724718394,
+        "run_values": [
+          62.60465768416141,
+          62.9563875356891,
+          63.061122405896704
+        ]
+      },
+      "pre_us": {
+        "mean": 19.351413333333333,
+        "between_run_std": 0.3333296682465164,
+        "run_values": [
+          19.53888,
+          19.5488,
+          18.96656
+        ]
+      },
+      "post_us": {
+        "mean": 47.41077333333333,
+        "between_run_std": 0.28761869572983956,
+        "run_values": [
+          47.69648,
+          47.41456,
+          47.12128
+        ]
+      }
+    },
+    {
+      "world": 8,
+      "tokens": 8,
+      "operation": "dispatch",
+      "pre_share_percent": {
+        "mean": 25.791001408491642,
+        "between_run_std": 0.25881841729978877,
+        "run_values": [
+          26.089549088642823,
+          25.653514643576106,
+          25.629940493255997
+        ]
+      },
+      "post_share_percent": {
+        "mean": 71.11740705975812,
+        "between_run_std": 0.040668899753867976,
+        "run_values": [
+          71.071010315389,
+          71.1343232355791,
+          71.14688762830625
+        ]
+      },
+      "pre_us": {
+        "mean": 19.38208,
+        "between_run_std": 0.3860610024335544,
+        "run_values": [
+          19.77664,
+          19.36448,
+          19.005119999999998
+        ]
+      },
+      "post_us": {
+        "mean": 51.33488,
+        "between_run_std": 0.5528764520216042,
+        "run_values": [
+          51.61616,
+          51.69056,
+          50.69792
+        ]
+      }
+    },
+    {
+      "world": 8,
+      "tokens": 32,
+      "operation": "combine",
+      "pre_share_percent": {
+        "mean": 15.7793300159725,
+        "between_run_std": 0.24447678631185624,
+        "run_values": [
+          15.580987585974002,
+          15.704535402740767,
+          16.05246705920273
+        ]
+      },
+      "post_share_percent": {
+        "mean": 76.55745096270746,
+        "between_run_std": 0.3992372005893545,
+        "run_values": [
+          76.10515446585697,
+          76.86080835267052,
+          76.70639006959489
+        ]
+      },
+      "pre_us": {
+        "mean": 19.74656,
+        "between_run_std": 0.26127804040906394,
+        "run_values": [
+          19.45216,
+          19.83664,
+          19.95088
+        ]
+      },
+      "post_us": {
+        "mean": 94.39754666666667,
+        "between_run_std": 1.5304003791600849,
+        "run_values": [
+          92.9832,
+          96.02224,
+          94.1872
+        ]
+      }
+    },
+    {
+      "world": 8,
+      "tokens": 32,
+      "operation": "dispatch",
+      "pre_share_percent": {
+        "mean": 15.195331385795223,
+        "between_run_std": 0.39680156196370453,
+        "run_values": [
+          15.57997677502842,
+          14.787399268882039,
+          15.218618113475209
+        ]
+      },
+      "post_share_percent": {
+        "mean": 82.7033655993114,
+        "between_run_std": 0.3445564832812246,
+        "run_values": [
+          82.5308187849783,
+          83.10010618319515,
+          82.47917182976076
+        ]
+      },
+      "pre_us": {
+        "mean": 19.63696,
+        "between_run_std": 0.017930711084616597,
+        "run_values": [
+          19.63904,
+          19.61808,
+          19.65376
+        ]
+      },
+      "post_us": {
+        "mean": 104.61450666666667,
+        "between_run_std": 3.0737122908517884,
+        "run_values": [
+          101.73248,
+          107.84944,
+          104.2616
+        ]
+      }
+    },
+    {
+      "world": 8,
+      "tokens": 96,
+      "operation": "combine",
+      "pre_share_percent": {
+        "mean": 8.032018378996154,
+        "between_run_std": 0.21098191889303142,
+        "run_values": [
+          8.146921348922728,
+          7.788525633216011,
+          8.160608154849722
+        ]
+      },
+      "post_share_percent": {
+        "mean": 87.09646771364025,
+        "between_run_std": 0.22963725119666692,
+        "run_values": [
+          87.00065659609069,
+          87.35849575944661,
+          86.93025078538345
+        ]
+      },
+      "pre_us": {
+        "mean": 19.155626666666667,
+        "between_run_std": 0.21067585465195818,
+        "run_values": [
+          19.33136,
+          18.92208,
+          19.21344
+        ]
+      },
+      "post_us": {
+        "mean": 205.84954666666667,
+        "between_run_std": 3.962205647834712,
+        "run_values": [
+          204.64256,
+          210.27488,
+          202.6312
+        ]
+      }
+    },
+    {
+      "world": 8,
+      "tokens": 96,
+      "operation": "dispatch",
+      "pre_share_percent": {
+        "mean": 7.6552534533168,
+        "between_run_std": 0.22169491951934162,
+        "run_values": [
+          7.882556840143638,
+          7.4396286502446385,
+          7.643574869562125
+        ]
+      },
+      "post_share_percent": {
+        "mean": 90.70519604107567,
+        "between_run_std": 0.20736092889687252,
+        "run_values": [
+          90.49138220044077,
+          90.90543723161413,
+          90.71876869117212
+        ]
+      },
+      "pre_us": {
+        "mean": 19.342933333333335,
+        "between_run_std": 0.22146620268865563,
+        "run_values": [
+          19.5936,
+          19.26144,
+          19.17376
+        ]
+      },
+      "post_us": {
+        "mean": 227.36608,
+        "between_run_std": 5.326599919348171,
+        "run_values": [
+          223.01712,
+          233.3072,
+          225.77392
+        ]
+      }
+    },
+    {
+      "world": 8,
+      "tokens": 128,
+      "operation": "combine",
+      "pre_share_percent": {
+        "mean": 6.43523192784283,
+        "between_run_std": 0.27495183220545716,
+        "run_values": [
+          6.221087962613225,
+          6.745294751753352,
+          6.3393130691619115
+        ]
+      },
+      "post_share_percent": {
+        "mean": 89.79388787594898,
+        "between_run_std": 0.421264392476895,
+        "run_values": [
+          90.04576517109068,
+          89.30755769197224,
+          90.02834076478403
+        ]
+      },
+      "pre_us": {
+        "mean": 19.56848,
+        "between_run_std": 0.22534504742727227,
+        "run_values": [
+          19.3136,
+          19.74128,
+          19.65056
+        ]
+      },
+      "post_us": {
+        "mean": 271.55824,
+        "between_run_std": 10.645543521906214,
+        "run_values": [
+          277.82048,
+          259.26656,
+          277.58768
+        ]
+      }
+    },
+    {
+      "world": 8,
+      "tokens": 128,
+      "operation": "dispatch",
+      "pre_share_percent": {
+        "mean": 6.323511785782711,
+        "between_run_std": 0.08272194319329572,
+        "run_values": [
+          6.244130882102307,
+          6.409212279829334,
+          6.3171921954164905
+        ]
+      },
+      "post_share_percent": {
+        "mean": 92.14372584235272,
+        "between_run_std": 0.06593688099774751,
+        "run_values": [
+          92.16104698816781,
+          92.0708573594461,
+          92.19927317944426
+        ]
+      },
+      "pre_us": {
+        "mean": 19.623466666666666,
+        "between_run_std": 0.3830896653961487,
+        "run_values": [
+          19.22928,
+          19.9944,
+          19.64672
+        ]
+      },
+      "post_us": {
+        "mean": 283.6249066666667,
+        "between_run_std": 1.7102135302158457,
+        "run_values": [
+          281.66208,
+          284.4184,
+          284.79424
+        ]
+      }
+    },
+    {
+      "world": 16,
+      "tokens": 8,
+      "operation": "combine",
+      "pre_share_percent": {
+        "mean": 25.534900993652876,
+        "between_run_std": 0.02651764644980974,
+        "run_values": [
+          25.557774173702963,
+          25.505834916992246,
+          25.54109389026342
+        ]
+      },
+      "post_share_percent": {
+        "mean": 63.513735090395826,
+        "between_run_std": 0.14386051671468042,
+        "run_values": [
+          63.676286435956655,
+          63.40281749946411,
+          63.46210133576672
+        ]
+      },
+      "pre_us": {
+        "mean": 23.335733333333334,
+        "between_run_std": 0.22704796791280338,
+        "run_values": [
+          23.47072,
+          23.0736,
+          23.46288
+        ]
+      },
+      "post_us": {
+        "mean": 56.35392,
+        "between_run_std": 0.2585401972614694,
+        "run_values": [
+          56.59072,
+          56.07808,
+          56.39296
+        ]
+      }
+    },
+    {
+      "world": 16,
+      "tokens": 8,
+      "operation": "dispatch",
+      "pre_share_percent": {
+        "mean": 26.02142635852741,
+        "between_run_std": 0.20363315356050285,
+        "run_values": [
+          26.067455529439158,
+          25.79871838860956,
+          26.19810515753351
+        ]
+      },
+      "post_share_percent": {
+        "mean": 71.24039869753156,
+        "between_run_std": 0.15991529766191204,
+        "run_values": [
+          71.09131997361744,
+          71.40930199848759,
+          71.22057412048964
+        ]
+      },
+      "pre_us": {
+        "mean": 23.705386666666666,
+        "between_run_std": 0.4768813979736824,
+        "run_values": [
+          23.32144,
+          24.2392,
+          23.55552
+        ]
+      },
+      "post_us": {
+        "mean": 63.075786666666666,
+        "between_run_std": 2.1928036035480534,
+        "run_values": [
+          61.60272,
+          65.59584,
+          62.0288
+        ]
+      }
+    },
+    {
+      "world": 16,
+      "tokens": 32,
+      "operation": "combine",
+      "pre_share_percent": {
+        "mean": 16.159209922727158,
+        "between_run_std": 0.07703766352122922,
+        "run_values": [
+          16.187706599131992,
+          16.07198380587796,
+          16.217939363171524
+        ]
+      },
+      "post_share_percent": {
+        "mean": 77.08906641970775,
+        "between_run_std": 0.3547596024621005,
+        "run_values": [
+          77.2624305993369,
+          77.3238077600522,
+          76.68096089973413
+        ]
+      },
+      "pre_us": {
+        "mean": 23.66544,
+        "between_run_std": 0.266583864477952,
+        "run_values": [
+          23.833759999999998,
+          23.804479999999998,
+          23.35808
+        ]
+      },
+      "post_us": {
+        "mean": 110.91349333333334,
+        "between_run_std": 1.9069246937761664,
+        "run_values": [
+          111.52816,
+          112.43728,
+          108.77504
+        ]
+      }
+    },
+    {
+      "world": 16,
+      "tokens": 32,
+      "operation": "dispatch",
+      "pre_share_percent": {
+        "mean": 15.196422880056431,
+        "between_run_std": 0.27899361288528257,
+        "run_values": [
+          15.139482856912716,
+          14.950291705625611,
+          15.499494077630969
+        ]
+      },
+      "post_share_percent": {
+        "mean": 83.43958046871963,
+        "between_run_std": 0.5557152259930631,
+        "run_values": [
+          83.92101774948888,
+          83.56626218341736,
+          82.83146147325263
+        ]
+      },
+      "pre_us": {
+        "mean": 23.799306666666666,
+        "between_run_std": 0.32193830299194537,
+        "run_values": [
+          24.17104,
+          23.6112,
+          23.61568
+        ]
+      },
+      "post_us": {
+        "mean": 128.67205333333334,
+        "between_run_std": 3.71129839001573,
+        "run_values": [
+          131.43072,
+          130.1328,
+          124.45264
+        ]
+      }
+    },
+    {
+      "world": 16,
+      "tokens": 96,
+      "operation": "combine",
+      "pre_share_percent": {
+        "mean": 7.588708772251193,
+        "between_run_std": 0.11289417526489286,
+        "run_values": [
+          7.704009473322229,
+          7.478385790699785,
+          7.583731052731566
+        ]
+      },
+      "post_share_percent": {
+        "mean": 88.52361261500063,
+        "between_run_std": 0.06728458559067668,
+        "run_values": [
+          88.44818064260697,
+          88.57744469916535,
+          88.54521250322956
+        ]
+      },
+      "pre_us": {
+        "mean": 23.33904,
+        "between_run_std": 0.3228035984929532,
+        "run_values": [
+          23.69296,
+          23.0608,
+          23.26336
+        ]
+      },
+      "post_us": {
+        "mean": 269.86133333333333,
+        "between_run_std": 0.7499189645110551,
+        "run_values": [
+          269.4192,
+          270.7272,
+          269.4376
+        ]
+      }
+    },
+    {
+      "world": 16,
+      "tokens": 96,
+      "operation": "dispatch",
+      "pre_share_percent": {
+        "mean": 6.735211011459322,
+        "between_run_std": 0.13484257935107347,
+        "run_values": [
+          6.579673506303697,
+          6.806768115824014,
+          6.819191412250254
+        ]
+      },
+      "post_share_percent": {
+        "mean": 92.08148415196592,
+        "between_run_std": 0.053083822778355015,
+        "run_values": [
+          92.12708582660927,
+          92.09415524288414,
+          92.02321138640437
+        ]
+      },
+      "pre_us": {
+        "mean": 23.45696,
+        "between_run_std": 0.21565910878050235,
+        "run_values": [
+          23.208,
+          23.58624,
+          23.57664
+        ]
+      },
+      "post_us": {
+        "mean": 318.36544,
+        "between_run_std": 3.746366763038538,
+        "run_values": [
+          322.69136,
+          316.2112,
+          316.19376
+        ]
+      }
+    },
+    {
+      "world": 16,
+      "tokens": 128,
+      "operation": "combine",
+      "pre_share_percent": {
+        "mean": 6.108713656976546,
+        "between_run_std": 0.011768071945762222,
+        "run_values": [
+          6.100558405438285,
+          6.122204381150634,
+          6.10337818434072
+        ]
+      },
+      "post_share_percent": {
+        "mean": 90.75941023590984,
+        "between_run_std": 0.10884769695544161,
+        "run_values": [
+          90.8846408541705,
+          90.68753262036897,
+          90.70605723319004
+        ]
+      },
+      "pre_us": {
+        "mean": 23.55648,
+        "between_run_std": 0.21329548330895426,
+        "run_values": [
+          23.77824,
+          23.3528,
+          23.5384
+        ]
+      },
+      "post_us": {
+        "mean": 347.39610666666664,
+        "between_run_std": 3.954042009555983,
+        "run_values": [
+          351.38384,
+          343.47664,
+          347.32784
+        ]
+      }
+    },
+    {
+      "world": 16,
+      "tokens": 128,
+      "operation": "dispatch",
+      "pre_share_percent": {
+        "mean": 5.535394466602787,
+        "between_run_std": 0.11514423825891244,
+        "run_values": [
+          5.481942832731491,
+          5.667549822717888,
+          5.456690744358981
+        ]
+      },
+      "post_share_percent": {
+        "mean": 93.21685148564069,
+        "between_run_std": 0.18968757126566665,
+        "run_values": [
+          93.38145387225032,
+          93.009406713058,
+          93.25969387161375
+        ]
+      },
+      "pre_us": {
+        "mean": 23.423893333333332,
+        "between_run_std": 0.026154168565132065,
+        "run_values": [
+          23.45392,
+          23.41168,
+          23.40608
+        ]
+      },
+      "post_us": {
+        "mean": 392.2206933333333,
+        "between_run_std": 9.189374767792062,
+        "run_values": [
+          396.87696,
+          381.6352,
+          398.14992
+        ]
+      }
+    }
+  ],
+  "microbenchmark_runs": [
+    {
+      "world": 4,
+      "tokens": 96,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_holdout_2n2_t96_r1_retry1",
+      "operation": "combine",
+      "pre_share_percent": 14.961703268361447,
+      "pre_us": 18.28832,
+      "post_share_percent": 79.79201285252715,
+      "post_us": 96.81696
+    },
+    {
+      "world": 4,
+      "tokens": 96,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_holdout_2n2_t96_r1_retry1",
+      "operation": "dispatch",
+      "pre_share_percent": 15.753437324948145,
+      "pre_us": 18.46944,
+      "post_share_percent": 84.1100665899327,
+      "post_us": 96.74208
+    },
+    {
+      "world": 4,
+      "tokens": 96,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_holdout_2n2_t96_r2",
+      "operation": "combine",
+      "pre_share_percent": 15.556521692898828,
+      "pre_us": 19.12688,
+      "post_share_percent": 80.1358639129797,
+      "post_us": 100.05616
+    },
+    {
+      "world": 4,
+      "tokens": 96,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_holdout_2n2_t96_r2",
+      "operation": "dispatch",
+      "pre_share_percent": 16.397613179966857,
+      "pre_us": 19.199199999999998,
+      "post_share_percent": 84.44813034226875,
+      "post_us": 97.05088
+    },
+    {
+      "world": 4,
+      "tokens": 96,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_holdout_2n2_t96_r3",
+      "operation": "combine",
+      "pre_share_percent": 15.17763069342524,
+      "pre_us": 18.62144,
+      "post_share_percent": 79.68285484965003,
+      "post_us": 96.88928
+    },
+    {
+      "world": 4,
+      "tokens": 96,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_holdout_2n2_t96_r3",
+      "operation": "dispatch",
+      "pre_share_percent": 15.92107787172462,
+      "pre_us": 18.643359999999998,
+      "post_share_percent": 83.9163030335111,
+      "post_us": 96.45984
+    },
+    {
+      "world": 8,
+      "tokens": 96,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_holdout_2n4_t96_r1",
+      "operation": "combine",
+      "pre_share_percent": 8.146921348922728,
+      "pre_us": 19.33136,
+      "post_share_percent": 87.00065659609069,
+      "post_us": 204.64256
+    },
+    {
+      "world": 8,
+      "tokens": 96,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_holdout_2n4_t96_r1",
+      "operation": "dispatch",
+      "pre_share_percent": 7.882556840143638,
+      "pre_us": 19.5936,
+      "post_share_percent": 90.49138220044077,
+      "post_us": 223.01712
+    },
+    {
+      "world": 8,
+      "tokens": 96,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_holdout_2n4_t96_r2",
+      "operation": "combine",
+      "pre_share_percent": 7.788525633216011,
+      "pre_us": 18.92208,
+      "post_share_percent": 87.35849575944661,
+      "post_us": 210.27488
+    },
+    {
+      "world": 8,
+      "tokens": 96,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_holdout_2n4_t96_r2",
+      "operation": "dispatch",
+      "pre_share_percent": 7.4396286502446385,
+      "pre_us": 19.26144,
+      "post_share_percent": 90.90543723161413,
+      "post_us": 233.3072
+    },
+    {
+      "world": 8,
+      "tokens": 96,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_holdout_2n4_t96_r3",
+      "operation": "combine",
+      "pre_share_percent": 8.160608154849722,
+      "pre_us": 19.21344,
+      "post_share_percent": 86.93025078538345,
+      "post_us": 202.6312
+    },
+    {
+      "world": 8,
+      "tokens": 96,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_holdout_2n4_t96_r3",
+      "operation": "dispatch",
+      "pre_share_percent": 7.643574869562125,
+      "pre_us": 19.17376,
+      "post_share_percent": 90.71876869117212,
+      "post_us": 225.77392
+    },
+    {
+      "world": 16,
+      "tokens": 96,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_holdout_2n8_t96_r1_retry1",
+      "operation": "combine",
+      "pre_share_percent": 7.704009473322229,
+      "pre_us": 23.69296,
+      "post_share_percent": 88.44818064260697,
+      "post_us": 269.4192
+    },
+    {
+      "world": 16,
+      "tokens": 96,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_holdout_2n8_t96_r1_retry1",
+      "operation": "dispatch",
+      "pre_share_percent": 6.579673506303697,
+      "pre_us": 23.208,
+      "post_share_percent": 92.12708582660927,
+      "post_us": 322.69136
+    },
+    {
+      "world": 16,
+      "tokens": 96,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_holdout_2n8_t96_r2_retry1",
+      "operation": "combine",
+      "pre_share_percent": 7.478385790699785,
+      "pre_us": 23.0608,
+      "post_share_percent": 88.57744469916535,
+      "post_us": 270.7272
+    },
+    {
+      "world": 16,
+      "tokens": 96,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_holdout_2n8_t96_r2_retry1",
+      "operation": "dispatch",
+      "pre_share_percent": 6.806768115824014,
+      "pre_us": 23.58624,
+      "post_share_percent": 92.09415524288414,
+      "post_us": 316.2112
+    },
+    {
+      "world": 16,
+      "tokens": 96,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_holdout_2n8_t96_r3",
+      "operation": "combine",
+      "pre_share_percent": 7.583731052731566,
+      "pre_us": 23.26336,
+      "post_share_percent": 88.54521250322956,
+      "post_us": 269.4376
+    },
+    {
+      "world": 16,
+      "tokens": 96,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_holdout_2n8_t96_r3",
+      "operation": "dispatch",
+      "pre_share_percent": 6.819191412250254,
+      "pre_us": 23.57664,
+      "post_share_percent": 92.02321138640437,
+      "post_us": 316.19376
+    },
+    {
+      "world": 4,
+      "tokens": 128,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n2_t128_r1",
+      "operation": "combine",
+      "pre_share_percent": 13.051218031252267,
+      "pre_us": 18.63328,
+      "post_share_percent": 82.46668286236606,
+      "post_us": 118.01152
+    },
+    {
+      "world": 4,
+      "tokens": 128,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n2_t128_r1",
+      "operation": "dispatch",
+      "pre_share_percent": 13.636915472839885,
+      "pre_us": 18.76176,
+      "post_share_percent": 85.79949798065805,
+      "post_us": 115.47232
+    },
+    {
+      "world": 4,
+      "tokens": 128,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n2_t128_r2",
+      "operation": "combine",
+      "pre_share_percent": 12.915910248737912,
+      "pre_us": 18.3864,
+      "post_share_percent": 82.20758555253389,
+      "post_us": 117.592
+    },
+    {
+      "world": 4,
+      "tokens": 128,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n2_t128_r2",
+      "operation": "dispatch",
+      "pre_share_percent": 13.540706293243053,
+      "pre_us": 18.56656,
+      "post_share_percent": 85.75439334283512,
+      "post_us": 114.43216
+    },
+    {
+      "world": 4,
+      "tokens": 128,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n2_t128_r3_retry1",
+      "operation": "combine",
+      "pre_share_percent": 13.416570083642949,
+      "pre_us": 19.19616,
+      "post_share_percent": 82.63589508315293,
+      "post_us": 118.06112
+    },
+    {
+      "world": 4,
+      "tokens": 128,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n2_t128_r3_retry1",
+      "operation": "dispatch",
+      "pre_share_percent": 14.008907902031167,
+      "pre_us": 19.34288,
+      "post_share_percent": 86.2737860932529,
+      "post_us": 116.46448
+    },
+    {
+      "world": 4,
+      "tokens": 32,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n2_t32_r1",
+      "operation": "combine",
+      "pre_share_percent": 22.373022792763166,
+      "pre_us": 18.56944,
+      "post_share_percent": 71.37946159455849,
+      "post_us": 58.84592
+    },
+    {
+      "world": 4,
+      "tokens": 32,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n2_t32_r1",
+      "operation": "dispatch",
+      "pre_share_percent": 23.271907835480075,
+      "pre_us": 18.6344,
+      "post_share_percent": 77.56897597661877,
+      "post_us": 58.88896
+    },
+    {
+      "world": 4,
+      "tokens": 32,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n2_t32_r2",
+      "operation": "combine",
+      "pre_share_percent": 22.068725567033155,
+      "pre_us": 18.412,
+      "post_share_percent": 71.14719333228125,
+      "post_us": 58.59008
+    },
+    {
+      "world": 4,
+      "tokens": 32,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n2_t32_r2",
+      "operation": "dispatch",
+      "pre_share_percent": 23.301890556149555,
+      "pre_us": 18.57088,
+      "post_share_percent": 77.038313074532,
+      "post_us": 58.40816
+    },
+    {
+      "world": 4,
+      "tokens": 32,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n2_t32_r3",
+      "operation": "combine",
+      "pre_share_percent": 22.67728283041399,
+      "pre_us": 18.9632,
+      "post_share_percent": 71.61084580153963,
+      "post_us": 59.19456
+    },
+    {
+      "world": 4,
+      "tokens": 32,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n2_t32_r3",
+      "operation": "dispatch",
+      "pre_share_percent": 23.612234593570978,
+      "pre_us": 19.08224,
+      "post_share_percent": 77.6421208840122,
+      "post_us": 58.88752
+    },
+    {
+      "world": 4,
+      "tokens": 8,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n2_t8_r1",
+      "operation": "combine",
+      "pre_share_percent": 27.70946370408881,
+      "pre_us": 18.99296,
+      "post_share_percent": 66.25198713439666,
+      "post_us": 44.66192
+    },
+    {
+      "world": 4,
+      "tokens": 8,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n2_t8_r1",
+      "operation": "dispatch",
+      "pre_share_percent": 26.478355835602308,
+      "pre_us": 19.05104,
+      "post_share_percent": 74.4701811652788,
+      "post_us": 49.09504
+    },
+    {
+      "world": 4,
+      "tokens": 8,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n2_t8_r2",
+      "operation": "combine",
+      "pre_share_percent": 27.332655989130522,
+      "pre_us": 18.786559999999998,
+      "post_share_percent": 65.48082865024892,
+      "post_us": 43.69456
+    },
+    {
+      "world": 4,
+      "tokens": 8,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n2_t8_r2",
+      "operation": "dispatch",
+      "pre_share_percent": 26.451760988583423,
+      "pre_us": 18.86416,
+      "post_share_percent": 73.60585290367092,
+      "post_us": 48.33808
+    },
+    {
+      "world": 4,
+      "tokens": 8,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n2_t8_r3",
+      "operation": "combine",
+      "pre_share_percent": 27.776634965770835,
+      "pre_us": 19.196479999999998,
+      "post_share_percent": 65.96319740597717,
+      "post_us": 44.64416
+    },
+    {
+      "world": 4,
+      "tokens": 8,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n2_t8_r3",
+      "operation": "dispatch",
+      "pre_share_percent": 26.726276262109888,
+      "pre_us": 19.23424,
+      "post_share_percent": 73.87298866017417,
+      "post_us": 48.688159999999996
+    },
+    {
+      "world": 8,
+      "tokens": 128,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n4_t128_r1",
+      "operation": "combine",
+      "pre_share_percent": 6.221087962613225,
+      "pre_us": 19.3136,
+      "post_share_percent": 90.04576517109068,
+      "post_us": 277.82048
+    },
+    {
+      "world": 8,
+      "tokens": 128,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n4_t128_r1",
+      "operation": "dispatch",
+      "pre_share_percent": 6.244130882102307,
+      "pre_us": 19.22928,
+      "post_share_percent": 92.16104698816781,
+      "post_us": 281.66208
+    },
+    {
+      "world": 8,
+      "tokens": 128,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n4_t128_r2",
+      "operation": "combine",
+      "pre_share_percent": 6.745294751753352,
+      "pre_us": 19.74128,
+      "post_share_percent": 89.30755769197224,
+      "post_us": 259.26656
+    },
+    {
+      "world": 8,
+      "tokens": 128,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n4_t128_r2",
+      "operation": "dispatch",
+      "pre_share_percent": 6.409212279829334,
+      "pre_us": 19.9944,
+      "post_share_percent": 92.0708573594461,
+      "post_us": 284.4184
+    },
+    {
+      "world": 8,
+      "tokens": 128,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n4_t128_r3",
+      "operation": "combine",
+      "pre_share_percent": 6.3393130691619115,
+      "pre_us": 19.65056,
+      "post_share_percent": 90.02834076478403,
+      "post_us": 277.58768
+    },
+    {
+      "world": 8,
+      "tokens": 128,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n4_t128_r3",
+      "operation": "dispatch",
+      "pre_share_percent": 6.3171921954164905,
+      "pre_us": 19.64672,
+      "post_share_percent": 92.19927317944426,
+      "post_us": 284.79424
+    },
+    {
+      "world": 8,
+      "tokens": 32,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n4_t32_r1",
+      "operation": "combine",
+      "pre_share_percent": 15.580987585974002,
+      "pre_us": 19.45216,
+      "post_share_percent": 76.10515446585697,
+      "post_us": 92.9832
+    },
+    {
+      "world": 8,
+      "tokens": 32,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n4_t32_r1",
+      "operation": "dispatch",
+      "pre_share_percent": 15.57997677502842,
+      "pre_us": 19.63904,
+      "post_share_percent": 82.5308187849783,
+      "post_us": 101.73248
+    },
+    {
+      "world": 8,
+      "tokens": 32,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n4_t32_r2",
+      "operation": "combine",
+      "pre_share_percent": 15.704535402740767,
+      "pre_us": 19.83664,
+      "post_share_percent": 76.86080835267052,
+      "post_us": 96.02224
+    },
+    {
+      "world": 8,
+      "tokens": 32,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n4_t32_r2",
+      "operation": "dispatch",
+      "pre_share_percent": 14.787399268882039,
+      "pre_us": 19.61808,
+      "post_share_percent": 83.10010618319515,
+      "post_us": 107.84944
+    },
+    {
+      "world": 8,
+      "tokens": 32,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n4_t32_r3",
+      "operation": "combine",
+      "pre_share_percent": 16.05246705920273,
+      "pre_us": 19.95088,
+      "post_share_percent": 76.70639006959489,
+      "post_us": 94.1872
+    },
+    {
+      "world": 8,
+      "tokens": 32,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n4_t32_r3",
+      "operation": "dispatch",
+      "pre_share_percent": 15.218618113475209,
+      "pre_us": 19.65376,
+      "post_share_percent": 82.47917182976076,
+      "post_us": 104.2616
+    },
+    {
+      "world": 8,
+      "tokens": 8,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n4_t8_r1",
+      "operation": "combine",
+      "pre_share_percent": 24.743220320189547,
+      "pre_us": 19.53888,
+      "post_share_percent": 62.60465768416141,
+      "post_us": 47.69648
+    },
+    {
+      "world": 8,
+      "tokens": 8,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n4_t8_r1",
+      "operation": "dispatch",
+      "pre_share_percent": 26.089549088642823,
+      "pre_us": 19.77664,
+      "post_share_percent": 71.071010315389,
+      "post_us": 51.61616
+    },
+    {
+      "world": 8,
+      "tokens": 8,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n4_t8_r2",
+      "operation": "combine",
+      "pre_share_percent": 24.915453060538393,
+      "pre_us": 19.5488,
+      "post_share_percent": 62.9563875356891,
+      "post_us": 47.41456
+    },
+    {
+      "world": 8,
+      "tokens": 8,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n4_t8_r2",
+      "operation": "dispatch",
+      "pre_share_percent": 25.653514643576106,
+      "pre_us": 19.36448,
+      "post_share_percent": 71.1343232355791,
+      "post_us": 51.69056
+    },
+    {
+      "world": 8,
+      "tokens": 8,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n4_t8_r3",
+      "operation": "combine",
+      "pre_share_percent": 24.40565990862315,
+      "pre_us": 18.96656,
+      "post_share_percent": 63.061122405896704,
+      "post_us": 47.12128
+    },
+    {
+      "world": 8,
+      "tokens": 8,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n4_t8_r3",
+      "operation": "dispatch",
+      "pre_share_percent": 25.629940493255997,
+      "pre_us": 19.005119999999998,
+      "post_share_percent": 71.14688762830625,
+      "post_us": 50.69792
+    },
+    {
+      "world": 16,
+      "tokens": 128,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n8_t128_r1",
+      "operation": "combine",
+      "pre_share_percent": 6.100558405438285,
+      "pre_us": 23.77824,
+      "post_share_percent": 90.8846408541705,
+      "post_us": 351.38384
+    },
+    {
+      "world": 16,
+      "tokens": 128,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n8_t128_r1",
+      "operation": "dispatch",
+      "pre_share_percent": 5.481942832731491,
+      "pre_us": 23.45392,
+      "post_share_percent": 93.38145387225032,
+      "post_us": 396.87696
+    },
+    {
+      "world": 16,
+      "tokens": 128,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n8_t128_r2",
+      "operation": "combine",
+      "pre_share_percent": 6.122204381150634,
+      "pre_us": 23.3528,
+      "post_share_percent": 90.68753262036897,
+      "post_us": 343.47664
+    },
+    {
+      "world": 16,
+      "tokens": 128,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n8_t128_r2",
+      "operation": "dispatch",
+      "pre_share_percent": 5.667549822717888,
+      "pre_us": 23.41168,
+      "post_share_percent": 93.009406713058,
+      "post_us": 381.6352
+    },
+    {
+      "world": 16,
+      "tokens": 128,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n8_t128_r3",
+      "operation": "combine",
+      "pre_share_percent": 6.10337818434072,
+      "pre_us": 23.5384,
+      "post_share_percent": 90.70605723319004,
+      "post_us": 347.32784
+    },
+    {
+      "world": 16,
+      "tokens": 128,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n8_t128_r3",
+      "operation": "dispatch",
+      "pre_share_percent": 5.456690744358981,
+      "pre_us": 23.40608,
+      "post_share_percent": 93.25969387161375,
+      "post_us": 398.14992
+    },
+    {
+      "world": 16,
+      "tokens": 32,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n8_t32_r1",
+      "operation": "combine",
+      "pre_share_percent": 16.187706599131992,
+      "pre_us": 23.833759999999998,
+      "post_share_percent": 77.2624305993369,
+      "post_us": 111.52816
+    },
+    {
+      "world": 16,
+      "tokens": 32,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n8_t32_r1",
+      "operation": "dispatch",
+      "pre_share_percent": 15.139482856912716,
+      "pre_us": 24.17104,
+      "post_share_percent": 83.92101774948888,
+      "post_us": 131.43072
+    },
+    {
+      "world": 16,
+      "tokens": 32,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n8_t32_r2",
+      "operation": "combine",
+      "pre_share_percent": 16.07198380587796,
+      "pre_us": 23.804479999999998,
+      "post_share_percent": 77.3238077600522,
+      "post_us": 112.43728
+    },
+    {
+      "world": 16,
+      "tokens": 32,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n8_t32_r2",
+      "operation": "dispatch",
+      "pre_share_percent": 14.950291705625611,
+      "pre_us": 23.6112,
+      "post_share_percent": 83.56626218341736,
+      "post_us": 130.1328
+    },
+    {
+      "world": 16,
+      "tokens": 32,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n8_t32_r3",
+      "operation": "combine",
+      "pre_share_percent": 16.217939363171524,
+      "pre_us": 23.35808,
+      "post_share_percent": 76.68096089973413,
+      "post_us": 108.77504
+    },
+    {
+      "world": 16,
+      "tokens": 32,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n8_t32_r3",
+      "operation": "dispatch",
+      "pre_share_percent": 15.499494077630969,
+      "pre_us": 23.61568,
+      "post_share_percent": 82.83146147325263,
+      "post_us": 124.45264
+    },
+    {
+      "world": 16,
+      "tokens": 8,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n8_t8_r1",
+      "operation": "combine",
+      "pre_share_percent": 25.557774173702963,
+      "pre_us": 23.47072,
+      "post_share_percent": 63.676286435956655,
+      "post_us": 56.59072
+    },
+    {
+      "world": 16,
+      "tokens": 8,
+      "repeat": 1,
+      "run_id": "h200_cross_tc162_small_2n8_t8_r1",
+      "operation": "dispatch",
+      "pre_share_percent": 26.067455529439158,
+      "pre_us": 23.32144,
+      "post_share_percent": 71.09131997361744,
+      "post_us": 61.60272
+    },
+    {
+      "world": 16,
+      "tokens": 8,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n8_t8_r2",
+      "operation": "combine",
+      "pre_share_percent": 25.505834916992246,
+      "pre_us": 23.0736,
+      "post_share_percent": 63.40281749946411,
+      "post_us": 56.07808
+    },
+    {
+      "world": 16,
+      "tokens": 8,
+      "repeat": 2,
+      "run_id": "h200_cross_tc162_small_2n8_t8_r2",
+      "operation": "dispatch",
+      "pre_share_percent": 25.79871838860956,
+      "pre_us": 24.2392,
+      "post_share_percent": 71.40930199848759,
+      "post_us": 65.59584
+    },
+    {
+      "world": 16,
+      "tokens": 8,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n8_t8_r3",
+      "operation": "combine",
+      "pre_share_percent": 25.54109389026342,
+      "pre_us": 23.46288,
+      "post_share_percent": 63.46210133576672,
+      "post_us": 56.39296
+    },
+    {
+      "world": 16,
+      "tokens": 8,
+      "repeat": 3,
+      "run_id": "h200_cross_tc162_small_2n8_t8_r3",
+      "operation": "dispatch",
+      "pre_share_percent": 26.19810515753351,
+      "pre_us": 23.55552,
+      "post_share_percent": 71.22057412048964,
+      "post_us": 62.0288
+    }
+  ],
+  "e2e": [
+    {
+      "topology": "1n8",
+      "world": 8,
+      "concurrency": 64,
+      "tokens_per_rank": 8,
+      "pre_share_percent": {
+        "mean": 9.327740476272105,
+        "between_run_std": 0.12083080991037845,
+        "run_values": [
+          9.410679496266289,
+          9.383435382834788,
+          9.18910654971524
+        ]
+      },
+      "post_share_percent": {
+        "mean": 10.099771421209182,
+        "between_run_std": 0.19491963859009048,
+        "run_values": [
+          9.875320116735443,
+          10.226484117593124,
+          10.197510029298979
+        ]
+      },
+      "union_share_percent": {
+        "mean": 19.419045553723592,
+        "between_run_std": 0.1653225186545091,
+        "run_values": [
+          19.278031069948472,
+          19.600987627232588,
+          19.378117963989713
+        ]
+      }
+    },
+    {
+      "topology": "1n8",
+      "world": 8,
+      "concurrency": 128,
+      "tokens_per_rank": 16,
+      "pre_share_percent": {
+        "mean": 7.939594749398851,
+        "between_run_std": 0.15451236416742875,
+        "run_values": [
+          8.116994065670873,
+          7.8673627146576255,
+          7.834427467868055
+        ]
+      },
+      "post_share_percent": {
+        "mean": 9.816340351770966,
+        "between_run_std": 0.06717727731354134,
+        "run_values": [
+          9.892036393743826,
+          9.793167769772616,
+          9.76381689179646
+        ]
+      },
+      "union_share_percent": {
+        "mean": 17.73334072605292,
+        "between_run_std": 0.2231550574178915,
+        "run_values": [
+          17.988284795644255,
+          17.63828505574093,
+          17.573452326773573
+        ]
+      }
+    },
+    {
+      "topology": "2n4",
+      "world": 8,
+      "concurrency": 64,
+      "tokens_per_rank": 8,
+      "pre_share_percent": {
+        "mean": 16.723704250973935,
+        "between_run_std": 0.09565479181655884,
+        "run_values": [
+          16.71845988507914,
+          16.821873342124793,
+          16.630779525717873
+        ]
+      },
+      "post_share_percent": {
+        "mean": 36.82861020154852,
+        "between_run_std": 0.012618958308920401,
+        "run_values": [
+          36.81445052986133,
+          36.83271247428017,
+          36.83866760050405
+        ]
+      },
+      "union_share_percent": {
+        "mean": 53.550746747728155,
+        "between_run_std": 0.09420684527270791,
+        "run_values": [
+          53.53159794841024,
+          53.65305691346336,
+          53.467585381310876
+        ]
+      }
+    },
+    {
+      "topology": "2n4",
+      "world": 8,
+      "concurrency": 128,
+      "tokens_per_rank": 16,
+      "pre_share_percent": {
+        "mean": 15.192132721478941,
+        "between_run_std": 0.0500539878440469,
+        "run_values": [
+          15.239888443006363,
+          15.196449629647402,
+          15.14006009178306
+        ]
+      },
+      "post_share_percent": {
+        "mean": 37.55848332145908,
+        "between_run_std": 0.08632201698838064,
+        "run_values": [
+          37.52049397136082,
+          37.65728462265088,
+          37.49767137036553
+        ]
+      },
+      "union_share_percent": {
+        "mean": 52.746961101632344,
+        "between_run_std": 0.10837142987848038,
+        "run_values": [
+          52.75626978963757,
+          52.85037792889951,
+          52.63423558635995
+        ]
+      }
+    }
+  ],
+  "post_partition": [
+    {
+      "tokens": 8,
+      "operation": "dispatch",
+      "before_first_signal_share_percent": {
+        "mean": 69.83705530181277,
+        "between_run_std": 0.3642253448733889,
+        "run_values": [
+          70.10599224124182,
+          69.98261324836291,
+          69.42256041583356
+        ]
+      },
+      "signal_issue_observe_envelope_share_percent": {
+        "mean": 29.840162947881566,
+        "between_run_std": 0.3639200440540495,
+        "run_values": [
+          29.57127318349743,
+          29.694944605066517,
+          30.254271055080757
+        ]
+      },
+      "after_signals_share_percent": {
+        "mean": 0.3227817503056696,
+        "between_run_std": 0.00036548187808511847,
+        "run_values": [
+          0.32273457526075255,
+          0.3224421465705772,
+          0.32316852908567906
+        ]
+      }
+    },
+    {
+      "tokens": 8,
+      "operation": "combine",
+      "before_first_signal_share_percent": {
+        "mean": 65.32659120632937,
+        "between_run_std": 0.442851726241184,
+        "run_values": [
+          65.05383126042994,
+          65.08837918741393,
+          65.83756317114424
+        ]
+      },
+      "signal_issue_observe_envelope_share_percent": {
+        "mean": 34.31498265277911,
+        "between_run_std": 0.4402354622197419,
+        "run_values": [
+          34.58372547200032,
+          34.55429591643409,
+          33.80692656990292
+        ]
+      },
+      "after_signals_share_percent": {
+        "mean": 0.35842614089151387,
+        "between_run_std": 0.003595303478531253,
+        "run_values": [
+          0.3624432675697297,
+          0.3573248961519694,
+          0.3555102589528425
+        ]
+      }
+    },
+    {
+      "tokens": 128,
+      "operation": "dispatch",
+      "before_first_signal_share_percent": {
+        "mean": 86.98657740069667,
+        "between_run_std": 1.4111174958516979,
+        "run_values": [
+          88.15223163812557,
+          87.38974735914414,
+          85.41775320482033
+        ]
+      },
+      "signal_issue_observe_envelope_share_percent": {
+        "mean": 12.953688649113628,
+        "between_run_std": 1.411577724550185,
+        "run_values": [
+          11.787836329551034,
+          12.55013472841982,
+          14.523094889370029
+        ]
+      },
+      "after_signals_share_percent": {
+        "mean": 0.05973395018968959,
+        "between_run_std": 0.0005125618004937141,
+        "run_values": [
+          0.059932032323389006,
+          0.060117912436034704,
+          0.059151905809645064
+        ]
+      }
+    },
+    {
+      "tokens": 128,
+      "operation": "combine",
+      "before_first_signal_share_percent": {
+        "mean": 84.1473471160001,
+        "between_run_std": 2.425746504914654,
+        "run_values": [
+          86.94204670751017,
+          82.58724981330337,
+          82.91274482718676
+        ]
+      },
+      "signal_issue_observe_envelope_share_percent": {
+        "mean": 15.7864839611931,
+        "between_run_std": 2.4275287269213335,
+        "run_values": [
+          12.98985336991157,
+          17.34923380904096,
+          17.020364704626772
+        ]
+      },
+      "after_signals_share_percent": {
+        "mean": 0.06616892280679998,
+        "between_run_std": 0.002375435079208518,
+        "run_values": [
+          0.06809992257825719,
+          0.06351637765567138,
+          0.06689046818647136
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/sources/phase-share-node0.json.gz",
+      "sha256": "f68e494a66e4c2e4dfbcbf14cc53620f41fdc1ae36a72e3c032a82380332567f"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/sources/phase-share-node1.json.gz",
+      "sha256": "58629d3e6aa1fadf0f68572602893adacaf9a90e689a4e1e58a0c6672b916f55"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/20260912/gpu3/results/processed_snapshot_sync/snap_c64_r1-steps.json",
+      "sha256": "8e851b9864e239d819ba72c45fcd873ff022c0f75cf9d9e7e3c502576baf9256"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/20260912/gpu3/results/processed_snapshot_sync/snap_c64_r2-steps.json",
+      "sha256": "69bed3a4c6f31fa45dc440f8207798f5013e3777b9b35125a128962a4c082576"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/20260912/gpu3/results/processed_snapshot_sync/snap_c64_r3-steps.json",
+      "sha256": "033dc1c9983441ea1b5ccacda5b8c85d09b100a76001a6f0db2db7a5bd407b5c"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/20260912/gpu3/results/processed_snapshot_sync/snap_c128_r1-steps.json",
+      "sha256": "827ffa3571a2dfffeb18f16114df8429845c6da5a439f2d5654a6be1b4ae7dfb"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/20260912/gpu3/results/processed_snapshot_sync/snap_c128_r2-steps.json",
+      "sha256": "31e6b1135882ee5786397575921f7c7c1e8fafff4a9c86a9a00bae0384809e74"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/20260912/gpu3/results/processed_snapshot_sync/snap_c128_r3-steps.json",
+      "sha256": "7efaadc21dc0c34813fcaf7db27737e41d3be7d2c2c63d1cf2b6d154d89871c8"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/20260912/cross_e2e/2n4-sync-step-summary.json",
+      "sha256": "3a21822ff35c34d3d0a8df7c02b5bf3df24ef5125b2348b6c311589bed067d78"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/20260912/cross_e2e/2n4-sync-step-summary.json",
+      "sha256": "3a21822ff35c34d3d0a8df7c02b5bf3df24ef5125b2348b6c311589bed067d78"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/20260912/cross_e2e/2n4-sync-step-summary.json",
+      "sha256": "3a21822ff35c34d3d0a8df7c02b5bf3df24ef5125b2348b6c311589bed067d78"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/20260912/cross_e2e/2n4-sync-step-summary.json",
+      "sha256": "3a21822ff35c34d3d0a8df7c02b5bf3df24ef5125b2348b6c311589bed067d78"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/20260912/cross_e2e/2n4-sync-step-summary.json",
+      "sha256": "3a21822ff35c34d3d0a8df7c02b5bf3df24ef5125b2348b6c311589bed067d78"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/20260912/cross_e2e/2n4-sync-step-summary.json",
+      "sha256": "3a21822ff35c34d3d0a8df7c02b5bf3df24ef5125b2348b6c311589bed067d78"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r1-node0.json.gz",
+      "sha256": "4a58820b9f6ce50371cfcca605be8db98aeb4ad5a9344cc705714e2ae1b2b48a"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r1-node1.json.gz",
+      "sha256": "64411d19b70c1936be69cc2d7f4a5c0f32bdc45a7ccec1f0be553bedac3a79fc"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r2-node0.json.gz",
+      "sha256": "54930d71ac11f53cc3341575299306d150b586f5da32670263b28227fb9767b9"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r2-node1.json.gz",
+      "sha256": "2de3e78e264f33d954f182d8799799fd2ac4d5d2a9b165726540abd2b8716eaa"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r3-node0.json.gz",
+      "sha256": "77c0305d9a710c0d2ebe6e8b681b9cfbea146bd048f1cc18bbe342f4ef20da1d"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r3-node1.json.gz",
+      "sha256": "99f5c7948da9c7e2a6977d92e1f6c811ca1c54e242fcd32534cfb7b3e117e015"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r1-node0.json.gz",
+      "sha256": "4a58820b9f6ce50371cfcca605be8db98aeb4ad5a9344cc705714e2ae1b2b48a"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r1-node1.json.gz",
+      "sha256": "64411d19b70c1936be69cc2d7f4a5c0f32bdc45a7ccec1f0be553bedac3a79fc"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r2-node0.json.gz",
+      "sha256": "54930d71ac11f53cc3341575299306d150b586f5da32670263b28227fb9767b9"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r2-node1.json.gz",
+      "sha256": "2de3e78e264f33d954f182d8799799fd2ac4d5d2a9b165726540abd2b8716eaa"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r3-node0.json.gz",
+      "sha256": "77c0305d9a710c0d2ebe6e8b681b9cfbea146bd048f1cc18bbe342f4ef20da1d"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t8-r3-node1.json.gz",
+      "sha256": "99f5c7948da9c7e2a6977d92e1f6c811ca1c54e242fcd32534cfb7b3e117e015"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r1-node0.json.gz",
+      "sha256": "dac8c2d7cf5bd2cbca86e112d736c24a0670c733a381d2c97a7404d25b0db940"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r1-node1.json.gz",
+      "sha256": "237c2c50f9354c45f921fc72937773183816f71b3d7748cc18c5c0245626ea2d"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r2-node0.json.gz",
+      "sha256": "460efea0c0b8c548f373c0b6cafa439452c567005c8b5db74e95fabcdabf5c24"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r2-node1.json.gz",
+      "sha256": "223ca9a5fe1ae4e26a02d5c9578cc5fce30850253e849959f943ac30ee86fb17"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r3-node0.json.gz",
+      "sha256": "a4e62a26f7d8cc69e625a4370c33407ac4017719a8c1ef6cbb896fddbe33b466"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r3-node1.json.gz",
+      "sha256": "c68bf32a3c4585926753b91fc9e8db146a4186c34b2ddc17c3c186b5d65e4efb"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r1-node0.json.gz",
+      "sha256": "dac8c2d7cf5bd2cbca86e112d736c24a0670c733a381d2c97a7404d25b0db940"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r1-node1.json.gz",
+      "sha256": "237c2c50f9354c45f921fc72937773183816f71b3d7748cc18c5c0245626ea2d"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r2-node0.json.gz",
+      "sha256": "460efea0c0b8c548f373c0b6cafa439452c567005c8b5db74e95fabcdabf5c24"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r2-node1.json.gz",
+      "sha256": "223ca9a5fe1ae4e26a02d5c9578cc5fce30850253e849959f943ac30ee86fb17"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r3-node0.json.gz",
+      "sha256": "a4e62a26f7d8cc69e625a4370c33407ac4017719a8c1ef6cbb896fddbe33b466"
+    },
+    {
+      "path": "/Users/yuanmingyulinyizaitaofan/Desktop/\u5b66\u4e60\u751f\u6d3b\u8d44\u6599/\u5317\u5927&\u79d1\u7814/lgy/\u5728\u7f51\u8ba1\u7b97/nsdi-\u540c\u6b65\u8bba\u6587/data/h200/numbers/stages/anchor-t128-r3-node1.json.gz",
+      "sha256": "c68bf32a3c4585926753b91fc9e8db146a4186c34b2ddc17c3c186b5d65e4efb"
+    }
+  ],
+  "denominators": {
+    "microbenchmark": "Each iteration select maximum phase-duration rank, divide by SAME rank and iteration trace-on operation span; average iterations then 3 runs. Pre/post can select different ranks; do not add them.",
+    "e2e": "Same-rank same-GPU-step durations; average rank ratios within each window then 3 windows. Union explicitly merged; component sums can have small overlap.",
+    "post_partition": "Select max-post rank each iteration and divide its three subintervals by its own post duration; sum=100%."
+  }
+}

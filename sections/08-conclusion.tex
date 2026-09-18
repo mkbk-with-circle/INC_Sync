@@ -1,0 +1,26 @@
+\section{Conclusion}
+Cross-node Direct Dispatch and Combine coordinate their participants at both transfer
+boundaries: peer readiness gates injection, and sender completion followed by a local
+join precedes an EP-wide tail exchange. On two H200 nodes, each boundary costs
+11--15\us{} at every batch size we measured, which is roughly 20\% and 18\% of the
+operator at eight tokens per rank and falls monotonically to about 5\% by 128; in
+Qwen3-30B-A3B decode, crossing the node boundary doubles the entry share at fixed EP8. The cost is fixed, and small-batch
+decode is where it is exposed.
+
+\sys{} addresses both boundaries by changing where coordination is resolved rather than
+what it guarantees. Readiness aggregated at the fan-in point lets a rank upload as soon
+as it is locally ready, with bounded staging absorbing early arrivals; a sealed
+per-destination traffic plan lets the network append an ordered completion notification
+behind that destination's final data unit, so the destination need not wait for a sender
+to traverse its own completion path and originate a fresh exchange. Data visibility,
+local completion conditions, and buffer ownership are preserved throughout; only the
+placement of the completion decision changes.
+
+What this study does and does not settle is worth stating plainly. The baselines are
+measured and the coordination stages are established from source. The latency
+opportunity is analytical: under a symmetric reference each eligible boundary is worth
+approximately one one-way traversal, and we characterize how much added overhead erases
+it. What remains open is the exposed fraction of the tail, which requires timestamping
+destination visibility separately from sender completion, and the achievable saving,
+which requires hardware. Building that prototype, and measuring $\epsilon$ against the
+conditions specified here, is the natural next step.

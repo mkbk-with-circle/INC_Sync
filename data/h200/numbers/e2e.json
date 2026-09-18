@@ -1,0 +1,1353 @@
+{
+  "single_node_8gpu": {
+    "rows": [
+      {
+        "concurrency": 1,
+        "actual_tokens_per_active_rank": 1,
+        "active_ranks": 1,
+        "sync_union_share_percent": {
+          "values": [
+            20.29260936701147,
+            20.36061746011156,
+            20.211593226567047
+          ],
+          "mean": 20.288273351230025,
+          "std_between_windows": 0.07460667745265866
+        },
+        "trace_step_us": {
+          "values": [
+            6196.384,
+            6167.2,
+            6270.144
+          ],
+          "mean": 6211.242666666667,
+          "std_between_windows": 53.05611901876498
+        },
+        "sync_parts_us": {
+          "dispatch_pre": {
+            "values": [
+              189.792,
+              187.072,
+              179.648
+            ],
+            "mean": 185.504,
+            "std_between_windows": 5.250633485590099
+          },
+          "dispatch_post": {
+            "values": [
+              383.104,
+              376.896,
+              370.976
+            ],
+            "mean": 376.992,
+            "std_between_windows": 6.064569894065029
+          },
+          "combine_pre": {
+            "values": [
+              380.16,
+              377.408,
+              411.936
+            ],
+            "mean": 389.8346666666667,
+            "std_between_windows": 19.189712799657332
+          },
+          "combine_post": {
+            "values": [
+              304.48,
+              315.2,
+              304.928
+            ],
+            "mean": 308.2026666666667,
+            "std_between_windows": 6.064007036055713
+          }
+        },
+        "request_median_tpot_ms": {
+          "sync": {
+            "values": [
+              6.131560079694733,
+              6.100307592726129,
+              6.212059085763346
+            ],
+            "mean": 6.147975586061403,
+            "std_between_windows": 0.05765588162509861
+          },
+          "off": {
+            "values": [
+              5.931148320201814,
+              5.987217811148937,
+              6.105140291565046
+            ],
+            "mean": 6.007835474305265,
+            "std_between_windows": 0.08880944516343328
+          }
+        },
+        "observed_tpot_on_off_delta_percent": {
+          "values": [
+            3.378970625474098,
+            1.8888536402768885,
+            1.751291356007334
+          ],
+          "mean": 2.3397052072527735,
+          "std_between_windows": 0.9026545865647739
+        }
+      },
+      {
+        "concurrency": 64,
+        "actual_tokens_per_active_rank": 8,
+        "active_ranks": 8,
+        "sync_union_share_percent": {
+          "values": [
+            19.278031069948472,
+            19.600987627232588,
+            19.378117963989713
+          ],
+          "mean": 19.419045553723592,
+          "std_between_windows": 0.1653225186545091
+        },
+        "trace_step_us": {
+          "values": [
+            7636.064,
+            7609.228,
+            7577.232
+          ],
+          "mean": 7607.508,
+          "std_between_windows": 29.453690023492978
+        },
+        "sync_parts_us": {
+          "dispatch_pre": {
+            "values": [
+              251.76000000000002,
+              246.008,
+              250.332
+            ],
+            "mean": 249.36666666666667,
+            "std_between_windows": 2.9950421254689124
+          },
+          "dispatch_post": {
+            "values": [
+              414.216,
+              429.096,
+              426.512
+            ],
+            "mean": 423.2746666666667,
+            "std_between_windows": 7.950713510958201
+          },
+          "combine_pre": {
+            "values": [
+              467.00800000000004,
+              468.02,
+              445.98
+            ],
+            "mean": 460.336,
+            "std_between_windows": 12.442953347176058
+          },
+          "combine_post": {
+            "values": [
+              339.984,
+              349.06,
+              346.176
+            ],
+            "mean": 345.0733333333333,
+            "std_between_windows": 4.637386045320513
+          }
+        },
+        "request_median_tpot_ms": {
+          "sync": {
+            "values": [
+              8.621013833312537,
+              8.043974960648168,
+              8.011125644126277
+            ],
+            "mean": 8.225371479362327,
+            "std_between_windows": 0.34302977068825374
+          },
+          "off": {
+            "values": [
+              7.406649861748762,
+              7.753746701389785,
+              7.37620255081203
+            ],
+            "mean": 7.512199704650192,
+            "std_between_windows": 0.20973906028982087
+          }
+        },
+        "observed_tpot_on_off_delta_percent": {
+          "values": [
+            16.39559037123235,
+            3.7430711942958217,
+            8.607723133149992
+          ],
+          "mean": 9.582128232892721,
+          "std_between_windows": 6.382292640931636
+        }
+      },
+      {
+        "concurrency": 128,
+        "actual_tokens_per_active_rank": 16,
+        "active_ranks": 8,
+        "sync_union_share_percent": {
+          "values": [
+            17.988284795644255,
+            17.63828505574093,
+            17.573452326773573
+          ],
+          "mean": 17.73334072605292,
+          "std_between_windows": 0.2231550574178915
+        },
+        "trace_step_us": {
+          "values": [
+            8043.2,
+            8001.372,
+            8055.116
+          ],
+          "mean": 8033.229333333334,
+          "std_between_windows": 28.22525516861312
+        },
+        "sync_parts_us": {
+          "dispatch_pre": {
+            "values": [
+              269.672,
+              248.476,
+              251.256
+            ],
+            "mean": 256.468,
+            "std_between_windows": 11.51917149798545
+          },
+          "dispatch_post": {
+            "values": [
+              434.668,
+              427.456,
+              427.42
+            ],
+            "mean": 429.848,
+            "std_between_windows": 4.1742812554977595
+          },
+          "combine_pre": {
+            "values": [
+              383.172,
+              380.964,
+              379.864
+            ],
+            "mean": 381.3333333333333,
+            "std_between_windows": 1.6846427910193353
+          },
+          "combine_post": {
+            "values": [
+              360.968,
+              356.212,
+              359.192
+            ],
+            "mean": 358.79066666666665,
+            "std_between_windows": 2.403265556140936
+          }
+        },
+        "request_median_tpot_ms": {
+          "sync": {
+            "values": [
+              7.905444540963399,
+              7.919524304979429,
+              7.9576417979762315
+            ],
+            "mean": 7.927536881306353,
+            "std_between_windows": 0.027005359550689514
+          },
+          "off": {
+            "values": [
+              8.300046311823403,
+              7.810770951974111,
+              7.696172031830615
+            ],
+            "mean": 7.93566309854271,
+            "std_between_windows": 0.32072507341192724
+          }
+        },
+        "observed_tpot_on_off_delta_percent": {
+          "values": [
+            -4.754211675878173,
+            1.392351071027531,
+            3.3974002278561732
+          ],
+          "mean": 0.011846541001843866,
+          "std_between_windows": 4.247533251822986
+        }
+      },
+      {
+        "concurrency": 256,
+        "actual_tokens_per_active_rank": 32,
+        "active_ranks": 8,
+        "sync_union_share_percent": {
+          "values": [
+            17.377444291456573,
+            16.392033382138404,
+            16.958611029958874
+          ],
+          "mean": 16.90936290118462,
+          "std_between_windows": 0.4945479741052829
+        },
+        "trace_step_us": {
+          "values": [
+            8610.324,
+            8504.396,
+            8578.484
+          ],
+          "mean": 8564.401333333333,
+          "std_between_windows": 54.35003607481162
+        },
+        "sync_parts_us": {
+          "dispatch_pre": {
+            "values": [
+              278.412,
+              241.448,
+              246.088
+            ],
+            "mean": 255.316,
+            "std_between_windows": 20.13582161224119
+          },
+          "dispatch_post": {
+            "values": [
+              446.872,
+              419.456,
+              445.076
+            ],
+            "mean": 437.1346666666667,
+            "std_between_windows": 15.336487385752102
+          },
+          "combine_pre": {
+            "values": [
+              407.496,
+              383.368,
+              399.356
+            ],
+            "mean": 396.74,
+            "std_between_windows": 12.274880366015786
+          },
+          "combine_post": {
+            "values": [
+              364.512,
+              350.872,
+              365.048
+            ],
+            "mean": 360.144,
+            "std_between_windows": 8.034258646570938
+          }
+        },
+        "request_median_tpot_ms": {
+          "sync": {
+            "values": [
+              9.11077697152697,
+              9.55759839514109,
+              9.100056187374385
+            ],
+            "mean": 9.256143851347481,
+            "std_between_windows": 0.26112231862399465
+          },
+          "off": {
+            "values": [
+              9.161390026840639,
+              9.130839815759284,
+              9.131634343914161
+            ],
+            "mean": 9.14128806217136,
+            "std_between_windows": 0.01741334420554782
+          }
+        },
+        "observed_tpot_on_off_delta_percent": {
+          "values": [
+            -0.5524604363026153,
+            4.673815202028253,
+            -0.34581056742402083
+          ],
+          "mean": 1.2585147327672057,
+          "std_between_windows": 2.9595411829501432
+        }
+      }
+    ],
+    "repetition_unit": "three client windows per fixed server instance; not three independent server restarts",
+    "sampling": "16th pure decode step of each active rank; not all-step coverage",
+    "scope": "1n8 H200, Qwen3-30B-A3B BF16, DeepEP V2 Direct, no prefix cache, expert padding compatibility fix",
+    "interpretation": "Trace-on same-rank interval union; not removable INC latency. TPOT deltas include service/run-order/scheduling variability and are not isolated instrumentation overhead. Do not divide these phase spans by off TPOT."
+  },
+  "cross_node": [
+    {
+      "world": 4,
+      "rows": [
+        {
+          "case": "decode_c32",
+          "gpu_step_trace_on": {
+            "case": "decode_c32",
+            "windows": 3,
+            "mean_sync_union_percent": 47.832924363105256,
+            "between_window_std_percent": 0.10473672964103732,
+            "mean_gpu_step_us": 13076.125333333333,
+            "actual_tokens_per_rank": [
+              6,
+              7,
+              8,
+              12
+            ]
+          },
+          "requests": {
+            "sync": {
+              "median_ttft_ms": {
+                "values": [
+                  375.76597201405093,
+                  136.85760198859498,
+                  347.48828801093623
+                ],
+                "mean": 286.70395400452736,
+                "between_window_std": 130.53870599369003
+              },
+              "median_e2el_ms": {
+                "values": [
+                  2103.5984185291454,
+                  1845.9473270340823,
+                  1987.3257729923353
+                ],
+                "mean": 1978.9571728518542,
+                "between_window_std": 129.0292460583367
+              },
+              "median_tpot_ms": {
+                "values": [
+                  13.610542331103558,
+                  13.457460031481679,
+                  12.910898613989149
+                ],
+                "mean": 13.326300325524794,
+                "between_window_std": 0.36780087557595464
+              }
+            },
+            "off": {
+              "median_ttft_ms": {
+                "values": [
+                  396.663450577762,
+                  379.8685119836591,
+                  143.65829195594415
+                ],
+                "mean": 306.73008483912173,
+                "between_window_std": 141.47375981501094
+              },
+              "median_e2el_ms": {
+                "values": [
+                  2100.1335500041023,
+                  2118.9004705520347,
+                  1911.5197749924846
+                ],
+                "mean": 2043.5179318495404,
+                "between_window_std": 114.6982318388477
+              },
+              "median_tpot_ms": {
+                "values": [
+                  13.41727224048447,
+                  13.693309008184176,
+                  13.915240335164548
+                ],
+                "mean": 13.67527386127773,
+                "between_window_std": 0.2494734569503926
+              }
+            }
+          },
+          "empirical_on_off_difference_percent": {
+            "values": [
+              1.4404573981582125,
+              -1.722366570136813,
+              -7.217566473770298
+            ],
+            "mean": -2.4998252152496327,
+            "between_window_std": 4.381058753357056
+          }
+        },
+        {
+          "case": "decode_c64",
+          "gpu_step_trace_on": {
+            "case": "decode_c64",
+            "windows": 3,
+            "mean_sync_union_percent": 46.856941651760145,
+            "between_window_std_percent": 0.4255238674821586,
+            "mean_gpu_step_us": 14026.088,
+            "actual_tokens_per_rank": [
+              16
+            ]
+          },
+          "requests": {
+            "sync": {
+              "median_ttft_ms": {
+                "values": [
+                  552.7124165091664,
+                  561.9133269647136,
+                  635.9526690212078
+                ],
+                "mean": 583.5261374983626,
+                "between_window_std": 45.63518482420843
+              },
+              "median_e2el_ms": {
+                "values": [
+                  2406.4941450487822,
+                  2413.2160000153817,
+                  2432.6248834840953
+                ],
+                "mean": 2417.4450095160864,
+                "between_window_std": 13.568981679237222
+              },
+              "median_tpot_ms": {
+                "values": [
+                  14.597032771915138,
+                  14.577083016001422,
+                  14.147574074683696
+                ],
+                "mean": 14.440563287533418,
+                "between_window_std": 0.25393209195566313
+              }
+            },
+            "off": {
+              "median_ttft_ms": {
+                "values": [
+                  611.2624449888244,
+                  235.3962020133622,
+                  664.6048160619102
+                ],
+                "mean": 503.75448768803227,
+                "between_window_std": 233.93050090916014
+              },
+              "median_e2el_ms": {
+                "values": [
+                  2376.3377830036916,
+                  2093.160569027532,
+                  2458.977682515979
+                ],
+                "mean": 2309.4920115157342,
+                "between_window_std": 191.85100470057483
+              },
+              "median_tpot_ms": {
+                "values": [
+                  13.899155149940313,
+                  14.630769227730388,
+                  14.12982228725386
+                ],
+                "mean": 14.219915554974854,
+                "between_window_std": 0.3740352755712227
+              }
+            }
+          },
+          "empirical_on_off_difference_percent": {
+            "values": [
+              5.021007496112606,
+              -0.3669404587915426,
+              0.12563347980567574
+            ],
+            "mean": 1.593233505708913,
+            "between_window_std": 2.978738519610665
+          }
+        },
+        {
+          "case": "prefill_2048",
+          "gpu_step_trace_on": {
+            "case": "prefill_2048",
+            "windows": 3,
+            "mean_sync_union_percent": 59.780165197663706,
+            "between_window_std_percent": 3.0328587578111947,
+            "mean_gpu_step_us": 92203.31733333334,
+            "actual_tokens_per_rank": [
+              2048
+            ]
+          },
+          "requests": {
+            "sync": {
+              "median_ttft_ms": {
+                "values": [
+                  124.42377500701696,
+                  115.15222501475364,
+                  124.57831797655672
+                ],
+                "mean": 121.3847726661091,
+                "between_window_std": 5.3980976790135005
+              },
+              "median_e2el_ms": {
+                "values": [
+                  124.42362902220339,
+                  115.15208601485938,
+                  124.5781610487029
+                ],
+                "mean": 121.38462536192189,
+                "between_window_std": 5.398090409701868
+              }
+            },
+            "off": {
+              "median_ttft_ms": {
+                "values": [
+                  126.61110900808126,
+                  123.47268499433994,
+                  136.30020793061703
+                ],
+                "mean": 128.79466731101274,
+                "between_window_std": 6.686724259075178
+              },
+              "median_e2el_ms": {
+                "values": [
+                  126.610970008187,
+                  123.47254098858684,
+                  136.3000519340858
+                ],
+                "mean": 128.7945209769532,
+                "between_window_std": 6.686716712193189
+              }
+            }
+          },
+          "empirical_on_off_difference_percent": {
+            "values": [
+              -1.7276003805674622,
+              -6.738704985615007,
+              -8.600052877415488
+            ],
+            "mean": -5.688786081199319,
+            "between_window_std": 3.5544898522495805
+          }
+        },
+        {
+          "case": "prefill_512",
+          "gpu_step_trace_on": {
+            "case": "prefill_512",
+            "windows": 3,
+            "mean_sync_union_percent": 26.676369828746214,
+            "between_window_std_percent": 2.338454375535271,
+            "mean_gpu_step_us": 55073.952,
+            "actual_tokens_per_rank": [
+              512
+            ]
+          },
+          "requests": {
+            "sync": {
+              "median_ttft_ms": {
+                "values": [
+                  83.08853209018707,
+                  84.07550805713981,
+                  84.07048601657152
+                ],
+                "mean": 83.7448420546328,
+                "between_window_std": 0.5683866485904943
+              },
+              "median_e2el_ms": {
+                "values": [
+                  83.0883689923212,
+                  84.07537802122533,
+                  84.07031500246376
+                ],
+                "mean": 83.74468733867009,
+                "between_window_std": 0.5683939983456568
+              }
+            },
+            "off": {
+              "median_ttft_ms": {
+                "values": [
+                  80.70444501936436,
+                  66.23582006432116,
+                  79.39902902580798
+                ],
+                "mean": 75.44643136983116,
+                "between_window_std": 8.003283588312344
+              },
+              "median_e2el_ms": {
+                "values": [
+                  80.70429996587336,
+                  66.2356560351327,
+                  79.39886394888163
+                ],
+                "mean": 75.44627331662923,
+                "between_window_std": 8.003289562940143
+              }
+            }
+          },
+          "empirical_on_off_difference_percent": {
+            "values": [
+              2.954096357704561,
+              26.933595712251556,
+              5.883519040573071
+            ],
+            "mean": 11.923737036843063,
+            "between_window_std": 13.081180084592056
+          }
+        }
+      ],
+      "note": "Three client windows per fixed service instance, not independent service restarts. Request latency and GPU-step fractions have different denominators. On/off differences also include scheduling, sampling and run-order variation; not an isolated overhead estimate or INC speedup."
+    },
+    {
+      "world": 8,
+      "rows": [
+        {
+          "case": "decode_c128",
+          "gpu_step_trace_on": {
+            "case": "decode_c128",
+            "windows": 3,
+            "mean_sync_union_percent": 52.746961101632344,
+            "between_window_std_percent": 0.10837142987848038,
+            "mean_gpu_step_us": 13606.056,
+            "actual_tokens_per_rank": [
+              16
+            ]
+          },
+          "requests": {
+            "sync": {
+              "median_ttft_ms": {
+                "values": [
+                  1786.7538459831849,
+                  1039.0974850161,
+                  1791.8627744656987
+                ],
+                "mean": 1539.2380351549946,
+                "between_window_std": 433.141954453141
+              },
+              "median_e2el_ms": {
+                "values": [
+                  3523.8839334924705,
+                  3201.5745234675705,
+                  3522.010676038917
+                ],
+                "mean": 3415.8230443329862,
+                "between_window_std": 185.54702582670416
+              },
+              "median_tpot_ms": {
+                "values": [
+                  13.678379476026405,
+                  17.029131830974272,
+                  13.624141523504527
+                ],
+                "mean": 14.777217610168401,
+                "between_window_std": 1.9504034665356358
+              }
+            },
+            "off": {
+              "median_ttft_ms": {
+                "values": [
+                  1419.333097001072,
+                  1224.917744519189,
+                  2055.525256495457
+                ],
+                "mean": 1566.592032671906,
+                "between_window_std": 434.44344319949374
+              },
+              "median_e2el_ms": {
+                "values": [
+                  3175.3385169431567,
+                  3151.09266404761,
+                  4235.697377007455
+                ],
+                "mean": 3520.7095193327405,
+                "between_window_std": 619.3163107914777
+              },
+              "median_tpot_ms": {
+                "values": [
+                  13.828340165251062,
+                  15.16856302738219,
+                  17.168830815284682
+                ],
+                "mean": 15.388578002639312,
+                "between_window_std": 1.681078340751422
+              }
+            }
+          },
+          "empirical_on_off_difference_percent": {
+            "values": [
+              -1.084444607469881,
+              12.265952946455094,
+              -20.646072699513518
+            ],
+            "mean": -3.154854786842768,
+            "between_window_std": 16.55340770848595
+          }
+        },
+        {
+          "case": "decode_c64",
+          "gpu_step_trace_on": {
+            "case": "decode_c64",
+            "windows": 3,
+            "mean_sync_union_percent": 53.550746747728155,
+            "between_window_std_percent": 0.09420684527270791,
+            "mean_gpu_step_us": 12840.861333333334,
+            "actual_tokens_per_rank": [
+              8
+            ]
+          },
+          "requests": {
+            "sync": {
+              "median_ttft_ms": {
+                "values": [
+                  424.21142949024215,
+                  563.6566084576771,
+                  555.4409495089203
+                ],
+                "mean": 514.4363291522799,
+                "between_window_std": 78.24495927699847
+              },
+              "median_e2el_ms": {
+                "values": [
+                  2113.297296978999,
+                  2198.978256958071,
+                  2192.4511705874465
+                ],
+                "mean": 2168.2422415081724,
+                "between_window_std": 47.695502000795045
+              },
+              "median_tpot_ms": {
+                "values": [
+                  13.301824692519396,
+                  12.876718290843158,
+                  12.890238425324076
+                ],
+                "mean": 13.022927136228876,
+                "between_window_std": 0.24162695149281904
+              }
+            },
+            "off": {
+              "median_ttft_ms": {
+                "values": [
+                  761.5407584817149,
+                  265.1607514708303,
+                  587.144082528539
+                ],
+                "mean": 537.9485308270281,
+                "between_window_std": 251.8202326471078
+              },
+              "median_e2el_ms": {
+                "values": [
+                  2376.7368639819324,
+                  2041.752963559702,
+                  2193.813833000604
+                ],
+                "mean": 2204.101220180746,
+                "between_window_std": 167.72872782194557
+              },
+              "median_tpot_ms": {
+                "values": [
+                  12.718127279608385,
+                  13.990342641784627,
+                  12.651965747620384
+                ],
+                "mean": 13.120145223004466,
+                "between_window_std": 0.7543387818596443
+              }
+            }
+          },
+          "empirical_on_off_difference_percent": {
+            "values": [
+              4.589491833808612,
+              -7.959950513402248,
+              1.8832858265404928
+            ],
+            "mean": -0.49572428435104765,
+            "between_window_std": 6.604308641885647
+          }
+        },
+        {
+          "case": "prefill_2048",
+          "gpu_step_trace_on": {
+            "case": "prefill_2048",
+            "windows": 3,
+            "mean_sync_union_percent": 57.780061744230075,
+            "between_window_std_percent": 1.9033595108112338,
+            "mean_gpu_step_us": 117068.74666666667,
+            "actual_tokens_per_rank": [
+              2048
+            ]
+          },
+          "requests": {
+            "sync": {
+              "median_ttft_ms": {
+                "values": [
+                  144.66610993258655,
+                  155.47663997858763,
+                  146.5157630154863
+                ],
+                "mean": 148.88617097555348,
+                "between_window_std": 5.7819560177966975
+              },
+              "median_e2el_ms": {
+                "values": [
+                  144.66594997793436,
+                  155.47647699713707,
+                  146.5156130725518
+                ],
+                "mean": 148.88601334920773,
+                "between_window_std": 5.781952240541763
+              }
+            },
+            "off": {
+              "median_ttft_ms": {
+                "values": [
+                  154.5568339060992,
+                  152.7101049432531,
+                  143.76617199741304
+                ],
+                "mean": 150.3443702822551,
+                "between_window_std": 5.771232231644994
+              },
+              "median_e2el_ms": {
+                "values": [
+                  154.5566979330033,
+                  152.7099449886009,
+                  143.76600505784154
+                ],
+                "mean": 150.3442159931486,
+                "between_window_std": 5.771244964603359
+              }
+            }
+          },
+          "empirical_on_off_difference_percent": {
+            "values": [
+              -6.399409022264102,
+              1.8116253907117574,
+              1.912543806287581
+            ],
+            "mean": -0.8917466084215878,
+            "between_window_std": 4.770042461057422
+          }
+        },
+        {
+          "case": "prefill_512",
+          "gpu_step_trace_on": {
+            "case": "prefill_512",
+            "windows": 3,
+            "mean_sync_union_percent": 31.829358499820408,
+            "between_window_std_percent": 2.5542765508988774,
+            "mean_gpu_step_us": 55120.32,
+            "actual_tokens_per_rank": [
+              512
+            ]
+          },
+          "requests": {
+            "sync": {
+              "median_ttft_ms": {
+                "values": [
+                  79.60673200432211,
+                  88.43704499304295,
+                  80.6141149951145
+                ],
+                "mean": 82.88596399749319,
+                "between_window_std": 4.833692200264693
+              },
+              "median_e2el_ms": {
+                "values": [
+                  79.60655796341598,
+                  88.43688492197543,
+                  80.61393606476486
+                ],
+                "mean": 82.88579298338543,
+                "between_window_std": 4.833701370872901
+              }
+            },
+            "off": {
+              "median_ttft_ms": {
+                "values": [
+                  85.13553603552282,
+                  84.36225296463817,
+                  83.63423799164593
+                ],
+                "mean": 84.3773423306023,
+                "between_window_std": 0.7507627593727868
+              },
+              "median_e2el_ms": {
+                "values": [
+                  85.13528597541153,
+                  84.3620770610869,
+                  83.63396197091788
+                ],
+                "mean": 84.37710833580543,
+                "between_window_std": 0.7507748637454262
+              }
+            }
+          },
+          "empirical_on_off_difference_percent": {
+            "values": [
+              -6.494120186068731,
+              4.830112858783875,
+              -3.6111084037533825
+            ],
+            "mean": -1.7583719103460795,
+            "between_window_std": 5.885069064933335
+          }
+        }
+      ],
+      "note": "Three client windows per fixed service instance, not independent service restarts. Request latency and GPU-step fractions have different denominators. On/off differences also include scheduling, sampling and run-order variation; not an isolated overhead estimate or INC speedup."
+    },
+    {
+      "world": 16,
+      "rows": [
+        {
+          "case": "decode_c128",
+          "gpu_step_trace_on": {
+            "case": "decode_c128",
+            "windows": 3,
+            "mean_sync_union_percent": 55.60255964494891,
+            "between_window_std_percent": 0.18270182671425164,
+            "mean_gpu_step_us": 13781.078666666666,
+            "actual_tokens_per_rank": [
+              8
+            ]
+          },
+          "requests": {
+            "sync": {
+              "median_ttft_ms": {
+                "values": [
+                  509.50894347624853,
+                  506.3684045453556,
+                  691.1588205257431
+                ],
+                "mean": 569.0120561824491,
+                "between_window_std": 105.7938550949263
+              },
+              "median_e2el_ms": {
+                "values": [
+                  2253.3108624629676,
+                  2250.998015573714,
+                  2442.456361022778
+                ],
+                "mean": 2315.5884130198197,
+                "between_window_std": 109.87695157786384
+              },
+              "median_tpot_ms": {
+                "values": [
+                  13.730508369745642,
+                  13.737342204425602,
+                  13.792675323546021
+                ],
+                "mean": 13.753508632572421,
+                "between_window_std": 0.034091019132233696
+              }
+            },
+            "off": {
+              "median_ttft_ms": {
+                "values": [
+                  587.8282499616034,
+                  432.44529247749597,
+                  574.2397814756259
+                ],
+                "mean": 531.5044413049085,
+                "between_window_std": 86.05636434196597
+              },
+              "median_e2el_ms": {
+                "values": [
+                  2406.4730564132333,
+                  2185.5718054575846,
+                  2307.9227755079046
+                ],
+                "mean": 2299.989212459574,
+                "between_window_std": 110.66411674713714
+              },
+              "median_tpot_ms": {
+                "values": [
+                  14.320616074562746,
+                  13.803534921511686,
+                  13.65329627145639
+                ],
+                "mean": 13.925815755843608,
+                "between_window_std": 0.3500619684258196
+              }
+            }
+          },
+          "empirical_on_off_difference_percent": {
+            "values": [
+              -4.120686580413913,
+              -0.47953453562773474,
+              1.0208454377498288
+            ],
+            "mean": -1.193125226097273,
+            "between_window_std": 2.644002009945212
+          }
+        },
+        {
+          "case": "decode_c256",
+          "gpu_step_trace_on": {
+            "case": "decode_c256",
+            "windows": 3,
+            "mean_sync_union_percent": 55.649156510024255,
+            "between_window_std_percent": 0.2189707115636321,
+            "mean_gpu_step_us": 14733.214666666667,
+            "actual_tokens_per_rank": [
+              16
+            ]
+          },
+          "requests": {
+            "sync": {
+              "median_ttft_ms": {
+                "values": [
+                  1234.3670974951237,
+                  873.5787415062077,
+                  1465.2516174828634
+                ],
+                "mean": 1191.065818828065,
+                "between_window_std": 298.20370318336666
+              },
+              "median_e2el_ms": {
+                "values": [
+                  3186.054148012772,
+                  2879.6480370219797,
+                  3342.1738959732465
+                ],
+                "mean": 3135.9586936693327,
+                "between_window_std": 235.29706428057813
+              },
+              "median_tpot_ms": {
+                "values": [
+                  15.364118476350624,
+                  15.792246157666446,
+                  14.779555768060579
+                ],
+                "mean": 15.311973467359216,
+                "between_window_std": 0.5083549771292262
+              }
+            },
+            "off": {
+              "median_ttft_ms": {
+                "values": [
+                  801.1091075022705,
+                  637.5767235294916,
+                  1258.9956800220534
+                ],
+                "mean": 899.2271703512719,
+                "between_window_std": 322.119148088105
+              },
+              "median_e2el_ms": {
+                "values": [
+                  2862.229448510334,
+                  2879.1093039908446,
+                  3121.468177996576
+                ],
+                "mean": 2954.268976832585,
+                "between_window_std": 145.04451741678585
+              },
+              "median_tpot_ms": {
+                "values": [
+                  16.222557385257762,
+                  17.633520854145697,
+                  14.669627902248333
+                ],
+                "mean": 16.175235380550596,
+                "between_window_std": 1.4825130308613972
+              }
+            }
+          },
+          "empirical_on_off_difference_percent": {
+            "values": [
+              -5.2916373696248575,
+              -10.441900467349729,
+              0.7493568790207572
+            ],
+            "mean": -4.9947269859846095,
+            "between_window_std": 5.601533457912029
+          }
+        },
+        {
+          "case": "decode_c64",
+          "gpu_step_trace_on": {
+            "case": "decode_c64",
+            "windows": 3,
+            "mean_sync_union_percent": 55.65273874416195,
+            "between_window_std_percent": 0.8375080974350633,
+            "mean_gpu_step_us": 13274.966666666667,
+            "actual_tokens_per_rank": [
+              3,
+              4,
+              5
+            ]
+          },
+          "requests": {
+            "sync": {
+              "median_ttft_ms": {
+                "values": [
+                  330.70176449837163,
+                  166.82765848236158,
+                  394.3583160289563
+                ],
+                "mean": 297.2959130032298,
+                "between_window_std": 117.3861713170808
+              },
+              "median_e2el_ms": {
+                "values": [
+                  2066.411578503903,
+                  1925.82930799108,
+                  2175.710554525722
+                ],
+                "mean": 2055.9838136735684,
+                "between_window_std": 125.26656797383805
+              },
+              "median_tpot_ms": {
+                "values": [
+                  13.669864378143542,
+                  13.847257003763794,
+                  14.02674501167801
+                ],
+                "mean": 13.847955464528448,
+                "between_window_std": 0.1784413419966646
+              }
+            },
+            "off": {
+              "median_ttft_ms": {
+                "values": [
+                  239.2203924828209,
+                  247.05071799689904,
+                  354.9386339727789
+                ],
+                "mean": 280.40324815083295,
+                "between_window_std": 64.66816298715979
+              },
+              "median_e2el_ms": {
+                "values": [
+                  1993.3464680216275,
+                  1998.4989470103756,
+                  2098.2307544909418
+                ],
+                "mean": 2030.0253898409817,
+                "between_window_std": 59.123733265144025
+              },
+              "median_tpot_ms": {
+                "values": [
+                  13.811379700888123,
+                  13.791736259352504,
+                  13.728681783096528
+                ],
+                "mean": 13.777265914445719,
+                "between_window_std": 0.043206244491477884
+              }
+            }
+          },
+          "empirical_on_off_difference_percent": {
+            "values": [
+              -1.0246284282190987,
+              0.4025652997362128,
+              2.1710986771393603
+            ],
+            "mean": 0.5163451828854915,
+            "between_window_std": 1.6008989129041804
+          }
+        },
+        {
+          "case": "prefill_2048",
+          "gpu_step_trace_on": {
+            "case": "prefill_2048",
+            "windows": 3,
+            "mean_sync_union_percent": 53.27129345124118,
+            "between_window_std_percent": 4.627847193036612,
+            "mean_gpu_step_us": 170548.11733333333,
+            "actual_tokens_per_rank": [
+              2048
+            ]
+          },
+          "requests": {
+            "sync": {
+              "median_ttft_ms": {
+                "values": [
+                  194.96488792356104,
+                  206.63281891029328,
+                  166.0286490805447
+                ],
+                "mean": 189.20878530479968,
+                "between_window_std": 20.905123532499147
+              },
+              "median_e2el_ms": {
+                "values": [
+                  194.96466894634068,
+                  206.6326669882983,
+                  166.0284890094772
+                ],
+                "mean": 189.2086083147054,
+                "between_window_std": 20.905118818850116
+              }
+            },
+            "off": {
+              "median_ttft_ms": {
+                "values": [
+                  216.00772091187537,
+                  214.71927303355187,
+                  190.40234899148345
+                ],
+                "mean": 207.04311431230357,
+                "between_window_std": 14.425717567273598
+              },
+              "median_e2el_ms": {
+                "values": [
+                  216.00756898988038,
+                  214.7191329859197,
+                  190.40220603346825
+                ],
+                "mean": 207.04296933642277,
+                "between_window_std": 14.42571555635263
+              }
+            }
+          },
+          "empirical_on_off_difference_percent": {
+            "values": [
+              -9.741704092558424,
+              -3.7660588213685897,
+              -12.801155048790369
+            ],
+            "mean": -8.769639320905794,
+            "between_window_std": 4.595315375456713
+          }
+        },
+        {
+          "case": "prefill_512",
+          "gpu_step_trace_on": {
+            "case": "prefill_512",
+            "windows": 3,
+            "mean_sync_union_percent": 37.85130037730997,
+            "between_window_std_percent": 2.4927638883960705,
+            "mean_gpu_step_us": 54031.168,
+            "actual_tokens_per_rank": [
+              512
+            ]
+          },
+          "requests": {
+            "sync": {
+              "median_ttft_ms": {
+                "values": [
+                  88.63389689940959,
+                  84.9564200034365,
+                  80.43053792789578
+                ],
+                "mean": 84.67361827691396,
+                "between_window_std": 4.108984937459874
+              },
+              "median_e2el_ms": {
+                "values": [
+                  88.63376791123301,
+                  84.95626703370363,
+                  80.43039496988058
+                ],
+                "mean": 84.6734766382724,
+                "between_window_std": 4.108991325074732
+              }
+            },
+            "off": {
+              "median_ttft_ms": {
+                "values": [
+                  78.17529700696468,
+                  85.93573397956789,
+                  86.28547901753336
+                ],
+                "mean": 83.46550333468865,
+                "between_window_std": 4.584789268910114
+              },
+              "median_e2el_ms": {
+                "values": [
+                  78.1751450849697,
+                  85.93547099735588,
+                  86.28529403358698
+                ],
+                "mean": 83.46530337197085,
+                "between_window_std": 4.584749182377888
+              }
+            }
+          },
+          "empirical_on_off_difference_percent": {
+            "values": [
+              13.378394829140404,
+              -1.1395887726568077,
+              -6.785546254483732
+            ],
+            "mean": 1.8177532673332883,
+            "between_window_std": 10.402188902441925
+          }
+        }
+      ],
+      "note": "Three client windows per fixed service instance, not independent service restarts. Request latency and GPU-step fractions have different denominators. On/off differences also include scheduling, sampling and run-order variation; not an isolated overhead estimate or INC speedup."
+    }
+  ]
+}

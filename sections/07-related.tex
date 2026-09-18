@@ -1,0 +1,66 @@
+\section{Related Work}
+\label{sec:related}
+Every ingredient \sys{} uses has a precedent: signals that trail data, in-network
+multicast and reduction, and device-side barriers are all established. What we claim is
+new is their combination and placement for cross-node EP synchronization, so this
+section is organized around drawing that boundary precisely rather than around
+categories of technique.
+
+\paragraph{EP communication and its data path.}
+DeepEP~\cite{deepep}, NCCL EP~\cite{ncclep}, and GPU-initiated
+networking~\cite{gin} supply the setting, the baselines, and the transport primitives
+we measure. We do not replace their data path; we relocate the coordination around it.
+SwiftEP~\cite{swiftep} reduces copies and GPU overhead through buffer fusion and TMA
+offloading, and COMET~\cite{comet} overlaps computation with communication at fine
+grain. These optimize how the payload moves and when compute proceeds against it; our
+question is when a rank may begin uploading and when a destination may be told its
+input is complete. The two are composable, but improvements to byte movement cannot be
+counted as control-traversal savings, and we keep the arithmetic and transferred bytes
+fixed across any comparison.
+
+\paragraph{Ordering inside an already-started transfer.}
+Two recent systems are close enough to require careful separation, and in both cases
+the distinction is the scope of what gets reordered.
+Perseus~\cite{perseus} decouples each tile's PUT from its completion signal and uses a
+NIC fence flag to preserve order, removing serialization in the proxy and NIC pipeline.
+That serialization lives \emph{inside} an RDMA transfer that has already been
+initiated; Perseus does not aggregate readiness across ranks, does not buffer early
+data in the fabric, and does not generate per-destination completion.
+UBEP~\cite{ubep} decomposes a BSP Dispatch pipeline on a production superpod,
+substituting point-to-point signals and Data-as-Flag for its \texttt{SyncAll} and
+explicit barriers. This too addresses stage synchronization within the EP data pipeline,
+and it depends on pre-partitioned receive addresses and 512\,B atomic load/store over
+its scale-up fabric. Both works corroborate that these costs are worth attacking. What
+neither provides is readiness aggregated in the network, admission of early data against
+bounded staging, or a fabric-side completion notification per destination.
+
+\paragraph{In-network computation for MoE.}
+DySHARP~\cite{dysharp} accelerates MoE with dynamic in-switch addressing, multicast and
+reduction, and token-centric fusion, and MultiWrite~\cite{multiwrite} eliminates
+duplicate upstream traffic in many-to-many communication via multicast write semantics.
+These give us a data plane we can reuse, and we deliberately claim none of their
+bandwidth benefit: our contribution concerns the synchronization critical path
+surrounding those actions, not the bytes they save. Neither performs dynamic readiness
+aggregation, staged release, or destination completion determination.
+
+\paragraph{Collective offload and synchronization primitives.}
+SHARP~\cite{sharp} offloads reduction and broadcast to the network, and
+SwitchML~\cite{switchml} co-designs in-switch gradient aggregation with endpoint
+protocols; both target collectives whose participant set and traffic volume are
+established in advance, whereas MoE presents a readiness set and per-destination traffic
+plan that change with routing. EPIC~\cite{epic} offers programmable protocol and
+resource abstractions for Ethernet in-network computing and could plausibly host our
+mechanism; our contribution is the MoE-specific event semantics and timing rather than a
+general INC architecture. GPU-initiated networking~\cite{gin} exposes PUT, signal, and
+fence primitives to the device, which is precisely the substrate the baseline tail is
+built from, but it does not itself aggregate readiness across ranks or evaluate a
+dynamic per-destination completion condition. PFC~\cite{pfc} can protect the staging
+path at link level while supplying neither generation semantics nor an end-to-end
+visibility contract.
+
+\paragraph{Delay decomposition and observability.}
+Swift~\cite{swift} decomposes an observed round trip into endpoint and fabric components
+for congestion control; we borrow the decomposition discipline and propose no congestion
+control algorithm. FabricPerf~\cite{fabricperf} develops fine-grained observation of GPU
+scale-up communication, which informs our event-based methodology, though the
+\ready{}/\data{}/\done{} events on cross-node Direct required separate instrumentation.
