@@ -2,7 +2,7 @@
 \label{sec:design}
 \sys{} moves readiness aggregation to INC so that ranks can upload data while waiting for their peers.
 
-\subsection{Overview and Assumptions}
+\subsection{Protocol Overview}
 \label{sec:overview}
 \autoref{fig:design-overview} contrasts the baseline's wait-before-send sequence with early upload.
 \input{figures/design-overview}
@@ -12,7 +12,7 @@ Receive buffers are allocated and registered symmetrically during initialization
 
 A rank sends \ready{} after its local input is available and the previous use of its receive buffer has finished. READY identifies the rank, generation, and buffer epoch. The node uses it to confirm that the buffer is writable for the current round. Deployment can be within or across nodes; any path that bypasses INC needs the corresponding readiness protection before it writes destination memory.
 
-\subsection{Early Upload and Readiness Aggregation}
+\subsection{Overlapping Readiness Collection with Upload}
 \label{sec:early-upload}
 In Direct, a rank waits for peer readiness before sending data. With \sys{}, it sends READY and immediately starts uploading locally available data to INC. This applies to token activations in Dispatch and expert outputs in Combine.
 
@@ -20,7 +20,7 @@ INC records which ranks are ready and buffers data that arrives early. Once all 
 
 The benefit comes from moving data while readiness is being collected. While baseline sources are still waiting for peer signals, data can already be in flight to INC or buffered there. \autoref{fig:timing} illustrates how this overlap can advance data delivery when INC has sufficient buffer space and forwarding bandwidth.
 
-\subsection{Buffer Management and Backpressure}
+\subsection{Buffer Reuse and Flow Control}
 \label{sec:resources}
 A receive buffer remains assigned to its round until the last computation reading it finishes. The next READY confirms that it can be reused. A source buffer remains allocated until sending hardware has finished reading it. Generation and epoch checks keep old messages from authorizing writes into a newer round. INC retires a round's readiness state after its queued data has drained and all participants have advanced to the next round.
 
