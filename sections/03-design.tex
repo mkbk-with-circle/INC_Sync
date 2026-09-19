@@ -42,10 +42,6 @@ For Combine, INC uses the expert assignments recorded during Dispatch to determi
 
 \subsection{Buffer Management and Progress}
 \label{sec:resources}
-A destination sends \ready{} only after the previous computation has finished using its receive buffer. It keeps that buffer reserved for the current round. After DONE and any remaining local dependencies, Dispatch can arrange the received tokens for expert computation; Combine can pass the reduced results to the next computation. The buffer becomes reusable after its last reader finishes, and the next READY confirms this. DONE alone does not permit overwrite.
+\ready{} confirms that the receive buffer is available for the current round. The buffer remains reserved until its last reader finishes; DONE confirms data arrival, not permission to overwrite. Senders retain source buffers until the transport finishes reading them. Generation and buffer-epoch checks reject stale signals.
 
-A sender likewise keeps its source buffer until the transport has finished reading it. Generating DONE at INC does not change this requirement. Generation and epoch identifiers prevent signals from one round from authorizing writes in another.
-
-INC needs space for early-arriving tokens, data waiting to be forwarded, and partial sums during Combine. Buffer occupancy triggers PFC~\cite{pfc} before overflow, with spare capacity (headroom) for data already in flight when a pause is sent. Transmission resumes on the same path when space becomes available.
-
-READY and count vectors use a separate traffic class with reserved resources, so they can still arrive when DATA is paused. This prevents a full data buffer from blocking the signals needed to start forwarding. Exhaustion of partial-sum storage must also pause incoming data before overflow. Such pauses can reduce overlap or throughput. The design assumes reliable delivery and does not address endpoint or INC-node failure recovery.
+INC uses PFC~\cite{pfc} to pause DATA before token buffers or Combine partial-sum storage fill up, reserving headroom for data already in flight. Transmission resumes when space becomes available. READY and count vectors use a separate traffic class with reserved resources, preventing DATA pauses from blocking the signals needed to start forwarding. Backpressure protects finite storage but can reduce overlap or throughput.
