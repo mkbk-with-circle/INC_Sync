@@ -29,9 +29,9 @@ For Dispatch generation $g$, the count vector from source $s$ contains $n_{g,s,d
  N_{g,d}=\sum_s n_{g,s,d}.
  \label{eq:count}
 \end{equation}
-The expected count becomes valid only after every required source has supplied its complete vector and all additions have finished. A zero entry explicitly reports no traffic; silence does not. Planned counts and output progress use the same record unit, with a fragmented record counted only when all its fragments have been submitted. Input packets, multicast replicas, and reduced outputs require their own accounting.
+The expected count $N_{g,d}$ is finalized after INC receives and aggregates complete vectors from all required sources, including those with zero traffic. Expected counts and forwarding progress refer to the same destination output records, accounting for any replication. A record contributes to forwarding progress only after all its fragments enter the ordered delivery channel.
 
-The node appends \done$(g,d)$ only when $N_{g,d}$ is valid and all $N_{g,d}$ records have entered the appropriate ordered delivery channel. If data finishes first, DONE waits for the final count; a destination with zero expected records is notified once its count is valid and it is ready. At the receiver, the required contract is
+INC issues \done$(g,d)$ once the count is finalized and all $N_{g,d}$ records have been submitted. If $N_{g,d}=0$, notification requires only the finalized count and destination readiness. In both cases, the delivery interface must guarantee
 \begin{equation}
  \operatorname{observe}_d(\done(g,d))
  \Rightarrow
