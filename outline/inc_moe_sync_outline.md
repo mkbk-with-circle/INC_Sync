@@ -61,9 +61,9 @@ PFC 在缓存溢出前暂停 DATA，并预留 headroom 接纳暂停生效前的�
 
 借鉴 Swift 区分处理与网络时延，在参与者同时就绪的参考条件下：
 
-**T_ready = T_issue + L + T_observe。**
+**T_ready = T_issue + L + T_exit。**
 
-T_issue 是本地准备并发出 READY 的时间；L 是 READY 的单向网络传播；T_observe 是接收后检查信号与完成本地同步的时间。
+T_issue 是本地准备并发出 READY 的时间；L 是 READY 的单向网络传播；T_exit 是最后一个必要 READY 到达后，rank 退出 pre-barrier 并可发送 DATA 所需的时间。
 
 ### 4.2 Latency Reduction from Early Upload
 
@@ -75,7 +75,7 @@ INC 保留本地发起工作，随后让 DATA 上传与 READY 传播重叠；目
 
 T_extra 包括仍需执行的就绪处理及额外缓存／放行等待。DATA 自身的源到目标传播已包含在 T_data 中。
 
-**收益 ΔT = L + T_observe − T_extra。**
+**收益 ΔT = L + T_exit − T_extra。**
 
 网络部分的参考收益是 L：对称路径下约半个网络 RTT。其含义不是整个实测 pre-barrier 时长的一半，净收益还取决于观察工作和新增处理成本。
 

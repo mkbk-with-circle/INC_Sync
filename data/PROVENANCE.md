@@ -54,7 +54,7 @@ The prebarrier-overview and prebarrier-timing figures are protocol schematics,
 not measured traces. Both have native draw.io, SVG, and PDF sources.
 The reference splits READY into local issue time, one-way traversal L, and
 endpoint observation. INC retains local issue time and overlaps upload with
-the readiness wait. Its reference saving is L + T_observe - T_extra;
+the readiness wait. Its reference saving is L + T_exit - T_extra;
 T_extra includes retained readiness processing and additional buffering or
 forwarding delays. The data-transfer and post-barrier work are held equal
 in the reference. L is half the network RTT only for symmetric paths.

@@ -12,10 +12,10 @@ Let $T_{\rm ready}$ be the pre-barrier duration, $T_{\rm data}$ the data-transfe
 
 Following Swift's separation of processing and network delay~\cite{swift}, consider a reference with simultaneous rank readiness and comparable communication paths:
 \begin{equation}
- T_{\rm ready}=T_{\rm issue}+L+T_{\rm observe}.
+ T_{\rm ready}=T_{\rm issue}+L+T_{\rm exit}.
  \label{eq:ready}
 \end{equation}
-Here $T_{\rm issue}$ is the local work to prepare and issue READY, $L$ is its one-way network traversal, and $T_{\rm observe}$ is the subsequent signal checking and local synchronization before DATA starts. These terms describe the critical execution path; per-rank minimum measurements are reported separately in Section~\ref{sec:evidence}.
+Here $T_{\rm issue}$ is the local work to prepare and issue READY, $L$ is its one-way network traversal, and $T_{\rm exit}$ is the time from the arrival of the last required READY until the rank exits the pre-barrier and can send DATA.
 
 \subsection{Latency Reduction from Early Upload}
 \label{sec:readiness-analysis}
@@ -32,7 +32,7 @@ The local issue time remains. $T_{\rm extra}$ includes readiness processing stil
 
 The reference difference is therefore
 \begin{equation}
- \Delta T=L+T_{\rm observe}-T_{\rm extra}.
+ \Delta T=L+T_{\rm exit}-T_{\rm extra}.
  \label{eq:gain}
 \end{equation}
 The network component is one serialized READY traversal, $L$, which is approximately half a network RTT for symmetric paths. The net benefit also depends on how much endpoint observation work is replaced and how much processing and waiting INC adds. Half a network RTT is not half the measured pre-barrier duration.
