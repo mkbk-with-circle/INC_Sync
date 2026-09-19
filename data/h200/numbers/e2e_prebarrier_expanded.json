@@ -1,25 +1,158 @@
 {
   "scope": "H200 Qwen3-30B-A3B BF16, DeepEP V2 Direct, trace-on sampled GPU steps",
-  "method": "For each sampled rank step, sum dispatch_pre and combine_pre, divide by same-rank gpu_clock_span_us, average ranks within a client window, then report mean and sample standard deviation across three windows.",
+  "method": "For each sampled rank step, sum dispatch_pre and combine_pre, divide by same-rank gpu_clock_span_us, average active rank-steps within a client window, then report mean and sample standard deviation across three windows. Low-concurrency windows may activate fewer than all EP ranks; active_steps_per_window records the included rank-steps.",
   "rows": [
     {
       "topology": "1n8",
       "ep": 8,
       "workload": "decode_c1",
-      "tokens_per_rank": [1],
-      "active_steps_per_window": [1, 1, 1],
-      "run_values_percent": [9.19813878545939, 9.152938124270333, 9.43493482765308],
+      "tokens_per_rank": [
+        1
+      ],
+      "active_steps_per_window": [
+        1,
+        1,
+        1
+      ],
+      "run_values_percent": [
+        9.19813878545939,
+        9.152938124270333,
+        9.43493482765308
+      ],
       "mean_percent": 9.262003912460935,
       "between_window_std_percent": 0.15145824842139438,
-      "source": "data/h200/20260912/gpu3/results/processed_snapshot_sync/snap_c1_r{1,2,3}-steps.json"
+      "source": "data/h200/20260912/gpu3/results/processed_snapshot_sync/snap_c1_r{1,2,3}-steps.json",
+      "note": "Only one rank is active in each sampled window."
+    },
+    {
+      "topology": "1n8",
+      "ep": 8,
+      "workload": "decode_c2",
+      "tokens_per_rank": [
+        1
+      ],
+      "active_steps_per_window": [
+        2,
+        2,
+        2
+      ],
+      "run_values_percent": [
+        10.96349227776592,
+        9.428610696810924,
+        10.211266858642986
+      ],
+      "mean_percent": 10.201123277739944,
+      "between_window_std_percent": 0.7674910657876601,
+      "source": "data/h200/20260919/gpu3/results/processed_snapshot_sync_c2_32_20260919b/snap_c{2,4,8,16,32}_r{1,2,3}-steps.json",
+      "note": "Only 2 ranks are active in each sampled window."
+    },
+    {
+      "topology": "1n8",
+      "ep": 8,
+      "workload": "decode_c4",
+      "tokens_per_rank": [
+        1
+      ],
+      "active_steps_per_window": [
+        4,
+        4,
+        4
+      ],
+      "run_values_percent": [
+        10.499739731276405,
+        10.686064555982997,
+        10.0321694984635
+      ],
+      "mean_percent": 10.405991261907634,
+      "between_window_std_percent": 0.3368772301504617,
+      "source": "data/h200/20260919/gpu3/results/processed_snapshot_sync_c2_32_20260919b/snap_c{2,4,8,16,32}_r{1,2,3}-steps.json",
+      "note": "Only 4 ranks are active in each sampled window."
+    },
+    {
+      "topology": "1n8",
+      "ep": 8,
+      "workload": "decode_c8",
+      "tokens_per_rank": [
+        1
+      ],
+      "active_steps_per_window": [
+        8,
+        8,
+        8
+      ],
+      "run_values_percent": [
+        10.5246746479142,
+        11.282112057516688,
+        11.056893100566535
+      ],
+      "mean_percent": 10.954559935332474,
+      "between_window_std_percent": 0.3889497588332561,
+      "source": "data/h200/20260919/gpu3/results/processed_snapshot_sync_c2_32_20260919b/snap_c{2,4,8,16,32}_r{1,2,3}-steps.json"
+    },
+    {
+      "topology": "1n8",
+      "ep": 8,
+      "workload": "decode_c16",
+      "tokens_per_rank": [
+        1,
+        2,
+        3
+      ],
+      "active_steps_per_window": [
+        8,
+        8,
+        8
+      ],
+      "run_values_percent": [
+        14.6172365428313,
+        14.939895933173887,
+        15.18203229489299
+      ],
+      "mean_percent": 14.913054923632725,
+      "between_window_std_percent": 0.28335294286741386,
+      "source": "data/h200/20260919/gpu3/results/processed_snapshot_sync_c2_32_20260919b/snap_c{2,4,8,16,32}_r{1,2,3}-steps.json"
+    },
+    {
+      "topology": "1n8",
+      "ep": 8,
+      "workload": "decode_c32",
+      "tokens_per_rank": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "active_steps_per_window": [
+        8,
+        8,
+        8
+      ],
+      "run_values_percent": [
+        11.415301174762398,
+        12.441807278225252,
+        12.671732288813073
+      ],
+      "mean_percent": 12.176280247266908,
+      "between_window_std_percent": 0.6689792517080186,
+      "source": "data/h200/20260919/gpu3/results/processed_snapshot_sync_c2_32_20260919b/snap_c{2,4,8,16,32}_r{1,2,3}-steps.json"
     },
     {
       "topology": "1n8",
       "ep": 8,
       "workload": "decode_c64",
-      "tokens_per_rank": [8],
-      "active_steps_per_window": [8, 8, 8],
-      "run_values_percent": [9.410679496266289, 9.383435382834788, 9.18910654971524],
+      "tokens_per_rank": [
+        8
+      ],
+      "active_steps_per_window": [
+        8,
+        8,
+        8
+      ],
+      "run_values_percent": [
+        9.410679496266289,
+        9.383435382834788,
+        9.18910654971524
+      ],
       "mean_percent": 9.327740476272105,
       "between_window_std_percent": 0.12083080991037845,
       "source": "data/h200/numbers/outline_shares.json"
@@ -28,9 +161,19 @@
       "topology": "1n8",
       "ep": 8,
       "workload": "decode_c128",
-      "tokens_per_rank": [16],
-      "active_steps_per_window": [8, 8, 8],
-      "run_values_percent": [8.116994065670873, 7.8673627146576255, 7.834427467868055],
+      "tokens_per_rank": [
+        16
+      ],
+      "active_steps_per_window": [
+        8,
+        8,
+        8
+      ],
+      "run_values_percent": [
+        8.116994065670873,
+        7.8673627146576255,
+        7.834427467868055
+      ],
       "mean_percent": 7.939594749398851,
       "between_window_std_percent": 0.15451236416742875,
       "source": "data/h200/numbers/outline_shares.json"
@@ -39,9 +182,19 @@
       "topology": "1n8",
       "ep": 8,
       "workload": "decode_c256",
-      "tokens_per_rank": [32],
-      "active_steps_per_window": [8, 8, 8],
-      "run_values_percent": [7.965824481232541, 7.346968570311586, 7.523834592172827],
+      "tokens_per_rank": [
+        32
+      ],
+      "active_steps_per_window": [
+        8,
+        8,
+        8
+      ],
+      "run_values_percent": [
+        7.965824481232541,
+        7.346968570311586,
+        7.523834592172827
+      ],
       "mean_percent": 7.612209214572318,
       "between_window_std_percent": 0.31875259219909235,
       "source": "data/h200/20260912/gpu3/results/processed_snapshot_sync/snap_c256_r{1,2,3}-steps.json"
@@ -49,43 +202,240 @@
     {
       "topology": "2n4",
       "ep": 8,
+      "workload": "decode_c1",
+      "tokens_per_rank": [
+        1
+      ],
+      "active_steps_per_window": [
+        1,
+        1,
+        1
+      ],
+      "run_values_percent": [
+        23.300838217825095,
+        19.07934926368106,
+        15.785592640061799
+      ],
+      "mean_percent": 19.388593373855983,
+      "between_window_std_percent": 3.7671544915600568,
+      "source": "data/h200/20260919/cross_2n4/results/processed_cross_2n4_concurrency_20260919/node{0,1}/snap_c*_r*-steps.json",
+      "note": "Only one rank is active in each sampled window."
+    },
+    {
+      "topology": "2n4",
+      "ep": 8,
+      "workload": "decode_c2",
+      "tokens_per_rank": [
+        1
+      ],
+      "active_steps_per_window": [
+        2,
+        2,
+        2
+      ],
+      "run_values_percent": [
+        18.106635703152406,
+        19.396641765426413,
+        16.803269376868073
+      ],
+      "mean_percent": 18.10218228181563,
+      "between_window_std_percent": 1.2966919299337831,
+      "source": "data/h200/20260919/cross_2n4/results/processed_cross_2n4_concurrency_20260919/node{0,1}/snap_c*_r*-steps.json",
+      "note": "Only 2 ranks are active in each sampled window."
+    },
+    {
+      "topology": "2n4",
+      "ep": 8,
+      "workload": "decode_c4",
+      "tokens_per_rank": [
+        1
+      ],
+      "active_steps_per_window": [
+        4,
+        4,
+        4
+      ],
+      "run_values_percent": [
+        19.306080067339263,
+        17.657658081132606,
+        17.97198796279677
+      ],
+      "mean_percent": 18.311908703756213,
+      "between_window_std_percent": 0.8752047439046403,
+      "source": "data/h200/20260919/cross_2n4/results/processed_cross_2n4_concurrency_20260919/node{0,1}/snap_c*_r*-steps.json",
+      "note": "Only 4 ranks are active in each sampled window."
+    },
+    {
+      "topology": "2n4",
+      "ep": 8,
+      "workload": "decode_c8",
+      "tokens_per_rank": [
+        1,
+        2
+      ],
+      "active_steps_per_window": [
+        7,
+        7,
+        7
+      ],
+      "run_values_percent": [
+        20.338848145174808,
+        19.431731175146975,
+        19.86222378959214
+      ],
+      "mean_percent": 19.877601036637973,
+      "between_window_std_percent": 0.45375394667501284,
+      "source": "data/h200/20260919/cross_2n4/results/processed_cross_2n4_concurrency_20260919/node{0,1}/snap_c*_r*-steps.json",
+      "note": "Only 7 ranks are active in each sampled window."
+    },
+    {
+      "topology": "2n4",
+      "ep": 8,
+      "workload": "decode_c16",
+      "tokens_per_rank": [
+        1,
+        2,
+        3
+      ],
+      "active_steps_per_window": [
+        8,
+        8,
+        8
+      ],
+      "run_values_percent": [
+        19.03530477226913,
+        18.56593526239363,
+        18.598842030457927
+      ],
+      "mean_percent": 18.733360688373562,
+      "between_window_std_percent": 0.2620083704688824,
+      "source": "data/h200/20260919/cross_2n4/results/processed_cross_2n4_concurrency_20260919/node{0,1}/snap_c*_r*-steps.json"
+    },
+    {
+      "topology": "2n4",
+      "ep": 8,
+      "workload": "decode_c32",
+      "tokens_per_rank": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "active_steps_per_window": [
+        8,
+        8,
+        8
+      ],
+      "run_values_percent": [
+        17.704165449090322,
+        17.835791669589184,
+        17.440852142954032
+      ],
+      "mean_percent": 17.660269753877845,
+      "between_window_std_percent": 0.2010955779432742,
+      "source": "data/h200/20260919/cross_2n4/results/processed_cross_2n4_concurrency_20260919/node{0,1}/snap_c*_r*-steps.json"
+    },
+    {
+      "topology": "2n4",
+      "ep": 8,
       "workload": "decode_c64",
-      "tokens_per_rank": [8],
-      "active_steps_per_window": [8, 8, 8],
-      "run_values_percent": [16.71845988507914, 16.821873342124793, 16.630779525717873],
+      "tokens_per_rank": [
+        8
+      ],
+      "active_steps_per_window": [
+        8,
+        8,
+        8
+      ],
+      "run_values_percent": [
+        16.71845988507914,
+        16.821873342124793,
+        16.630779525717873
+      ],
       "mean_percent": 16.723704250973935,
       "between_window_std_percent": 0.09565479181655884,
       "source": "data/h200/numbers/outline_shares.json"
     },
     {
-      "topology": "2n2",
-      "ep": 4,
-      "workload": "decode_c64",
-      "tokens_per_rank": [16],
-      "active_steps_per_window": [4, 4, 4],
-      "run_values_percent": [14.730301325143287, 14.966951359742591, 14.553594416771183],
-      "mean_percent": 14.75028236721902,
-      "between_window_std_percent": 0.20740159620285256,
-      "source": "data/h200/20260912/cross_e2e/2n2-sync-step-summary.json"
-    },
-    {
       "topology": "2n4",
       "ep": 8,
       "workload": "decode_c128",
-      "tokens_per_rank": [16],
-      "active_steps_per_window": [8, 8, 8],
-      "run_values_percent": [15.239888443006363, 15.196449629647402, 15.14006009178306],
+      "tokens_per_rank": [
+        16
+      ],
+      "active_steps_per_window": [
+        8,
+        8,
+        8
+      ],
+      "run_values_percent": [
+        15.239888443006363,
+        15.196449629647402,
+        15.14006009178306
+      ],
       "mean_percent": 15.192132721478941,
       "between_window_std_percent": 0.0500539878440469,
       "source": "data/h200/20260912/cross_e2e/2n4-sync-step-summary.json"
     },
     {
+      "topology": "2n4",
+      "ep": 8,
+      "workload": "decode_c256",
+      "tokens_per_rank": [
+        32
+      ],
+      "active_steps_per_window": [
+        8,
+        8,
+        8
+      ],
+      "run_values_percent": [
+        14.2778490524106,
+        14.17683485259724,
+        14.195799638631012
+      ],
+      "mean_percent": 14.216827847879618,
+      "between_window_std_percent": 0.05368990900658795,
+      "source": "data/h200/20260919/cross_2n4/results/processed_cross_2n4_concurrency_20260919/node{0,1}/snap_c*_r*-steps.json"
+    },
+    {
+      "topology": "2n2",
+      "ep": 4,
+      "workload": "decode_c64",
+      "tokens_per_rank": [
+        16
+      ],
+      "active_steps_per_window": [
+        4,
+        4,
+        4
+      ],
+      "run_values_percent": [
+        14.730301325143287,
+        14.966951359742591,
+        14.553594416771183
+      ],
+      "mean_percent": 14.75028236721902,
+      "between_window_std_percent": 0.20740159620285256,
+      "source": "data/h200/20260912/cross_e2e/2n2-sync-step-summary.json"
+    },
+    {
       "topology": "2n8",
       "ep": 16,
       "workload": "decode_c256",
-      "tokens_per_rank": [16],
-      "active_steps_per_window": [16, 16, 16],
-      "run_values_percent": [14.905155626124612, 15.125383334666807, 15.097313983798426],
+      "tokens_per_rank": [
+        16
+      ],
+      "active_steps_per_window": [
+        16,
+        16,
+        16
+      ],
+      "run_values_percent": [
+        14.905155626124612,
+        15.125383334666807,
+        15.097313983798426
+      ],
       "mean_percent": 15.042617648196615,
       "between_window_std_percent": 0.11987004525166377,
       "source": "data/h200/20260912/cross_e2e/2n8-sync-step-summary.json"
@@ -94,9 +444,19 @@
       "topology": "2n4",
       "ep": 8,
       "workload": "prefill_512",
-      "tokens_per_rank": [512],
-      "active_steps_per_window": [1, 1, 1],
-      "run_values_percent": [2.70815825226827, 2.6446844984510682, 2.5790590830371825],
+      "tokens_per_rank": [
+        512
+      ],
+      "active_steps_per_window": [
+        1,
+        1,
+        1
+      ],
+      "run_values_percent": [
+        2.70815825226827,
+        2.6446844984510682,
+        2.5790590830371825
+      ],
       "mean_percent": 2.6439672779188403,
       "between_window_std_percent": 0.06455257297744317,
       "source": "data/h200/20260912/cross_e2e/2n4-sync-step-summary.json"
@@ -105,9 +465,19 @@
       "topology": "2n4",
       "ep": 8,
       "workload": "prefill_2048",
-      "tokens_per_rank": [2048],
-      "active_steps_per_window": [1, 1, 1],
-      "run_values_percent": [3.5494806511117676, 2.7799863442612787, 3.074274393571074],
+      "tokens_per_rank": [
+        2048
+      ],
+      "active_steps_per_window": [
+        1,
+        1,
+        1
+      ],
+      "run_values_percent": [
+        3.5494806511117676,
+        2.7799863442612787,
+        3.074274393571074
+      ],
       "mean_percent": 3.1345804629813734,
       "between_window_std_percent": 0.38827566054881485,
       "source": "data/h200/20260912/cross_e2e/2n4-sync-step-summary.json"

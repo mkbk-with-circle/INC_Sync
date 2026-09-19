@@ -6,12 +6,13 @@
 |:---|:---|:---|
 | Pre-barrier duration/share, entry-cost.tex | h200/numbers/paired_control_share.json, pre fields | EP8; T=8/32/64/128 |
 | Pre-barrier constants | h200/numbers/pre_min_fits_t64.json | EP4/8/16; all listed T |
-| GPU-step shares, inference-share.tex | h200/numbers/e2e_prebarrier_expanded.json | Qwen3-30B-A3B; 1n8 C1/64/128/256 and 2n4 C64/128 |
+| GPU-step shares, inference-share.tex | h200/numbers/e2e_prebarrier_expanded.json | Qwen3-30B-A3B; 1n8 and 2n4 C1/2/4/8/16/32/64/128/256 |
 | Serving coverage, Table tab:serving-coverage | h200/numbers/e2e_prebarrier_expanded.json | Cross-node EP4/8/16 decode and EP8 prefill |
 | Same-image trace check | h200/numbers/POST_STAGES.md | EP8/T8 total operator differences across three runs |
 
-Numeric source files are unchanged. Other H100/H200 measurements and earlier
-figure sources remain available as historical evidence in the repository.
+Numeric source files listed above are the maintained inputs for the current
+figures. Other H100/H200 measurements and earlier figure sources remain
+available as historical evidence in the repository.
 
 ## Microbenchmarks
 
@@ -34,9 +35,12 @@ decode step. Sum pre-barriers and divide by the same rank's GPU-step time, then
 average over ranks and three client windows on one server instance. This is a
 GPU-step share, not the single-operator denominator used by entry-cost.tex.
 
-The 1n8 shares are 9.26%, 9.33%, 7.94%, and 7.61% at concurrency 1, 64, 128,
-and 256. The C1 windows have one active rank. The 2n4 shares are 16.72% and
-15.19% at concurrency 64 and 128. These characterize the recorded software
+The request-concurrency sweep reports concurrency 1/2/4/8/16/32/64/128/256
+for both 1n8 and 2n4 at EP8. The 20260919 supplement adds 1n8 C2/4/8/16/32
+and 2n4 C1/2/4/8/16/32/256; existing 20260912 rows provide 1n8 C1/64/128/256
+and 2n4 C64/128. The 1n8 shares range from 7.61% to 14.91%; the 2n4 shares
+range from 14.22% to 19.88%. C1 has one active rank, and 2n4 C8 has seven
+active ranks in the sampled windows. These characterize the recorded software
 baseline.
 
 The expanded cross-node summary reports same-rank pre-barrier/GPU-step shares.

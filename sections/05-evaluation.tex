@@ -41,13 +41,13 @@ The fitted duration rises from approximately 11.6\us{} at EP4 to 18.3\us{} at EP
 
 \subsection{Pre-Barriers in MoE Serving}
 \label{sec:e2e}
-We measure Qwen3-30B-A3B in BF16 with vLLM 0.27 and DeepEP V2 Direct. The model has $H=2048$, 128 experts, and $\topk=8$. Runs use actual routing, TP=1, EP8, and requests with 128 input and 128 output tokens. \autoref{fig:inference-share} reports one-node measurements at concurrency 1, 64, 128, and 256, and cross-node measurements at 64 and 128.
+We measure Qwen3-30B-A3B in BF16 with vLLM 0.27 and DeepEP V2 Direct. The model has $H=2048$, 128 experts, and $\topk=8$. Runs use actual routing, TP=1, EP8, and requests with 128 input and 128 output tokens. \autoref{fig:inference-share} reports one-node and cross-node sweeps from concurrency 1 to 256.
 
-The serving build includes tracing and an expert-padding correctness fix. For decode, one active GPU step is sampled per rank and client window; each sampled step contains 48 Dispatch and 48 Combine calls. We sum the pre-barrier intervals from those calls, divide by the same rank's trace-on GPU-step time, and average over ranks and three client windows on the same server instance. Thus \autoref{fig:inference-share} and \autoref{tab:serving-coverage} measure cumulative pre-barrier exposure within an MoE GPU step, whereas \autoref{fig:entry-cost} measures a single communication operator.
+The serving build includes tracing and an expert-padding correctness fix. For decode, one active GPU step is sampled per rank and client window; each sampled step contains 48 Dispatch and 48 Combine calls. We sum the pre-barrier intervals from those calls, divide by the same rank's trace-on GPU-step time, and average over active rank-steps and three client windows on the same server instance. Thus \autoref{fig:inference-share} and \autoref{tab:serving-coverage} measure cumulative pre-barrier exposure within an MoE GPU step, whereas \autoref{fig:entry-cost} measures a single communication operator.
 
 \input{figures/inference-share}
 
-For one node, the shares at C64, C128, and C256 are 9.33\%, 7.94\%, and 7.61\%. C1 is a low-load anchor with only one active rank in each sampled window. Across two nodes, C64 and C128 give 16.72\% and 15.19\%. Readiness coordination therefore remains visible with real routing and model computation.
+For one node, the share stays between 7.61\% and 14.91\% across the sweep. Across two nodes, it stays between 14.22\% and 19.88\%. C1 is a low-load anchor with one active rank in each sampled window; from C16 onward both topologies activate all eight ranks. Readiness coordination therefore remains visible with real routing and model computation, and the cross-node path exposes a larger fraction of the GPU step.
 
 \autoref{tab:serving-coverage} extends the cross-node results. At 16 tokens per rank, the share remains near 15\% across EP4, EP8, and EP16. Prefill has much larger token batches and a 2.6--3.1\% share. Each prefill row samples the single active prefill step per client window; it is a workload comparison rather than a controlled token-only experiment.
 

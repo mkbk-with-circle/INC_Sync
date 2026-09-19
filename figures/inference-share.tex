@@ -3,25 +3,40 @@
 \centering
 \begin{tikzpicture}
 \begin{axis}[width=\columnwidth,height=5.4cm,
- xmode=log,log basis x=2,xtick={1,64,128,256},xticklabels={1,64,128,256},
+ xmode=log,log basis x=2,
+ xtick={1,2,4,8,16,32,64,128,256},
+ xticklabels={1,2,4,8,16,32,64,128,256},
  xlabel={Request concurrency},ylabel={Pre-barrier share of GPU step (\%)},
- xmin=.7,xmax=380,ymin=0,ymax=20,
+ xmin=.7,xmax=380,ymin=0,ymax=25,
  grid=major,grid style={black!10},
  tick label style={font=\footnotesize},label style={font=\footnotesize},
+ xticklabel style={font=\scriptsize,rotate=35,anchor=east},
  legend style={font=\footnotesize,at={(.03,.97)},anchor=north west,draw=none}]
-\addplot+[datablue,mark=*,solid,error bars/.cd,y dir=both,y explicit]
- coordinates {(1,9.26) +- (0,0.15) (64,9.33) +- (0,0.12)
- (128,7.94) +- (0,0.15) (256,7.61) +- (0,0.32)};
+\addplot+[datablue,mark=*,solid]
+ coordinates {(1,9.26) (2,10.20) (4,10.41) (8,10.95) (16,14.91)
+ (32,12.18) (64,9.33) (128,7.94) (256,7.61)};
 \addlegendentry{1 node}
+\addplot+[datablue,mark=*,only marks,forget plot,
+ error bars/.cd,y dir=both,y explicit]
+ coordinates {(1,9.26) +- (0,0.15) (2,10.20) +- (0,0.77)
+ (4,10.41) +- (0,0.34) (8,10.95) +- (0,0.39)
+ (16,14.91) +- (0,0.28) (32,12.18) +- (0,0.67)
+ (64,9.33) +- (0,0.12) (128,7.94) +- (0,0.15)
+ (256,7.61) +- (0,0.32)};
 \addplot+[controlorange,mark=square*,dashed]
- coordinates {(64,16.72) (128,15.19)};
+ coordinates {(1,19.39) (2,18.10) (4,18.31) (8,19.88) (16,18.73)
+ (32,17.66) (64,16.72) (128,15.19) (256,14.22)};
 \addlegendentry{2 nodes}
 \addplot+[controlorange,mark=square*,only marks,forget plot,
  error bars/.cd,y dir=both,y explicit]
- coordinates {(64,16.72) +- (0,0.10) (128,15.19) +- (0,0.05)};
+ coordinates {(1,19.39) +- (0,3.77) (2,18.10) +- (0,1.30)
+ (4,18.31) +- (0,0.88) (8,19.88) +- (0,0.45)
+ (16,18.73) +- (0,0.26) (32,17.66) +- (0,0.20)
+ (64,16.72) +- (0,0.10) (128,15.19) +- (0,0.05)
+ (256,14.22) +- (0,0.05)};
 \end{axis}
 \end{tikzpicture}
-\caption{Qwen3-30B-A3B decode at fixed EP8. Each point sums the pre-barriers from 48 Dispatch and 48 Combine calls in one sampled GPU step. The single-node sweep covers concurrency 1--256; cross-node measurements cover 64 and 128. At concurrency 1, one rank is active. Lines connect measured points. Error bars show variation across three client windows.}
+\caption{Qwen3-30B-A3B decode at fixed EP8. Each point sums the pre-barriers from 48 Dispatch and 48 Combine calls in one sampled GPU step. Both sweeps cover concurrency 1--256; low-concurrency windows may activate fewer than all ranks. Lines connect measured points. Error bars show variation across three client windows.}
 \label{fig:inference-share}
-\Description{Lines show pre-barrier share versus request concurrency. The one-node series has four measured points from one to 256; the two-node series has measured points at 64 and 128.}
+\Description{Lines show pre-barrier share versus request concurrency. The one-node and two-node series each have measured points at concurrency 1, 2, 4, 8, 16, 32, 64, 128, and 256.}
 \end{figure}
