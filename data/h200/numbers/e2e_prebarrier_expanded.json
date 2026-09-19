@@ -1,0 +1,61 @@
+{
+  "scope": "H200 Qwen3-30B-A3B BF16, DeepEP V2 Direct, trace-on sampled GPU steps",
+  "method": "For each sampled rank step, sum dispatch_pre and combine_pre, divide by same-rank gpu_clock_span_us, average ranks within a client window, then report mean and sample standard deviation across three windows.",
+  "rows": [
+    {
+      "topology": "2n2",
+      "ep": 4,
+      "workload": "decode_c64",
+      "tokens_per_rank": [16],
+      "active_steps_per_window": [4, 4, 4],
+      "run_values_percent": [14.730301325143287, 14.966951359742591, 14.553594416771183],
+      "mean_percent": 14.75028236721902,
+      "between_window_std_percent": 0.20740159620285256,
+      "source": "data/h200/20260912/cross_e2e/2n2-sync-step-summary.json"
+    },
+    {
+      "topology": "2n4",
+      "ep": 8,
+      "workload": "decode_c128",
+      "tokens_per_rank": [16],
+      "active_steps_per_window": [8, 8, 8],
+      "run_values_percent": [15.239888443006363, 15.196449629647402, 15.14006009178306],
+      "mean_percent": 15.192132721478941,
+      "between_window_std_percent": 0.0500539878440469,
+      "source": "data/h200/20260912/cross_e2e/2n4-sync-step-summary.json"
+    },
+    {
+      "topology": "2n8",
+      "ep": 16,
+      "workload": "decode_c256",
+      "tokens_per_rank": [16],
+      "active_steps_per_window": [16, 16, 16],
+      "run_values_percent": [14.905155626124612, 15.125383334666807, 15.097313983798426],
+      "mean_percent": 15.042617648196615,
+      "between_window_std_percent": 0.11987004525166377,
+      "source": "data/h200/20260912/cross_e2e/2n8-sync-step-summary.json"
+    },
+    {
+      "topology": "2n4",
+      "ep": 8,
+      "workload": "prefill_512",
+      "tokens_per_rank": [512],
+      "active_steps_per_window": [1, 1, 1],
+      "run_values_percent": [2.70815825226827, 2.6446844984510682, 2.5790590830371825],
+      "mean_percent": 2.6439672779188403,
+      "between_window_std_percent": 0.06455257297744317,
+      "source": "data/h200/20260912/cross_e2e/2n4-sync-step-summary.json"
+    },
+    {
+      "topology": "2n4",
+      "ep": 8,
+      "workload": "prefill_2048",
+      "tokens_per_rank": [2048],
+      "active_steps_per_window": [1, 1, 1],
+      "run_values_percent": [3.5494806511117676, 2.7799863442612787, 3.074274393571074],
+      "mean_percent": 3.1345804629813734,
+      "between_window_std_percent": 0.38827566054881485,
+      "source": "data/h200/20260912/cross_e2e/2n4-sync-step-summary.json"
+    }
+  ]
+}

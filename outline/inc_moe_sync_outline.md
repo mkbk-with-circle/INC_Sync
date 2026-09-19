@@ -87,14 +87,18 @@ T_extra 包括仍需执行的就绪处理及额外缓存／放行等待。DATA �
 
 ## 5. Evaluation — 实验评估
 
+回答三个问题：pre-barrier 如何随 token 数变化、在不同 EP 配置中是否持续存在，以及它在真实 MoE serving step 中占多大比例。
+
 ### 5.1 Experimental Setup and Methodology
 
 - 两台 H200，各八卡；机内 NVSwitch，机间八轨 400GbE RoCE。Direct、GDAKI3、TC162。
 - 微基准：H=7168、topk=8、E=256、BF16、balanced/uniform。每点三轮独立进程，每轮 200 次有效迭代。
-- 每次选 pre-barrier 最短的 rank，除以同 rank 同轮 trace-on 算子时间；先逐迭代计算，再对三轮均值取平均。误差为轮间标准差。
-- 推理使用同 rank 的 pre-barrier 累计时间与 GPU step 配对，再跨 rank 和三个 client 窗口平均。
+- 每次选 pre-barrier 最短的 rank，除以同 rank 同轮 trace-on 算子时间；该口径减少慢 rank 到达差的影响，但选中 rank 仍可能等待。误差为三轮均值的样本标准差。
+- EP8 token sweep 与 EP-size 表来自不同采集批次；表格常数只拟合表中列出的点。
+- 同镜像 EP8/T8 on/off 检查中，Dispatch 总时延差 3.9%–5.0%，Combine 为 1.7%–3.8%；阶段占比使用同次 trace-on 分子与分母。
+- 推理每个 client 窗口采样一个 active GPU step。decode 每个活跃 rank 均采样；prefill 只统计实际执行的 active step。
 
-### 5.2 Pre-Barrier Cost
+### 5.2 Pre-Barrier Cost versus Token Count
 
 H200 跨机 EP8 Direct：
 
@@ -107,7 +111,7 @@ H200 跨机 EP8 Direct：
 
 四档绝对时长均约 15 µs；算子占比随 T 增大而下降。来源：[配对数值](../data/h200/numbers/PAIRED_CONTROL_SHARE.md)；[主图源码](../figures/entry-cost.tex)。
 
-### 5.3 Dependence on EP Size
+### 5.3 Across EP Configurations
 
 各固定 EP 配置的常数估计使用全部所列 token 档，每档三轮：
 
@@ -117,11 +121,11 @@ H200 跨机 EP8 Direct：
 | 8 | 8/32/64/96/128 | 14.96 | 14.94 | 0.16 |
 | 16 | 8/32/96/128 | 18.36 | 18.28 | 0.09 |
 
-固定 EP 时，pre-barrier 对 T 近似恒定。EP4/8/16 同时改变每机卡数、目标分布和网络并发，数值体现这些配置的综合变化。EP8 T=64 来自后续不同插桩批次。来源：[拟合数值](../data/h200/numbers/PRE_MIN_FITS_T64.md)。
+固定 EP 时，pre-barrier 对 T 近似恒定。EP4/8/16 同时改变每机卡数、目标分布和网络并发，因此这些数值表示各配置的综合变化。来源：[拟合数值](../data/h200/numbers/PRE_MIN_FITS_T64.md)。
 
-### 5.4 Pre-Barriers in MoE Inference
+### 5.4 Pre-Barriers in MoE Serving
 
-Qwen3-30B-A3B，BF16、TP1/EP8 Direct，输入/输出各 128 token；实际路由，比较单机 1n8 和跨机 2n4：
+Qwen3-30B-A3B，BF16、TP1/EP8 Direct，实际路由。主图比较单机 1n8 与跨机 2n4：
 
 | 拓扑 | 并发 | 实测 token/rank | D+C pre-barrier 占 GPU step |
 |:---|---:|---:|---:|
@@ -130,7 +134,19 @@ Qwen3-30B-A3B，BF16、TP1/EP8 Direct，输入/输出各 128 token；实际路�
 | 单机 1n8 | 128 | 16 | 7.94% |
 | 跨机 2n4 | 128 | 16 | 15.19% |
 
-每个采样 step 含 48 次 Dispatch 与 48 次 Combine；三个 client 窗口使用同一 server 实例。占比分母为 GPU step。来源：[推理数值](../data/h200/numbers/E2E.md)、[分项](../data/h200/numbers/outline_shares.json)；[主图源码](../figures/inference-share.tex)。
+每个 decode step 含 48 次 Dispatch 与 48 次 Combine；三个 client 窗口复用同一 server 实例。
+
+扩展跨机对照：
+
+| EP | 工作负载 | T/rank | pre-barrier 占 GPU step |
+|---:|:---|---:|---:|
+| 4 | Decode C64 | 16 | (14.75 ± 0.21)% |
+| 8 | Decode C128 | 16 | (15.19 ± 0.05)% |
+| 16 | Decode C256 | 16 | (15.04 ± 0.12)% |
+| 8 | Prefill | 512 | (2.64 ± 0.06)% |
+| 8 | Prefill | 2048 | (3.13 ± 0.39)% |
+
+在相同 16 token/rank 下，跨机 EP4/8/16 均约为 15%。大 token prefill 的占比降至约 3%，与小 batch decode 的趋势一致。prefill 行使用并发 1 和每窗口唯一 active step，是工作负载对照。来源：[扩展汇总](../data/h200/numbers/e2e_prebarrier_expanded.json)、[原始汇总](../data/h200/20260912/cross_e2e/)；[主图源码](../figures/inference-share.tex)。
 
 ## 6. Related Work — 相关工作
 
