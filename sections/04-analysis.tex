@@ -37,8 +37,8 @@ The reference difference is therefore
 \end{equation}
 The network component is one serialized READY traversal, $L$, which is approximately half a network RTT for symmetric paths. The net benefit also depends on how much endpoint observation work is replaced and how much processing and waiting INC adds. Half a network RTT is not half the measured pre-barrier duration.
 
-\subsection{Readiness Skew and Forwarding Delays}
+\subsection{Readiness Skew in Practice}
 \label{sec:skew}
-The reference uses simultaneous readiness, the same payload rate, and the same post-barrier work. Sufficient staging and forwarding capacity allow upload to proceed while READY is collected. If INC must hold data longer or drain a congested output, the additional wait contributes to $T_{\rm extra}$; PFC pauses can have the same effect.
+In practice, differences in computation and scheduling often make ranks ready at different times. Figure~\ref{fig:timing}(C--D) shows how the overlap works in this case: early ranks upload while later ranks prepare, and INC buffers the data. When the last required READY arrives, INC can start forwarding these tokens instead of waiting for the early ranks to receive peer signals and then begin uploading. The mechanism therefore does not require synchronized arrivals.
 
-When ranks become ready at different times, early ranks can upload while later ranks prepare. Forwarding still waits for the required READY signals. The full operation finishes with the last participating rank, so the benefit depends on whether early upload advances that completion time. The one-way-traversal reference is interpreted under its stated timing conditions.
+With sufficient staging and forwarding capacity, this upload head start is preserved under readiness skew and shortens the operation when it advances critical-path data delivery. Output queuing and PFC pauses contribute to $T_{\rm extra}$. The gain depends on the last rank to finish and the available overlap, rather than a fixed fraction of RTT for every arrival pattern.
