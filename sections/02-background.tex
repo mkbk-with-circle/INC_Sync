@@ -7,13 +7,13 @@ An MoE layer selects up to $\topk$ experts for each input token. Under expert pa
 
 Routing determines the amount of traffic sent to each destination. Communication therefore involves both activations or partial outputs and metadata describing destinations, valid counts, and output placement. Within a node, ranks may use NVLink; across nodes, they use a network transport such as RDMA. Communication staging provides known landing addresses, while the final expert layout may depend on exchanged counts.
 
-Three events must remain distinct. Receive resources must be writable before remote delivery. Required input must be complete and visible before a consumer reads it. A buffer becomes reusable only after its last consumer finishes. A notification that establishes data arrival does not necessarily establish safe buffer reuse.
+Ranks exchange routing metadata, valid counts, and readiness or completion signals through collective operations or peer-to-peer writes and polling. Their placement relative to payload varies: NCCL EP HT gathers routing metadata before Dispatch; DeepEP V2 Direct performs an entry barrier, then processes counts alongside data; LL paths write into reserved slots and use fine-grained signals without an independent entry barrier~\cite{ncclhtcode,deepepcode,ncclllcode}. These schedules must all ensure writable receive resources, visible input before consumption, and safe buffer reuse after consumption.
 
-\subsection{Synchronization Overhead in Small-Batch EP}
+\subsection{Synchronization in DeepEP V2 Direct}
 \label{sec:epsynchronization}
 Cross-node DeepEP V2 Direct places coordination at both ends of Dispatch and Combine~\cite{deepepcode}. An entry barrier precedes payload injection. Dispatch exchanges counts and computes layout alongside data movement; Combine reuses the established routing. After transfer, asynchronous-write waits, local joins, and GIN flush/fence operations precede an EP-wide completion-signal exchange.
 
-Direct already reserves communication buffers; changing this schedule must preserve their lifetime and data-visibility requirements. We focus on cross-node Direct, since Hybrid, LL, and NCCL EP HT use different control structures~\cite{deepepcode,ncclllcode,ncclhtcode}.
+Direct already reserves communication buffers; changing this schedule must preserve their lifetime and data-visibility requirements. We focus on this cross-node path, whose entry and completion exchanges expose opportunities at both transfer boundaries.
 
 At fixed EP size, fewer tokens reduce payload work while coordination still involves the same ranks. Our EP8 measurements show entry synchronization near 15\us{}, occupying about 20\% of the operator at eight tokens per rank and 5\% at 128. This motivates overlap, although the measured interval is not entirely removable. Section~\ref{sec:evidence} presents the methodology and results.
 

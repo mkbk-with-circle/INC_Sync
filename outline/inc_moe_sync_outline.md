@@ -15,7 +15,9 @@
 
 说明 Dispatch → expert compute → Combine；定义 token、rank、topk 和路由。路由决定各目标的数据量，通信 staging 提供落点，最终 expert 布局可依赖 count 交换。
 
-### 2.2 Synchronization Overhead in Small-Batch EP
+rank 通过集合操作或点对点写入与轮询，交换路由、计数及就绪/完成信息。典型组织方式包括：NCCL EP HT 先汇总路由再传数据；DeepEP V2 Direct 先做就绪同步，再将计数处理与数据传输并行；LL 利用预留槽位和细粒度信号，无需独立入口 barrier。这些路径都需保证接收资源可写、数据对消费者可见及 buffer 安全复用。
+
+### 2.2 Synchronization in DeepEP V2 Direct
 
 跨机 Direct 的路径：入口 barrier → DATA 与元数据处理 → 发送收尾及本地汇合 → 全 EP 完成 signal 交换。本文聚焦这条路径，保留资源可写、数据可见和 buffer 安全复用的要求。
 
