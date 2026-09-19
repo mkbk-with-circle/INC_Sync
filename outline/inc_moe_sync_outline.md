@@ -35,7 +35,7 @@ rank 通过集合操作或点对点写入与轮询，交换路由、计数及就
 
 ### 3.1 Overview and Assumptions
 
-![INC 协调流程](figures/inc-coordination-flow.png)
+![Direct 与 INC 对照：上传与就绪汇总重叠，完成通知紧跟尾数据](figures/inc-overview.png)
 
 INC 节点维护本轮参与者、逐目标流量计划、输出进度、目标内存描述符和有上限的暂存。受其完成判定覆盖的数据必须经过该节点；多 rail 和本地 bypass 需要明确的完成域与汇合。
 

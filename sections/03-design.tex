@@ -4,7 +4,7 @@
 
 \subsection{Overview and Assumptions}
 \label{sec:overview}
-Figure~\ref{fig:design-overview} shows the protocol participants and their state.
+Figure~\ref{fig:design-overview} contrasts the baseline with our two changes: uploading during readiness aggregation and appending completion notifications to trailing data.
 \input{figures/design-overview}
 The logical \sys{} node observes all readiness announcements and data covered by its completion decisions. For each generation it stores a participant bitmap, sealed per-destination traffic plans, output progress, destination memory descriptors, and bounded staging. A generation identifies the communication instance, direction, and buffer epoch. The EP membership is known; routing determines the per-destination traffic.
 

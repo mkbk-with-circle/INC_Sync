@@ -6,9 +6,10 @@ Compile with PDFLaTeX and BibTeX using `make`; the output is `build/main.pdf`.
 `make check` additionally checks references and layout, with optional Poppler font
 and paper-size checks. Overleaf should use the root `main.tex` and pdfLaTeX.
 
-The seven section files are ordered in `main.tex`. Figures are native TikZ/PGFPlots
-sources compiled with the paper. No experiment runner or external plot-generation
-step is required.
+The seven section files are ordered in `main.tex`. Plots and timing diagrams use
+TikZ/PGFPlots. The overview includes the supplied vector `figures/inc-overview.pdf`,
+with editable `.drawio` and `.svg` sources alongside it. No external figure export
+step is required to compile the paper.
 
 Evaluation uses pre-barrier costs, post-barrier signal-window observations, and GPU-step pre-barrier
 shares. Numeric sources and aggregation rules are listed in `data/PROVENANCE.md`.
