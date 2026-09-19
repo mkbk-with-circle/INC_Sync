@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="730" viewBox="0 0 1200 730">
+<rect width="1200" height="730" fill="white"/>
+<text x="25" y="26.0" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="700" fill="#17324D" text-anchor="start">A  Simultaneous readiness: Direct</text>
+<text x="636" y="26.0" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="700" fill="#17324D" text-anchor="start">B  Simultaneous readiness: INC</text>
+<rect x="52" y="44" width="86" height="30" rx="4" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="95" y="65.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">Rank 0</text>
+<path d="M95,81 L95,316" fill="none" stroke="#A3ADB6" stroke-width="2"/>
+<rect x="472" y="44" width="86" height="30" rx="4" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="515" y="65.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">Rank 1</text>
+<path d="M515,81 L515,316" fill="none" stroke="#A3ADB6" stroke-width="2"/>
+<rect x="637" y="44" width="86" height="30" rx="4" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="680" y="65.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">Rank 0</text>
+<path d="M680,81 L680,316" fill="none" stroke="#A3ADB6" stroke-width="2"/>
+<rect x="857" y="44" width="86" height="30" rx="4" fill="#F2FAF7" stroke="#00836B" stroke-width="1.5"/>
+<text x="900" y="65.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">INC</text>
+<path d="M900,81 L900,316" fill="none" stroke="#A3ADB6" stroke-width="2"/>
+<rect x="1077" y="44" width="86" height="30" rx="4" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="1120" y="65.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">Rank 1</text>
+<path d="M1120,81 L1120,316" fill="none" stroke="#A3ADB6" stroke-width="2"/>
+<path d="M95,100 L515,160" fill="none" stroke="#B96A00" stroke-width="2" stroke-dasharray="6 5"/>
+<polygon points="515,160 506.65613998199876,154.76740981921955 505.52476913210023,162.68700576850887" fill="#B96A00"/>
+<path d="M515,100 L95,160" fill="none" stroke="#B96A00" stroke-width="2" stroke-dasharray="6 5"/>
+<polygon points="95,160 104.47523086789974,162.68700576850887 103.34386001800127,154.76740981921955" fill="#B96A00"/>
+<text x="300" y="103.0" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#B96A00" text-anchor="middle">READY</text>
+<path d="M95,170 L515,230" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="515,230 506.65613998199876,224.76740981921955 505.52476913210023,232.68700576850887" fill="#0072B2"/>
+<path d="M515,170 L95,230" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="95,230 104.47523086789974,232.68700576850887 103.34386001800127,224.76740981921955" fill="#0072B2"/>
+<path d="M95,190 L515,250" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="515,250 506.65613998199876,244.76740981921955 505.52476913210023,252.68700576850887" fill="#0072B2"/>
+<path d="M515,190 L95,250" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="95,250 104.47523086789974,252.68700576850887 103.34386001800127,244.76740981921955" fill="#0072B2"/>
+<path d="M95,210 L515,270" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="515,270 506.65613998199876,264.76740981921955 505.52476913210023,272.6870057685089" fill="#0072B2"/>
+<path d="M515,210 L95,270" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="95,270 104.47523086789974,272.6870057685089 103.34386001800127,264.76740981921955" fill="#0072B2"/>
+<text x="300" y="300.0" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="400" fill="#17324D" text-anchor="middle">Upload starts after peer READY</text>
+<path d="M680,100 L900,130" fill="none" stroke="#B96A00" stroke-width="2" stroke-dasharray="6 5"/>
+<polygon points="900,130 891.6229813065345,124.82066048522299 890.5420756686681,132.74730182957737" fill="#B96A00"/>
+<path d="M1120,100 L900,130" fill="none" stroke="#B96A00" stroke-width="2" stroke-dasharray="6 5"/>
+<polygon points="900,130 909.4579243313319,132.74730182957737 908.3770186934655,124.82066048522299" fill="#B96A00"/>
+<path d="M680,110 L1120,170" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="1120,170 1111.6229813065347,164.820660485223 1110.542075668668,172.74730182957737" fill="#0072B2"/>
+<path d="M1120,110 L680,170" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="680,170 689.4579243313319,172.74730182957737 688.3770186934655,164.820660485223" fill="#0072B2"/>
+<path d="M680,130 L1120,190" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="1120,190 1111.6229813065347,184.820660485223 1110.542075668668,192.74730182957737" fill="#0072B2"/>
+<path d="M1120,130 L680,190" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="680,190 689.4579243313319,192.74730182957737 688.3770186934655,184.820660485223" fill="#0072B2"/>
+<path d="M680,150 L1120,210" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="1120,210 1111.6229813065347,204.820660485223 1110.542075668668,212.74730182957737" fill="#0072B2"/>
+<path d="M1120,150 L680,210" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="680,210 689.4579243313319,212.74730182957737 688.3770186934655,204.820660485223" fill="#0072B2"/>
+<rect x="895" y="125" width="10" height="10" rx="0" fill="#00836B" stroke="#00836B" stroke-width="1.5"/>
+<text x="900" y="91.0" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#00836B" text-anchor="middle">All READY at INC</text>
+<text x="900" y="256.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">DATA follows READY into the network</text>
+<text x="900" y="282.0" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#00836B" text-anchor="middle">One control traversal can be hidden</text>
+<path d="M20,333 L1180,333" fill="none" stroke="#DBE3EA" stroke-width="2"/>
+<text x="25" y="371.0" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="700" fill="#17324D" text-anchor="start">C  Unequal readiness: Direct</text>
+<text x="636" y="371.0" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="700" fill="#17324D" text-anchor="start">D  Unequal readiness: INC</text>
+<rect x="52" y="389" width="86" height="30" rx="4" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="95" y="410.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">Rank 0</text>
+<path d="M95,426 L95,685" fill="none" stroke="#A3ADB6" stroke-width="2"/>
+<rect x="472" y="389" width="86" height="30" rx="4" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="515" y="410.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">Rank 1</text>
+<path d="M515,426 L515,685" fill="none" stroke="#A3ADB6" stroke-width="2"/>
+<rect x="637" y="389" width="86" height="30" rx="4" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="680" y="410.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">Rank 0</text>
+<path d="M680,426 L680,685" fill="none" stroke="#A3ADB6" stroke-width="2"/>
+<rect x="857" y="389" width="86" height="30" rx="4" fill="#F2FAF7" stroke="#00836B" stroke-width="1.5"/>
+<text x="900" y="410.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">INC</text>
+<path d="M900,426 L900,685" fill="none" stroke="#A3ADB6" stroke-width="2"/>
+<rect x="1077" y="389" width="86" height="30" rx="4" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="1120" y="410.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">Rank 1</text>
+<path d="M1120,426 L1120,685" fill="none" stroke="#A3ADB6" stroke-width="2"/>
+<path d="M95,445 L515,505" fill="none" stroke="#B96A00" stroke-width="2" stroke-dasharray="6 5"/>
+<polygon points="515,505 506.65613998199876,499.76740981921955 505.52476913210023,507.6870057685089" fill="#B96A00"/>
+<path d="M515,505 L95,565" fill="none" stroke="#B96A00" stroke-width="2" stroke-dasharray="6 5"/>
+<polygon points="95,565 104.47523086789974,567.6870057685088 103.34386001800127,559.7674098192196" fill="#B96A00"/>
+<path d="M95,575 L515,635" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="515,635 506.65613998199876,629.7674098192196 505.52476913210023,637.6870057685088" fill="#0072B2"/>
+<path d="M95,595 L515,655" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="515,655 506.65613998199876,649.7674098192196 505.52476913210023,657.6870057685088" fill="#0072B2"/>
+<path d="M95,615 L515,675" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="515,675 506.65613998199876,669.7674098192196 505.52476913210023,677.6870057685088" fill="#0072B2"/>
+<path d="M515,515 L95,575" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="95,575 104.47523086789974,577.6870057685088 103.34386001800127,569.7674098192196" fill="#0072B2"/>
+<path d="M515,535 L95,595" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="95,595 104.47523086789974,597.6870057685088 103.34386001800127,589.7674098192196" fill="#0072B2"/>
+<path d="M515,555 L95,615" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="95,615 104.47523086789974,617.6870057685088 103.34386001800127,609.7674098192196" fill="#0072B2"/>
+<text x="300" y="435.0" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#B96A00" text-anchor="middle">Rank 1 becomes ready later</text>
+<path d="M680,445 L900,475" fill="none" stroke="#B96A00" stroke-width="2" stroke-dasharray="6 5"/>
+<polygon points="900,475 891.6229813065345,469.820660485223 890.5420756686681,477.7473018295774" fill="#B96A00"/>
+<path d="M1120,505 L900,535" fill="none" stroke="#B96A00" stroke-width="2" stroke-dasharray="6 5"/>
+<polygon points="900,535 909.4579243313319,537.7473018295774 908.3770186934655,529.8206604852229" fill="#B96A00"/>
+<rect x="890" y="485" width="20" height="50" rx="0" fill="#FFF0D7" stroke="#B96A00" stroke-width="1.5"/>
+<path d="M680,455 L900,485" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="900,485 891.6229813065345,479.820660485223 890.5420756686681,487.7473018295774" fill="#0072B2"/>
+<path d="M680,475 L900,505" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="900,505 891.6229813065345,499.820660485223 890.5420756686681,507.7473018295774" fill="#0072B2"/>
+<path d="M680,495 L900,525" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="900,525 891.6229813065345,519.8206604852229 890.5420756686681,527.7473018295774" fill="#0072B2"/>
+<path d="M900,540 L1120,570" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="1120,570 1111.6229813065347,564.8206604852229 1110.542075668668,572.7473018295774" fill="#0072B2"/>
+<path d="M900,560 L1120,590" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="1120,590 1111.6229813065347,584.8206604852229 1110.542075668668,592.7473018295774" fill="#0072B2"/>
+<path d="M900,580 L1120,610" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="1120,610 1111.6229813065347,604.8206604852229 1110.542075668668,612.7473018295774" fill="#0072B2"/>
+<path d="M1120,515 L680,575" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="680,575 689.4579243313319,577.7473018295774 688.3770186934655,569.8206604852229" fill="#0072B2"/>
+<path d="M1120,535 L680,595" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="680,595 689.4579243313319,597.7473018295774 688.3770186934655,589.8206604852229" fill="#0072B2"/>
+<path d="M1120,555 L680,615" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="680,615 689.4579243313319,617.7473018295774 688.3770186934655,609.8206604852229" fill="#0072B2"/>
+<text x="910" y="466.0" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#B96A00" text-anchor="start">Buffer early DATA</text>
+<text x="900" y="656.0" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="400" fill="#17324D" text-anchor="middle">Forward after the last READY arrives</text>
+<text x="25" y="715.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#607080" text-anchor="start">Dashed: READY     Solid: DATA     Schematics show readiness and data delivery; spacing is illustrative.</text>
+</svg>

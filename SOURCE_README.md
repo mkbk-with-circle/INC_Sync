@@ -1,22 +1,21 @@
 # Manuscript source
 
-**Overlapping MoE Synchronization and Data Transfer with In-Network Computing**
+**Overlapping MoE Pre-Barriers with Data Transfer Using In-Network Computing**
 
-Compile with PDFLaTeX and BibTeX using `make`; the output is `build/main.pdf`.
-`make check` additionally checks references and layout, with optional Poppler font
-and paper-size checks. Overleaf should use the root `main.tex` and pdfLaTeX.
+Build with PDFLaTeX and BibTeX using `make check`. The output is `build/main.pdf`.
+Overleaf uses the root `main.tex` with pdfLaTeX. The Git repository also provides
+`manuscript.pdf` as a versioned review copy.
 
-The seven section files are ordered in `main.tex`. Plots and timing diagrams use
-TikZ/PGFPlots. The overview includes the supplied vector `figures/inc-overview.pdf`,
-with editable `.drawio` and `.svg` sources alongside it. No external figure export
-step is required to compile the paper.
+The seven sections cover Introduction, Background and Motivation, Design,
+Latency Analysis, Evaluation, Related Work, and Conclusion.
 
-Evaluation uses pre-barrier costs, post-barrier signal-window observations, and GPU-step pre-barrier
-shares. Numeric sources and aggregation rules are listed in `data/PROVENANCE.md`.
-The broad post envelope is excluded from synchronization fitting.
+The two mechanism figures use the supplied `figures/prebarrier-overview.pdf`
+and `figures/prebarrier-timing.pdf`, with matching native draw.io and SVG sources.
+The measurement plots use PGFPlots. A normal build needs no external figure export.
 
-The `make archive` target packages manuscript sources and the generated `main.bbl`
-for arXiv. The Git repository itself builds the bibliography from `references.bib`.
-Author identities and affiliations remain to be supplied by the authors.
-The baseline measurements motivate and characterize the proposed design; they do not
-report measured INC acceleration.
+Evaluation reports H200 Direct pre-barrier durations, operator shares, EP-size
+comparisons, and pre-barrier shares in Qwen3 inference. Numeric sources and
+aggregation rules are recorded in `data/PROVENANCE.md`.
+
+`make archive` packages the LaTeX sources, figures, and generated bibliography.
+Author identities and affiliations are to be supplied before release.

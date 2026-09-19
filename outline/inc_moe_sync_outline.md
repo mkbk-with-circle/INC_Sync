@@ -1,105 +1,89 @@
-# Overlapping MoE Synchronization and Data Transfer with In-Network Computing
+# Overlapping MoE Pre-Barriers with Data Transfer Using In-Network Computing
 
-> 主线：在具有入口与尾部协调的 EP 路径上，将 READY 汇总与数据上传重叠，并在目标数据输出完成后生成有序 DONE，减少控制等待在关键路径上的暴露。
+> 主线：rank 本地就绪后先上传，INC 同时收集 READY 并暂存早到数据；接收条件满足后转发，把等待其他 rank 就绪的时间用于搬运数据。
 
 ## 1. Introduction — 引言
 
-- **问题**：小 batch 缩短了 payload 阶段，但跨 rank 协调的成本不会等比例下降。
-- **研究场景**：DeepEP V2 跨机 Direct Dispatch/Combine，具有 pre-barrier 和发送收尾之后的全 EP 完成信号交换。
-- **方法**：rank 本地就绪后上传至 INC 暂存；INC 汇总 READY 后放行，并在逐目标尾包后追加 DONE。
-- **贡献**：基线同步测量、网内协调设计及其时延分析。引言用一个真实推理结果说明动机，完整数据放在 §5；当前没有 INC 原型加速测量。
+- **问题**：小 batch 缩短 token 传输，但 pre-barrier 仍需等待同一组 rank，开销难以摊薄。
+- **观测**：H200 跨机 EP8 Direct 的 pre-barrier 约 15 µs，小 batch 时约占算子 20%；真实跨机 decode 中约占 GPU step 的 15%–17%。
+- **思想**：将“开始上传”和“允许写入目标 buffer”分开。INC 汇总 READY 的同时接收数据，就绪后转发。
+- **贡献**：pre-barrier 开销测量、提前上传协议，以及完整通信操作的时延分析。
 
 ## 2. Background and Motivation — 背景与动机
 
 ### 2.1 Expert-Parallel Communication
 
-说明 Dispatch → expert compute → Combine；定义 token、rank、topk 和路由。路由决定各目标的数据量，通信 staging 提供落点，最终 expert 布局可依赖 count 交换。
+介绍 Dispatch → expert compute → Combine。路由决定 token 的目标，计数和布局元数据决定接收后的组织方式。READY 表示本轮通信所需资源可用。
 
-rank 通过集合操作或点对点写入与轮询，交换路由、计数及就绪/完成信息。典型组织方式包括：NCCL EP HT 先汇总路由再传数据；DeepEP V2 Direct 先做就绪同步，再将计数处理与数据传输并行；LL 利用预留槽位和细粒度信号，无需独立 pre-barrier。这些路径都需保证接收资源可写、数据对消费者可见及 buffer 安全复用。
+典型发送前协调方式：NCCL EP HT 先汇总路由；DeepEP V2 Direct 先执行 pre-barrier，再并行处理计数与数据；NCCL EP LL 向预留槽位写入并使用细粒度信号。
 
-### 2.2 Synchronization in DeepEP V2 Direct
+### 2.2 Pre-Barriers in DeepEP V2 Direct
 
-跨机 Direct 的路径：pre-barrier → DATA 与元数据处理 → 发送收尾及本地汇合 → 全 EP post-barrier 信号交换。本文聚焦这条路径，保留资源可写、数据可见和 buffer 安全复用的要求。
+Direct Dispatch/Combine 在 token 发送前等待参与 rank 就绪并完成本地同步。预分配 buffer 使地址可知，但目标 buffer 本轮是否允许覆盖仍需确认。
 
-固定 EP 规模时，token 减少会缩短 payload，却不减少参与协调的 rank。EP8 pre-barrier 约 15 µs，占比从 T/rank=8 时的约 20% 降至 T=128 时的约 5%，说明小 batch 下有必要减少暴露的同步开销。
+固定 EP8，T/rank 从 8 增至 128 时，pre-barrier 约保持 15 µs，占比从约 20% 降至约 5%。这说明小 batch 下提前上传的机会值得研究。
 
 ### 2.3 Opportunities for In-Network Computing
 
-**INC 背景**：网内计算支持数据路径上的状态维护与聚合，已用于集合归约和 MoE 通信。本文进一步利用有容量保障的暂存与保序通知能力处理同步。
+INC 可在转发时维护哪些 rank 已就绪，并暂存早到 token。所有相关通信经过 INC 时，可将上传与 READY 汇总并行组织。
 
-**优化机会**：本地就绪后先上传，INC 同时汇总 READY；目标可写且所需条件满足后放行。INC 跟踪目标输出，在尾数据后追加有序完成通知，保证通知可见时数据已可见；真正的全局依赖仍保留。
-
-**Key Insight**：同步条件必须满足，但同步通信可以与数据传输重叠：上传时汇总就绪，尾数据携带完成通知，从而减少关键路径上的同步等待。
+**Key Insight**：本地数据就绪后即可上传到网络暂存区，目标写入仍等待所需就绪条件。这样 pre-barrier 的等待过程可以与部分数据传输重叠。
 
 ## 3. Design — 设计
 
 ### 3.1 Overview and Assumptions
 
-![Direct 与 INC 对照：上传与就绪汇总重叠，完成通知紧跟尾数据](figures/inc-overview.png)
+![前同步与提前上传](figures/prebarrier-overview.png)
 
-INC 记录哪些 rank 已就绪、各目标预期接收和已转发的 token／归约结果数量，以及各接收 buffer 用于哪一轮。INC 同时缓存早到数据。generation 标识一次 Dispatch 或 Combine，epoch 区分同一 buffer 的不同轮使用。所有相关数据必须经过 INC；多级转发或多 rail 路径需要确认每一段都已完成。
+INC 为每轮维护 READY bitmap 和有上限的数据队列。generation 标识一次 Dispatch/Combine，epoch 区分接收 buffer 的不同轮使用。相关参与者及数据路径需纳入相同的就绪判定范围。
 
-接收 buffer 在初始化时按 symmetric memory 分配、注册，布局、地址映射和访问权限一次性提供给 INC。token 的路由和标识确定目标 buffer 及写入偏移，不依赖全局计数。READY 确认上一轮已用完接收 buffer、本轮可以写入。发送端直接上传，INC 缓存压力由 PFC 回压控制。
+接收 buffer 在初始化时按 symmetric memory 分配、注册，布局和访问映射一次性建立。token 路由和标识决定目标及写入偏移，不依赖全局计数。READY 确认本地输入可用，且目标 buffer 已结束上一轮使用。
 
-### 3.2 Readiness Aggregation and Early Upload
+### 3.2 Early Upload and Readiness Aggregation
 
-rank 完成本地路由、计数和接收区复用检查后，将 READY、epoch 与逐目标 count vector 一起发送，随后直接上传 DATA，不申请暂存额度。INC 收到本轮完整消息才标记其就绪，并从第一份向量到达起流式累加；重复或过期消息不更新状态。所需 READY 收齐且目标 staging 可写后立即按路由 fan-out，不必等待向量求和结束。
+rank 发布 READY 后开始上传，不等其他 rank 的 READY 返回。READY 携带 rank、generation、epoch；路由随 token 传输，必要计数和元数据按原通信流程处理，不把完整 count vector 作为 READY 的前置条件。
 
-全局接收计数和 expert buffer 中的最终位置可与数据传输并行计算。硬件加法可流水执行，未完成的求和仍会延迟 DONE。预期计数和转发计数都按各目标实际接收的 token 副本计数。
+INC 忽略重复和旧轮次消息。所需 READY 未收齐时暂存 DATA；就绪且目标可写后，按路由转发缓存和新到 token。Dispatch 接收后按 expert 整理；Combine 将 expert outputs 送回 token owner 完成合并。
 
-### 3.3 Completion Notification
+### 3.3 Buffer Management and Backpressure
 
-INC 对所有 source 的 count vector 求和，得到各目标应接收的 token 数，并在完整 token payload 提交发送后更新转发计数，每份 token 副本只计一次。DONE 的条件是：(i) 所有向量求和完成，(ii) 目标已就绪，(iii) 预期 token payload 已全部提交发送。保证：
+接收 buffer 的最后一次读取完成后才可复用，下一轮 READY 确认这一点。发送 buffer 保留到发送硬件读完。INC 在队列排空且所有 rank 进入下一轮后回收旧轮 READY 状态。
 
-**目标观察到 DONE ⇒ 本轮覆盖的全部数据已对目标 GPU 可见。**
-
-DONE 表示该目标的输入数据已到齐；开始计算前仍需满足其他依赖。
-
-Combine 根据 Dispatch 中记录的 expert 分配，确定每个 token 应收到哪些 expert outputs。输出携带 top-k slot，即使 expert 位于同一 rank 也能区分。INC 对加权输出求和，所有预期输出到齐且目标的 reduced results 全部提交发送后，按相同保序要求发送 DONE。
-
-### 3.4 Buffer Management and Progress
-
-收到 DONE 并满足其他依赖后，Dispatch 将 token 按 expert 排列以便计算；Combine 将归约结果交给后续计算。最后一次读取结束后才能复用接收 buffer，下一轮 READY 确认这一点。发送 buffer 则需等传输层读取完成后才能复用。
-
-INC 暂存占用触发 PFC，在溢出前暂停上游 DATA，并为暂停生效前的在途数据预留 headroom；空间恢复后沿原路径继续，无需每轮 credit 交换。READY/count vector 使用独立控制优先级和预留资源，避免被 DATA 暂停而无法放行。归约状态等资源限制也需联动回压；压力下重叠和吞吐可能下降。
+PFC 在缓存溢出前暂停 DATA，并预留 headroom 接纳暂停生效前的在途数据。READY 与必要控制元数据有独立优先级和预留资源，避免暂停 DATA 时阻塞就绪消息。
 
 ## 4. Latency Analysis — 时延分析
 
-### 4.1 Delay Model
+### 4.1 Operation Latency
 
-借鉴 [Swift](https://doi.org/10.1145/3387514.3406591) 区分端点与网络时延的思路：**消息时延 = 发送端发起时间 + 网络传输时间 + 接收端观察时间**。网络项包含传播、序列化和排队；barrier 还包含各 rank 就绪时间不同造成的等待及本地同步，因此其时长不能直接当作网络时延或 INC 收益。
+建模一次完整 Dispatch/Combine，从输入本地可用到所有 rank 完成。借鉴 [Swift](https://doi.org/10.1145/3387514.3406591) 区分处理与网络时延。
 
-比较基线与 INC 何时完成数据交付和通知，使目标具备开始后续计算的条件。无需引入 Swift 原始的六个时间戳。
+参考条件：rank 同时就绪、无明显拥塞，INC 维持基线数据转发速率。L 为单向传播和固定转发时延，S 为整次通信在瓶颈速率下传输全部 payload 的时间；H 为关键路径上未重叠的处理时间，C 为后续交付确认和本地收尾。
 
-### 4.2 Overlapping the Pre-Barrier
+- 基线：T_base = H_base + L + (S + L) + C。
+- INC：T_INC = H_INC + (S + L) + C。
 
-先讨论各 rank 不同时就绪的一般情况：基线等自己与 peer 就绪后才发送，INC 允许本地就绪的源直接上传，目标写入仍等 READY 和目标资源到齐。PFC 暂停会延迟数据到达 INC；暂存、慢 rank 和出口服务共同决定完成时间，不能将提前上传量直接换算为加速。
+### 4.2 How Early Upload Creates Overlap
 
-![基线与 INC 的时序对照](figures/inc-benefits-redrawn.png)
+![就绪等待与上传重叠](figures/prebarrier-timing.png)
 
-### 4.3 Overlapping the Post-Barrier
+基线先完成 READY 的端点间传播，再启动数据；INC 让 READY 与后续 DATA 一起向网络节点前进，条件满足后继续转发。因此参考收益为 **L + H_base − H_INC**。只有未被额外处理和排队抵消的提前量，才会缩短操作完成时间。
 
-区分发送侧收尾、目标数据可见、完成通知被观察三个时刻，比较同一目标的通信完成时间：
+### 4.3 Unequal Readiness and Backpressure
 
-**尾部净收益 = 基线通信完成时间 − INC 通信完成时间。**
-
-窄 signal 窗口未直接测得数据可见后仍需等待多久。理想情况下，各 rank 同时就绪，前后各暴露一次单向控制传播，INC 转发速率不变且计数及时完成，则收益为 2L − ε：一个网络 RTT 减去新增开销。一般情况还需考虑数据到达、排队、计数与通知时间，不能直接相加实测的前后同步时长。
+rank 到达不一致时，早到数据可在 INC 等待；真正收益取决于晚到 rank、出口排队和 PFC。完整操作以最后一个 rank 完成为准，某个目标提前收到数据不必然等于全局操作加速。
 
 ## 5. Evaluation — 实验评估
 
-本章测量基线的同步开销及其在推理中的影响；INC 的端到端收益仍需实现后评估。
-
 ### 5.1 Experimental Setup and Methodology
 
-- H200：两台各八卡，机内 NVSwitch，机间八轨 400GbE RoCE；跨机使用 GDAKI3/TC162，DeepEP V2 Direct。
-- 微基准：H=7168、topk=8、E=256、BF16、balanced/uniform。每档三次独立进程、每次 200 次有效迭代；post-barrier T=32 合并两批共六轮。
-- 每次迭代取该阶段耗时最短的 rank；占比除以该 rank 同次 trace-on 算子时长。均值误差表示轮间标准差，不把不同 rank 的阶段占比相加。
-- 总算子时延来自 trace-off，阶段来自 trace-on。推理的 GPU-step 占比使用同 rank/step 配对并跨 rank 平均，与微基准 rank-min 统计不同。
-- 实测使用通信插桩；推理还含 expert-padding 正确性修复。所有数值均为已有软件基线观测。
+- 两台 H200，各八卡；机内 NVSwitch，机间八轨 400GbE RoCE。Direct、GDAKI3、TC162。
+- 微基准：H=7168、topk=8、E=256、BF16、balanced/uniform。每点三轮独立进程，每轮 200 次有效迭代。
+- 每次选 pre-barrier 最短的 rank，除以同 rank 同轮 trace-on 算子时间；先逐迭代计算，再对三轮均值取平均。误差为轮间标准差。
+- 推理使用同 rank 的 pre-barrier 累计时间与 GPU step 配对，再跨 rank 和三个 client 窗口平均。
 
-### 5.2 Pre-Barrier
+### 5.2 Pre-Barrier Cost
 
-主图同时展示 pre-barrier 绝对时长和算子占比。EP8 的 pre-barrier 维持约 15 µs，占比随 T 增大而下降。
+H200 跨机 EP8 Direct：
 
 | T/rank | Dispatch pre-barrier 占比 | Combine pre-barrier 占比 |
 |---:|---:|---:|
@@ -108,34 +92,23 @@ INC 暂存占用触发 PFC，在溢出前暂停上游 DATA，并为暂停生效�
 | 64 | (8.29 ± 0.51)% | (8.20 ± 0.16)% |
 | 128 | (4.88 ± 0.04)% | (5.05 ± 0.19)% |
 
-各固定 EP 配置下对可用 T 档作常数描述；所有列出的点参与估计，不再称为独立预测验证。
+四档绝对时长均约 15 µs；算子占比随 T 增大而下降。来源：[配对数值](../data/h200/numbers/PAIRED_CONTROL_SHARE.md)；[主图源码](../figures/entry-cost.tex)。
 
-| EP 卡数 | 参与估计的 T/rank | Dispatch (µs) | Combine (µs) | 各档均值最大偏差 (µs) |
+### 5.3 Dependence on EP Size
+
+各固定 EP 配置的常数估计使用全部所列 token 档，每档三轮：
+
+| EP 卡数 | T/rank | Dispatch (µs) | Combine (µs) | 各档均值最大偏差 (µs) |
 |---:|:---|---:|---:|---:|
 | 4 | 8/32/96/128 | 11.65 | 11.54 | 0.06 |
 | 8 | 8/32/64/96/128 | 14.96 | 14.94 | 0.16 |
 | 16 | 8/32/96/128 | 18.36 | 18.28 | 0.09 |
 
-EP8 的 T=64 是后续不同插桩批次补测。不同 EP 配置也改变每机卡数与网络并发，不据此外推任意 rank 数的规律。来源：[配对数值](../data/h200/numbers/PAIRED_CONTROL_SHARE.md)、[pre-barrier 常数记录](../data/h200/numbers/PRE_MIN_FITS_T64.md)；[主图源码](../figures/entry-cost.tex)。
+固定 EP 时，pre-barrier 对 T 近似恒定。EP4/8/16 同时改变每机卡数、目标分布和网络并发，数值体现这些配置的综合变化。EP8 T=64 来自后续不同插桩批次。来源：[拟合数值](../data/h200/numbers/PRE_MIN_FITS_T64.md)。
 
-### 5.3 Post-Barrier
+### 5.4 Pre-Barriers in MoE Inference
 
-此处 post-barrier 数据仅指信号交换窗口：从本地发起信号到收齐全部预期信号，排除此前的 flush 和本地汇合。保留轮间波动，不再展示宽 post 拟合。
-
-| T/rank | Dispatch post-barrier (µs) | Combine post-barrier (µs) |
-|---:|---:|---:|
-| 8 | 13.97 ± 0.04 | 13.56 ± 0.24 |
-| 16 | 13.98 ± 0.23 | 13.78 ± 0.18 |
-| 32 | 11.67 ± 0.94 | 11.70 ± 1.43 |
-| 64 | 11.81 ± 0.42 | 11.76 ± 0.29 |
-| 96 | 11.12 ± 0.22 | 11.24 ± 0.92 |
-| 128 | 11.73 ± 0.07 | 11.88 ± 0.18 |
-
-T=8/16 约为 14 µs，已测 T≥32 约为 11–12 µs；T=32 的慢轮次全部保留。固定 EP8 时信号数量不随 T 改变，但窗口仍可能受 peer 就绪差、端点和网络排队影响。尚无证据支持协议阈值或通用时延公式，也不能将窗口全部计为 INC 收益。来源：[复测与代码分析](../data/h200/numbers/SIGNAL_SYNTHESIS_20260914.md)；[主图源码](../figures/completion-cost.tex)。
-
-### 5.4 Synchronization in MoE Inference
-
-Qwen3-30B-A3B，BF16，EP8 Direct，decode 输入/输出各 128 token。比较同一 EP 规模和并发下的单机与跨机 pre-barrier 占比。
+Qwen3-30B-A3B，BF16、TP1/EP8 Direct，输入/输出各 128 token；实际路由，比较单机 1n8 和跨机 2n4：
 
 | 拓扑 | 并发 | 实测 token/rank | D+C pre-barrier 占 GPU step |
 |:---|---:|---:|---:|
@@ -144,22 +117,22 @@ Qwen3-30B-A3B，BF16，EP8 Direct，decode 输入/输出各 128 token。比较�
 | 单机 1n8 | 128 | 16 | 7.94% |
 | 跨机 2n4 | 128 | 16 | 15.19% |
 
-跨机约 15%–17%，单机约 8%–9%。这是采样 GPU step 的占比，不是请求延迟或 INC 加速上限；三次 client 窗口复用服务实例，未测真实模型中 post-barrier signal 窗口的逐层占比。来源：[端到端数值](../data/h200/numbers/E2E.md)、[pre-barrier 分项](../data/h200/numbers/outline_shares.json)；[主图源码](../figures/inference-share.tex)。
+每个采样 step 含 48 次 Dispatch 与 48 次 Combine；三个 client 窗口使用同一 server 实例。占比分母为 GPU step。来源：[推理数值](../data/h200/numbers/E2E.md)、[分项](../data/h200/numbers/outline_shares.json)；[主图源码](../figures/inference-share.tex)。
 
 ## 6. Related Work — 相关工作
 
 ### 6.1 EP Communication
 
-[DeepEP](https://github.com/deepseek-ai/DeepEP)、[NCCL EP](https://arxiv.org/abs/2603.13606) 提供基线及不同同步组织；[SwiftEP](https://www.usenix.org/conference/nsdi26/presentation/li-xingyi)、[UEP](https://www.usenix.org/conference/osdi26/presentation/mao-ziming-uep)、[Perseus](https://arxiv.org/abs/2605.00686)、[UBEP](https://arxiv.org/abs/2607.06202) 分别从传输、可移植接口或流水内同步等方向优化 EP。比较其处理的依赖与本文的网络 READY 汇总、暂存放行、目标完成通知，避免反复逐篇否定。
+[DeepEP](https://github.com/deepseek-ai/DeepEP) 与 [NCCL EP](https://arxiv.org/abs/2603.13606) 提供 EP 数据路径与不同发送前协调方式。[SwiftEP](https://www.usenix.org/conference/nsdi26/presentation/li-xingyi)、[Perseus](https://arxiv.org/abs/2605.00686)、[UBEP](https://arxiv.org/abs/2607.06202) 改进数据移动和传输过程中的协调。本文用网络暂存重叠发送前的就绪等待。
 
 ### 6.2 In-Network Computation
 
-[DySHARP](https://arxiv.org/abs/2605.05607)、[MultiWrite](https://arxiv.org/abs/2605.22428) 提供 MoE multicast/reduction 与写语义；[SHARP](https://doi.org/10.1109/COMHPC.2016.006)、[SwitchML](https://www.usenix.org/conference/nsdi21/presentation/sapio) 提供集合卸载与归约状态管理先例。本文借用这些数据面能力，贡献集中在协调时序。
+[SHARP](https://developer.nvidia.com/blog/advancing-performance-with-nvidia-sharp-in-network-computing)、[SwitchML](https://www.usenix.org/conference/nsdi21/presentation/sapio) 展示网内归约与状态管理；[DySHARP](https://arxiv.org/abs/2605.05607)、[MultiWrite](https://arxiv.org/abs/2605.22428) 将网络处理用于 MoE 数据交换。本文利用临时状态和缓存改变 pre-barrier 与上传的先后关系。
 
-### 6.3 Synchronization Offload
+### 6.3 Synchronization and Delay Analysis
 
-[EPIC](https://arxiv.org/abs/2605.18683) 提供 INC 协议与资源抽象；[GPU-Initiated Networking](https://arxiv.org/abs/2511.15076) 提供 PUT/signal/fence 等端点原语。比较控制状态放置位置及完成语义。Swift 和测量工具在相应方法处引用，不另设一组重复介绍。
+[EPIC](https://arxiv.org/abs/2605.18683) 的 INC 协议和资源抽象、[GPU-Initiated Networking](https://arxiv.org/abs/2511.15076) 的端点原语为实现提供基础。[Swift](https://doi.org/10.1145/3387514.3406591) 提供处理/网络时延分解思路，[FabricPerf](https://github.com/open-neutrino/fabricperf) 强调明确的计时边界。
 
 ## 7. Conclusion — 结论
 
-跨机 Direct 的同步成本在小 batch 下占比显著。本文提出通过网内就绪汇总和有序完成通知重叠两端协调，并给出所需的可见性、资源与进展条件。现有实验支撑问题动机，实际收益仍需 INC 实现验证。
+小 batch 下 pre-barrier 开销显著。INC 允许本地就绪的 rank 在等待期间提前上传，并在接收条件满足后转发。收益取决于暂存空间、就绪时间差和转发速率。

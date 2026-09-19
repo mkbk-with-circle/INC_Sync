@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="490" viewBox="0 0 1200 490">
+<rect width="1200" height="490" fill="white"/>
+<text x="20" y="30.0" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="700" fill="#17324D" text-anchor="start">A  Direct: wait, then upload</text>
+<rect x="20" y="53" width="128" height="28" rx="7" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="84" y="73.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">GPU rank 0</text>
+<path d="M148,67 L225,103" fill="none" stroke="#607080" stroke-width="2"/>
+<polygon points="225,103 218.54117647058823,95.56470588235294 215.1529411764706,102.81176470588235" fill="#607080"/>
+<rect x="20" y="89" width="128" height="28" rx="7" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="84" y="109.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">GPU rank 1</text>
+<path d="M148,103 L225,103" fill="none" stroke="#607080" stroke-width="2"/>
+<polygon points="225,103 216.0,99.0 216.0,107.0" fill="#607080"/>
+<rect x="20" y="125" width="128" height="28" rx="7" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="84" y="145.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">GPU rank 2</text>
+<path d="M148,139 L225,103" fill="none" stroke="#607080" stroke-width="2"/>
+<polygon points="225,103 215.1529411764706,103.18823529411765 218.54117647058823,110.43529411764706" fill="#607080"/>
+<rect x="225" y="60" width="242" height="86" rx="7" fill="#FFF7EB" stroke="#B96A00" stroke-width="1.5"/>
+<text x="346" y="95.0" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#17324D" text-anchor="middle">Pre-barrier</text>
+<text x="346" y="123.0" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="400" fill="#17324D" text-anchor="middle">Collect peer READY</text>
+<path d="M467,103 L552,103" fill="none" stroke="#607080" stroke-width="2"/>
+<polygon points="552,103 543.0,99.0 543.0,107.0" fill="#607080"/>
+<rect x="552" y="60" width="270" height="86" rx="7" fill="#F0F8FC" stroke="#0072B2" stroke-width="1.5"/>
+<text x="687" y="95.0" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="700" fill="#17324D" text-anchor="middle">Upload and forward DATA</text>
+<text x="687" y="123.0" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="400" fill="#17324D" text-anchor="middle">ordinary network fabric</text>
+<path d="M822,103 L934,103" fill="none" stroke="#607080" stroke-width="2"/>
+<polygon points="934,103 925.0,99.0 925.0,107.0" fill="#607080"/>
+<rect x="934" y="60" width="243" height="86" rx="7" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="1055" y="97.0" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="700" fill="#17324D" text-anchor="middle">Destination buffers</text>
+<text x="1055" y="125.0" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="400" fill="#17324D" text-anchor="middle">writable after READY</text>
+<path d="M20,170 L1180,170" fill="none" stroke="#DBE3EA" stroke-width="2"/>
+<text x="20" y="203.0" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="700" fill="#17324D" text-anchor="start">B  INC: upload while collecting READY</text>
+<path d="M840,195 L880,195" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="880,195 871.0,191.0 871.0,199.0" fill="#0072B2"/>
+<text x="890" y="202.0" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#17324D" text-anchor="start">DATA</text>
+<path d="M1000,195 L1040,195" fill="none" stroke="#B96A00" stroke-width="2" stroke-dasharray="6 5"/>
+<polygon points="1040,195 1031.0,191.0 1031.0,199.0" fill="#B96A00"/>
+<text x="1050" y="202.0" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#17324D" text-anchor="start">READY</text>
+<rect x="438" y="229" width="361" height="223" rx="7" fill="#F2FAF7" stroke="#00836B" stroke-width="1.5"/>
+<text x="618" y="257.0" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#17324D" text-anchor="middle">INC node</text>
+<rect x="20" y="247" width="151" height="56" rx="7" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="95" y="272.0" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700" fill="#17324D" text-anchor="middle">GPU rank 0</text>
+<text x="95" y="293.0" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#607080" text-anchor="middle">locally ready</text>
+<path d="M171,262 L438,262" fill="none" stroke="#B96A00" stroke-width="2" stroke-dasharray="6 5"/>
+<polygon points="438,262 429.0,258.0 429.0,266.0" fill="#B96A00"/>
+<path d="M171,288 L438,288" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="438,288 429.0,284.0 429.0,292.0" fill="#0072B2"/>
+<rect x="240" y="278" width="24" height="20" rx="0" fill="#DCEFFA" stroke="#0072B2" stroke-width="1.5"/>
+<rect x="273" y="278" width="24" height="20" rx="0" fill="#DCEFFA" stroke="#0072B2" stroke-width="1.5"/>
+<rect x="306" y="278" width="24" height="20" rx="0" fill="#DCEFFA" stroke="#0072B2" stroke-width="1.5"/>
+<rect x="20" y="317" width="151" height="56" rx="7" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="95" y="342.0" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700" fill="#17324D" text-anchor="middle">GPU rank 1</text>
+<text x="95" y="363.0" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#607080" text-anchor="middle">locally ready</text>
+<path d="M171,332 L438,332" fill="none" stroke="#B96A00" stroke-width="2" stroke-dasharray="6 5"/>
+<polygon points="438,332 429.0,328.0 429.0,336.0" fill="#B96A00"/>
+<path d="M171,358 L438,358" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="438,358 429.0,354.0 429.0,362.0" fill="#0072B2"/>
+<rect x="240" y="348" width="24" height="20" rx="0" fill="#DCEFFA" stroke="#0072B2" stroke-width="1.5"/>
+<rect x="273" y="348" width="24" height="20" rx="0" fill="#DCEFFA" stroke="#0072B2" stroke-width="1.5"/>
+<rect x="306" y="348" width="24" height="20" rx="0" fill="#DCEFFA" stroke="#0072B2" stroke-width="1.5"/>
+<rect x="20" y="387" width="151" height="56" rx="7" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="95" y="412.0" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700" fill="#17324D" text-anchor="middle">GPU rank 2</text>
+<text x="95" y="433.0" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#607080" text-anchor="middle">ready later</text>
+<path d="M171,402 L438,402" fill="none" stroke="#B96A00" stroke-width="2" stroke-dasharray="6 5"/>
+<polygon points="438,402 429.0,398.0 429.0,406.0" fill="#B96A00"/>
+<text x="288" y="434.0" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="400" fill="#607080" text-anchor="middle">Upload after local readiness</text>
+<rect x="455" y="278" width="143" height="133" rx="3" fill="white" stroke="#B6CFC5" stroke-width="1.5"/>
+<text x="526" y="302.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700" fill="#17324D" text-anchor="middle">READY state</text>
+<text x="466" y="332.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="start">R0  received</text>
+<text x="466" y="359.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="start">R1  received</text>
+<text x="466" y="386.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#B96A00" text-anchor="start">R2  pending</text>
+<rect x="613" y="278" width="169" height="133" rx="3" fill="white" stroke="#B6CFC5" stroke-width="1.5"/>
+<text x="697" y="302.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700" fill="#17324D" text-anchor="middle">Buffered tokens</text>
+<rect x="628" y="321" width="137" height="27" rx="2" fill="#DCEFFA" stroke="#0072B2" stroke-width="1.5"/>
+<text x="696" y="341.0" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#0072B2" text-anchor="middle">R0 DATA</text>
+<rect x="628" y="356" width="137" height="27" rx="2" fill="#DCEFFA" stroke="#0072B2" stroke-width="1.5"/>
+<text x="696" y="376.0" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#0072B2" text-anchor="middle">R1 DATA</text>
+<text x="618" y="436.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#17324D" text-anchor="middle">Hold until all required ranks are ready</text>
+<path d="M799,343 L951,343" fill="none" stroke="#0072B2" stroke-width="2"/>
+<polygon points="951,343 942.0,339.0 942.0,347.0" fill="#0072B2"/>
+<text x="875" y="306.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#0072B2" text-anchor="middle">Then forward</text>
+<text x="875" y="326.0" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#0072B2" text-anchor="middle">by token route</text>
+<rect x="951" y="296" width="226" height="100" rx="7" fill="#F4F7FA" stroke="#607080" stroke-width="1.5"/>
+<text x="1064" y="327.0" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="700" fill="#17324D" text-anchor="middle">Destination GPUs</text>
+<text x="1064" y="357.0" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="400" fill="#17324D" text-anchor="middle">Preallocated</text>
+<text x="1064" y="381.0" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="400" fill="#17324D" text-anchor="middle">receive buffers</text>
+<text x="20" y="480.0" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="700" fill="#00836B" text-anchor="start">Earlier upload; destination writes still wait for readiness.</text>
+</svg>

@@ -1,7 +1,7 @@
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{figures/inc-overview.pdf}
-\caption{Two changes to Direct coordination: upload data while collecting READY, then append ordered DONE after the destination's final data. The queue shows the waiting stage; the right-hand sequence shows transmission after forwarding starts. Destination writability, data visibility, and buffer-lifetime requirements remain.}
-\Description{The Direct baseline serializes pre-barrier, data transfer and sender completion, and post-barrier. With INC, ranks zero and one upload while rank two is not yet ready. The network stores READY state and early data. Once all ranks are ready, it sends data followed by DONE to the destination.}
+\includegraphics[width=\textwidth]{figures/prebarrier-overview.pdf}
+\caption{Early upload overlaps readiness collection. The INC snapshot shows rank 2 still pending and data from ranks 0 and 1 buffered. Forwarding starts after all required ranks are ready and destination buffers are writable.}
+\Description{The baseline waits for peer readiness before uploading. INC receives READY and data together, stores early tokens, and forwards them after readiness is complete.}
 \label{fig:design-overview}
 \end{figure*}

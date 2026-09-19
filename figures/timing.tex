@@ -1,75 +1,7 @@
-% Schematic timing of endpoint coordination and the proposed \sys{} path.
-% Coordinates are schematic, not measurements. Dashed = control; solid = \data{}.
 \begin{figure*}[t]
 \centering
-\begin{tikzpicture}[x=1cm,y=-1cm,font=\footnotesize]
-\path[use as bounding box] (0,0) rectangle (17.5,9.3);
-\begin{scope}[shift={(0,4.75)}]
-\node[paneltitle] at (.1,.15) {(c) Aligned ranks: endpoint exchanges};
-\node at (1.1,.65) {Rank 0}; \node at (5.7,.65) {Rank 1};
-\draw[lifeline] (1.1,.9)--(1.1,4.2); \draw[lifeline] (5.7,.9)--(5.7,4.2);
-\draw[ctrlarrow] (1.1,1.05)--(5.7,1.65);
-\draw[ctrlarrow] (5.7,1.05)--(1.1,1.65);
-\node[smalllabel] at (3.4,1.08) {\ready{} all-to-all};
-\foreach \y in {1.8,2.04,2.28,2.95} {
-\draw[dataarrow] (1.1,\y)--(5.7,{\y+.6});
-\draw[dataarrow] (5.7,\y)--(1.1,{\y+.6});}
-\draw[ctrlarrow] (1.1,3.62)--(5.7,4.17);
-\draw[ctrlarrow] (5.7,3.62)--(1.1,4.17);
-\node[smalllabel] at (3.4,3.94) {post-barrier exchange};
-\draw[<->] (6.1,1.05)--(6.1,1.65) node[midway,right,align=left] {pre\,$\simeq L$};
-\draw[<->] (6.1,3.62)--(6.1,4.17) node[midway,right,align=left] {post\,$\simeq L$};
-\end{scope}
-\begin{scope}[shift={(8.8,4.75)}]
-\node[paneltitle] at (.1,.15) {(d) Aligned ranks: \sys{} overlap};
-\node at (.8,.65) {Rank 0}; \node at (3.6,.65) {\sys{}}; \node at (6.4,.65) {Rank 1};
-\foreach \x in {.8,3.6,6.4} \draw[lifeline] (\x,.9)--(\x,4.2);
-\draw[ctrlarrow] (.8,1.05)--(3.6,1.35); \draw[ctrlarrow] (6.4,1.05)--(3.6,1.35);
-\fill[incgreen] (3.6,1.35) circle (.045);
-\node[smalllabel,anchor=west] at (3.75,1.08) {all \ready{}};
-\foreach \y in {1.2,1.44,1.68,2.35} {
-\draw[dataarrow] (.8,\y)--(6.4,{\y+.6});
-\draw[dataarrow] (6.4,\y)--(.8,{\y+.6});}
-\draw[ctrlarrow] (3.6,2.72)--(6.4,3.02);
-\draw[ctrlarrow] (3.6,2.72)--(.8,3.02);
-\node[smalllabel,align=center] at (3.6,3.44) {\done{} follows final \data{}\\on each ordered output};
-\node[anchor=west] at (.4,4.02) {No extra endpoint exchange for DONE.};
-\end{scope}
-\begin{scope}[shift={(0,0)}]
-\node[paneltitle] at (.1,.15) {(a) Unequal ranks: endpoint exchanges};
-\node at (1.1,.65) {Rank 0}; \node at (5.7,.65) {Rank 1};
-\draw[lifeline] (1.1,.9)--(1.1,4.3); \draw[lifeline] (5.7,.9)--(5.7,4.3);
-\draw[ctrlarrow] (1.1,1.0)--(5.7,1.6); \draw[ctrlarrow] (5.7,1.55)--(1.1,2.15);
-\node[smalllabel] at (3.4,1.02) {Rank 1 ready later};
-\foreach \y in {2.2,2.43,2.66,3.03} \draw[dataarrow] (1.1,\y)--(5.7,{\y+.6});
-\foreach \y in {1.65,1.88,2.11,2.48} \draw[dataarrow] (5.7,\y)--(1.1,{\y+.6});
-\draw[ctrlarrow] (1.1,3.2)--(5.7,3.8);
-\draw[ctrlarrow] (5.7,3.72)--(1.1,4.32);
-\node[smalllabel,align=center] at (3.4,4.15) {Pre- and post-barrier signals\\traverse between endpoints};
-\end{scope}
-\begin{scope}[shift={(8.8,0)}]
-\node[paneltitle] at (.1,.15) {(b) Unequal ranks: bounded staging};
-\node at (.8,.65) {Rank 0}; \node at (3.6,.65) {\sys{}}; \node at (6.4,.65) {Rank 1};
-\foreach \x in {.8,3.6,6.4} \draw[lifeline] (\x,.9)--(\x,4.3);
-\fill[pattern=north east lines,pattern color=black!35] (3.43,1.43) rectangle (3.77,1.87);
-\draw[ctrlarrow] (.8,1.0)--(3.6,1.3);
-\draw[ctrlarrow] (6.4,1.55)--(3.6,1.85);
-\draw[dataarrow] (.8,1.13)--(3.6,1.43);
-\draw[dataarrow] (.8,1.36)--(3.6,1.66);
-\draw[dataarrow] (.8,1.59)--(3.6,1.89);
-\draw[dataarrow] (3.6,1.9)--(6.4,2.2);
-\draw[dataarrow] (3.6,2.13)--(6.4,2.43);
-\draw[dataarrow] (3.6,2.36)--(6.4,2.66);
-\draw[dataarrow] (.8,2.18)--(3.6,2.48)--(6.4,2.95);
-\foreach \y in {1.68,1.91,2.14,2.51} \draw[dataarrow] (6.4,\y)--(.8,{\y+.6});
-\draw[ctrlarrow] (3.6,2.72)--(6.4,3.02);
-\draw[ctrlarrow] (3.6,2.88)--(.8,3.18);
-\node[smalllabel,anchor=east] at (3.2,1.68) {buffer};
-\node[smalllabel,align=center] at (3.6,3.6) {Wait for \ready{} at the \sys{} node;\\preserve output service and ordering};
-\node[anchor=west] at (.4,4.18) {Skew coverage is not an additional fixed saving.};
-\end{scope}
-\end{tikzpicture}
-\caption{Idealized projection of the two-boundary design, not a measured Direct trace. Solid arrows carry \data{}; dashed arrows carry control. The left-hand reference assumes an exposed tail-signal interval of approximately $L$ after data arrival; actual Direct timing follows Equation~\eqref{eq:tailgain}. \sys{} overlaps readiness with upload and appends ordered \done{} at each destination's tail. Early data is buffered under skew. Local transfer completion and safe buffer reuse remain required.}
-\Description{Four timing panels compare endpoint and network coordination. The top pair shows unequal readiness and buffering; the lower pair shows aligned readiness as an ideal reference. Solid arrows are data and dashed arrows are control.}
+\includegraphics[width=\textwidth]{figures/prebarrier-timing.pdf}
+\caption{Readiness and data transmission with simultaneous (top) and unequal (bottom) rank readiness. Dashed arrows are READY; solid arrows are DATA. INC holds early data until the last required READY arrives. The aligned reference can hide one control traversal; actual operation latency also depends on output queuing and subsequent work.}
+\Description{Four panels compare Direct and INC. With aligned readiness, INC uploads while readiness signals converge. With unequal readiness, early data waits at INC rather than at the source.}
 \label{fig:timing}
 \end{figure*}

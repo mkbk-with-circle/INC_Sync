@@ -3,28 +3,25 @@
 
 \subsection{Expert-Parallel Communication}
 \label{sec:epbackground}
-An MoE layer selects up to $\topk$ experts for each input token. Under expert parallelism, experts are distributed across GPU ranks. Dispatch moves activations to the selected expert ranks; after expert computation, Combine returns and merges their contributions at the token owner~\cite{deepep,ncclep}.
+An MoE layer selects up to $\topk$ experts for each token. Under expert parallelism, Dispatch sends activations to the ranks hosting those experts; Combine returns their outputs to the token owner~\cite{deepep,ncclep}. Routing determines the destinations and traffic volume. The exchange also carries metadata needed to place tokens into expert input buffers.
 
-Routing determines the amount of traffic sent to each destination. Communication therefore involves both activations or partial outputs and metadata describing destinations, valid counts, and output placement. Within a node, ranks may use NVLink; across nodes, they use a network transport such as RDMA. Communication staging provides known landing addresses, while the final expert layout may depend on exchanged counts.
+Ranks communicate readiness, counts, and routing information through collective operations or point-to-point writes and polling. A readiness signal indicates that the resources needed for the round are available. Communication buffers provide known landing positions; the final arrangement of tokens by expert may depend on exchanged counts.
 
-Ranks exchange routing metadata, valid counts, and readiness or completion signals through collective operations or peer-to-peer writes and polling. Readiness signals indicate that resources are ready; completion signals indicate that the associated transfers have finished.
+EP implementations organize these steps differently. NCCL EP HT gathers routing metadata before Dispatch. DeepEP V2 Direct performs a pre-barrier, then processes counts alongside data. NCCL EP LL writes into reserved slots with fine-grained signals~\cite{ncclhtcode,deepepcode,ncclllcode}. These choices determine what must finish before a rank can send its first token.
 
-EP implementations organize these exchanges differently. NCCL EP HT gathers routing metadata before Dispatch; DeepEP V2 Direct performs a pre-barrier, then processes counts alongside data; NCCL EP LL writes into reserved slots and uses fine-grained signals without an independent pre-barrier~\cite{ncclhtcode,deepepcode,ncclllcode}. These schedules must all ensure writable receive resources, visible input before consumption, and safe buffer reuse after consumption.
-
-\subsection{Synchronization in DeepEP V2 Direct}
+\subsection{Pre-Barriers in DeepEP V2 Direct}
 \label{sec:epsynchronization}
-Cross-node DeepEP V2 Direct places coordination at both ends of Dispatch and Combine~\cite{deepepcode}. A pre-barrier precedes payload injection. Dispatch exchanges counts and computes layout alongside data movement; Combine reuses the established routing. After completing the required sender-side work, ranks exchange completion signals across the EP group in a post-barrier.
+Direct Dispatch and Combine enter a pre-barrier before token transmission~\cite{deepepcode}. Each rank waits for readiness from the participating group and completes the required local synchronization. Dispatch subsequently exchanges counts and computes layout information alongside data movement; Combine uses routing established during Dispatch.
 
-The Direct path preallocates communication buffers, and changes to its synchronization must preserve safe buffer reuse and data visibility. Opportunities to overlap pre-barrier and post-barrier communication with data transfer exist within or across nodes, provided the relevant traffic passes through INC and data-before-DONE ordering holds.
-% Cross-node Direct is our primary measurement scenario.
+The Direct path preallocates communication buffers. This permits a distinction between moving data toward the destination and writing it into the destination buffer. An INC node can support that distinction within or across nodes when it covers the relevant traffic and preserves the required delivery order.
 
-At fixed EP size, fewer tokens reduce payload work while coordination still involves the same ranks. Our EP8 measurements show a pre-barrier duration of approximately 15\us{}, occupying about 20\% of the operator at eight tokens per rank and 5\% at 128. This motivates overlap, although the measured interval is not entirely removable. Section~\ref{sec:evidence} presents the methodology and results.
+At fixed EP size, fewer tokens reduce data-transfer work while coordination still involves the same ranks. Our cross-node EP8 measurements show a pre-barrier duration near 15\us{}, occupying about 20\% of operator time at eight tokens per rank and 5\% at 128. Section~\ref{sec:evidence} reports the measurement method and results.
 
 \subsection{Opportunities for In-Network Computing}
 \label{sec:incopportunity}
-In-network computing (INC) allows switches and other network devices to compute while forwarding data, for example by summing values from multiple GPUs. These devices can also retain temporary state across packets, such as which ranks are ready and how much data has been forwarded to each destination. Prior work uses in-network computation for collective reduction and data transfer in MoE communication~\cite{sharp,switchml,dysharp}. We use this state to aggregate readiness signals and track completion, together with network buffering to overlap synchronization with data transfer.
+In-network computing lets network devices process data while forwarding it, for example by summing values from several GPUs~\cite{sharp,switchml,dysharp}. Such devices can also retain temporary state across packets. For pre-barriers, the useful state is which ranks are ready, together with space to hold data that arrives before forwarding is allowed.
 
-A locally ready rank can begin uploading to network staging while INC collects readiness signals from other ranks. Destination delivery still waits for the required readiness and writable resources. At completion, INC can track expected output and append an ordered notification to the destination's final data. The notification must imply data visibility, and genuine global dependencies remain.
+A locally ready rank can upload while INC collects the remaining readiness signals. INC holds early tokens until the required receive buffers are writable, then forwards both buffered and arriving data.
 
 \paragraph{Key insight.}
-Synchronization conditions must hold, but their communication need not be serialized with data transfer. INC can overlap readiness aggregation with upload and append ordered completion notifications to trailing data, potentially shortening the critical path.
+A rank can upload locally ready data before all ranks are ready, provided INC buffers the data until the required readiness conditions hold. This overlaps readiness aggregation with the first part of data transfer.

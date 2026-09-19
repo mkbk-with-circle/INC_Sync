@@ -2,16 +2,14 @@
 \label{sec:related}
 
 \subsection{EP Communication}
-DeepEP~\cite{deepep}, NCCL EP~\cite{ncclep}, and GPU-initiated networking~\cite{gin} provide the communication paths and transport primitives considered here. SwiftEP~\cite{swiftep} optimizes buffer movement and GPU work, while COMET~\cite{comet} overlaps communication and computation. These optimizations affect how payload moves and when computation can proceed. Our design targets readiness aggregation before delivery and completion notification after managed output.
+DeepEP~\cite{deepep} and NCCL EP~\cite{ncclep} provide GPU-initiated communication paths for expert parallelism. Their metadata exchanges, preallocated buffers, and synchronization schedules determine when data can be sent. \sys{} uses network staging to begin upload while peer readiness is still being collected.
 
-Perseus~\cite{perseus} reorganizes PUT, fence, and signal processing within the transfer pipeline. UBEP~\cite{ubep} uses point-to-point signals and Data-as-Flag to reduce stage synchronization in a scale-up EP implementation. Both motivate examining the dependencies enforced by existing synchronization. \sys{} instead considers an explicit network rendezvous with bounded early-data staging and destination notification. These systems differ in how they order writes and manage buffers.
+SwiftEP~\cite{swiftep} optimizes buffer movement and GPU work, while COMET~\cite{comet} overlaps communication with computation. Perseus~\cite{perseus} reorganizes PUT, fence, and signal processing in the transfer pipeline. UBEP~\cite{ubep} uses point-to-point signals and Data-as-Flag to reduce stage synchronization in scale-up EP. These approaches improve data movement or its coordination; early upload complements them when a readiness dependency precedes transmission.
 
 \subsection{In-Network Computation}
-DySHARP~\cite{dysharp} combines dynamic addressing, multicast, and reduction in the network for MoE. MultiWrite~\cite{multiwrite} reduces duplicate upstream traffic through multicast writes. Their data-plane techniques can complement the proposed coordination. We do not claim multicast arithmetic or bandwidth reduction as a new contribution.
+SHARP~\cite{sharp} and SwitchML~\cite{switchml} use network computation for collective reduction. DySHARP~\cite{dysharp} combines dynamic addressing, multicast, and reduction for MoE, while MultiWrite~\cite{multiwrite} uses multicast writes to reduce repeated upstream transfers. These systems demonstrate network processing and state management for distributed workloads. \sys{} applies temporary state and buffering to overlap pre-barrier coordination with upload.
 
-SHARP~\cite{sharp} and SwitchML~\cite{switchml} demonstrate network-assisted collectives and reduction state management. They provide useful precedents for the Combine data plane. The question here is how readiness aggregation and output completion change the timing of an EP operation with routing-dependent traffic.
+\subsection{Synchronization and Delay Analysis}
+EPIC~\cite{epic} provides protocol and resource abstractions for Ethernet in-network computing. GPU-initiated networking~\cite{gin} provides endpoint communication primitives. \sys{} combines these capabilities with readiness checks, symmetric receive buffers, and flow control.
 
-\subsection{Synchronization Offload}
-EPIC~\cite{epic} provides protocol and resource abstractions for Ethernet in-network computing. Such interfaces are relevant to a possible implementation of \sys{}, which requires programmable progress tracking, bounded storage, and data-before-DONE ordering. GPU-initiated networking~\cite{gin} exposes the endpoint PUT, signal, and fence operations used by our baseline; the proposed node must coordinate with these transport semantics.
-
-Swift's endpoint/fabric decomposition~\cite{swift} informs the latency model, while tools such as FabricPerf~\cite{fabricperf} motivate explicit observation boundaries. Our measured signal window characterizes endpoint coordination. It does not by itself identify the fabric propagation or the delay exposed after destination visibility.
+Swift~\cite{swift} separates processing and network contributions to delay. We apply that distinction to the execution order of an EP operation. FabricPerf~\cite{fabricperf} further motivates explicit timing boundaries; our pre-barrier measurements pair each interval with the corresponding operator or GPU step.
