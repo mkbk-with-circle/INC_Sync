@@ -10,17 +10,17 @@ Microbenchmarks fix $H=7168$, $\topk=8$, 256 experts, BF16, and balanced uniform
 
 For each iteration, we report the shortest pre-barrier interval across ranks and pair it with the same rank's trace-on operator time. Ratios are averaged within each run and then across runs. This rank-minimum statistic avoids assigning arrival skew from a slower rank to the protocol cost, but it may still contain waiting at the selected rank. A same-image EP8/T8 check changes total operator time by 3.9--5.0\% for Dispatch and 1.7--3.8\% for Combine across three runs; phase shares therefore use paired trace-on numerator and denominator.
 
-The EP8 token sweep and the EP-size comparison are separate campaigns. Figure~\ref{fig:entry-cost} uses $T=8,32,64,128$ from one instrumented image. Table~\ref{tab:entry-constants} uses its listed points from the original campaign plus a later EP8/T64 batch; its constants are fitted only to those values.
+The EP8 token sweep and the EP-size comparison are separate campaigns. \autoref{fig:entry-cost} uses $T=8,32,64,128$ from one instrumented image. \autoref{tab:entry-constants} uses its listed points from the original campaign plus a later EP8/T64 batch; its constants are fitted only to those values.
 
 \subsection{Pre-Barrier Cost versus Token Count}
 \label{sec:entry-eval}
-Figure~\ref{fig:entry-cost} reports pre-barrier duration and its share within a single Direct Dispatch or Combine operator at EP8. Dispatch and Combine remain near 15\us{} across the measured token counts. Their operator shares fall from 20.57\% and 19.84\% at $T=8$ to 4.88\% and 5.05\% at $T=128$. Small batches therefore expose a larger fraction of each communication operator to readiness coordination.
+\autoref{fig:entry-cost} reports pre-barrier duration and its share within a single Direct Dispatch or Combine operator at EP8. Dispatch and Combine remain near 15\us{} across the measured token counts. Their operator shares fall from 20.57\% and 19.84\% at $T=8$ to 4.88\% and 5.05\% at $T=128$. Small batches therefore expose a larger fraction of each communication operator to readiness coordination.
 
 \input{figures/entry-cost}
 
 \subsection{Across EP Configurations}
 \label{sec:scale-eval}
-Table~\ref{tab:entry-constants} summarizes each EP configuration with a constant fitted to all listed token counts. The largest departure of a token-count mean from its configuration's constant is 0.16\us{}, so token count has little effect over these measured ranges.
+\autoref{tab:entry-constants} summarizes each EP configuration with a constant fitted to all listed token counts. The largest departure of a token-count mean from its configuration's constant is 0.16\us{}, so token count has little effect over these measured ranges.
 
 \begin{table}[t]
 \centering
@@ -43,15 +43,15 @@ The fitted duration rises from approximately 11.6\us{} at EP4 to 18.3\us{} at EP
 
 \subsection{Pre-Barriers in MoE Serving}
 \label{sec:e2e}
-We measure Qwen3-30B-A3B in BF16 with vLLM 0.27 and DeepEP V2 Direct. The model has $H=2048$, 128 experts, and $\topk=8$. Runs use actual routing, TP=1, EP8, and requests with 128 input and 128 output tokens. Figure~\ref{fig:inference-share} reports one-node measurements at concurrency 1, 64, 128, and 256, and cross-node measurements at 64 and 128.
+We measure Qwen3-30B-A3B in BF16 with vLLM 0.27 and DeepEP V2 Direct. The model has $H=2048$, 128 experts, and $\topk=8$. Runs use actual routing, TP=1, EP8, and requests with 128 input and 128 output tokens. \autoref{fig:inference-share} reports one-node measurements at concurrency 1, 64, 128, and 256, and cross-node measurements at 64 and 128.
 
-The serving build includes tracing and an expert-padding correctness fix. For decode, one active GPU step is sampled per rank and client window; each sampled step contains 48 Dispatch and 48 Combine calls. We sum the pre-barrier intervals from those calls, divide by the same rank's trace-on GPU-step time, and average over ranks and three client windows on the same server instance. Thus Figure~\ref{fig:inference-share} and Table~\ref{tab:serving-coverage} measure cumulative pre-barrier exposure within an MoE GPU step, whereas Figure~\ref{fig:entry-cost} measures a single communication operator.
+The serving build includes tracing and an expert-padding correctness fix. For decode, one active GPU step is sampled per rank and client window; each sampled step contains 48 Dispatch and 48 Combine calls. We sum the pre-barrier intervals from those calls, divide by the same rank's trace-on GPU-step time, and average over ranks and three client windows on the same server instance. Thus \autoref{fig:inference-share} and \autoref{tab:serving-coverage} measure cumulative pre-barrier exposure within an MoE GPU step, whereas \autoref{fig:entry-cost} measures a single communication operator.
 
 \input{figures/inference-share}
 
 For one node, the shares at C64, C128, and C256 are 9.33\%, 7.94\%, and 7.61\%. C1 is a low-load anchor with only one active rank in each sampled window. Across two nodes, C64 and C128 give 16.72\% and 15.19\%. Readiness coordination therefore remains visible with real routing and model computation.
 
-Table~\ref{tab:serving-coverage} extends the cross-node results. At 16 tokens per rank, the share remains near 15\% across EP4, EP8, and EP16. Prefill has much larger token batches and a 2.6--3.1\% share. Each prefill row samples the single active prefill step per client window; it is a workload comparison rather than a controlled token-only experiment.
+\autoref{tab:serving-coverage} extends the cross-node results. At 16 tokens per rank, the share remains near 15\% across EP4, EP8, and EP16. Prefill has much larger token batches and a 2.6--3.1\% share. Each prefill row samples the single active prefill step per client window; it is a workload comparison rather than a controlled token-only experiment.
 
 \begin{table}[t]
 \centering

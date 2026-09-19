@@ -4,7 +4,7 @@
 
 \subsection{Overview and Assumptions}
 \label{sec:overview}
-Figure~\ref{fig:design-overview} contrasts the baseline's wait-before-send sequence with early upload.
+\autoref{fig:design-overview} contrasts the baseline's wait-before-send sequence with early upload.
 \input{figures/design-overview}
 INC maintains a bitmap of ready ranks and a bounded queue of early data for each communication round. A generation identifies the Dispatch or Combine operation, and a buffer epoch identifies a particular use of a receive buffer. All participating ranks and the traffic controlled by their pre-barrier must be covered by the INC node.
 
@@ -18,7 +18,7 @@ In Direct, a rank waits for peer readiness before sending data. With \sys{}, it 
 
 INC records which ranks are ready and buffers data that arrives early. Once all required READY signals have arrived and destination buffers are writable, INC forwards both buffered and incoming data according to their routes.
 
-The benefit comes from moving data while readiness is being collected. While baseline sources are still waiting for peer signals, data can already be in flight to INC or buffered there. Figure~\ref{fig:timing} illustrates how this overlap can advance data delivery when INC has sufficient buffer space and forwarding bandwidth.
+The benefit comes from moving data while readiness is being collected. While baseline sources are still waiting for peer signals, data can already be in flight to INC or buffered there. \autoref{fig:timing} illustrates how this overlap can advance data delivery when INC has sufficient buffer space and forwarding bandwidth.
 
 \subsection{Buffer Management and Backpressure}
 \label{sec:resources}

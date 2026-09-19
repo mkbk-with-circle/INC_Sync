@@ -19,7 +19,7 @@ Here $T_{\rm issue}$ is the local work to prepare and issue READY, $L$ is its on
 
 \subsection{Overlapping the Wait for READY}
 \label{sec:readiness-analysis}
-In the baseline, ranks finish the entire READY stage before sending DATA. With INC, each rank issues READY and starts uploading. READY and DATA travel toward the network node together; INC holds any early data until the required signals have arrived and destination buffers are writable. Figure~\ref{fig:timing} illustrates this change in timing.
+In the baseline, ranks finish the entire READY stage before sending DATA. With INC, each rank issues READY and starts uploading. READY and DATA travel toward the network node together; INC holds any early data until the required signals have arrived and destination buffers are writable. \autoref{fig:timing} illustrates this change in timing.
 
 \input{figures/timing}
 
@@ -39,6 +39,6 @@ The network component is one serialized READY traversal, $L$, which is approxima
 
 \subsection{Readiness Skew in Practice}
 \label{sec:skew}
-In practice, differences in computation and scheduling often make ranks ready at different times. Figure~\ref{fig:timing}(C--D) shows how the overlap works in this case: early ranks upload while later ranks prepare, and INC buffers the data. When the last required READY arrives, INC can start forwarding these tokens instead of waiting for the early ranks to receive peer signals and then begin uploading. The mechanism therefore does not require synchronized arrivals.
+In practice, differences in computation and scheduling often make ranks ready at different times. \autoref{fig:timing}(C--D) shows how the overlap works in this case: early ranks upload while later ranks prepare, and INC buffers the data. When the last required READY arrives, INC can start forwarding these tokens instead of waiting for the early ranks to receive peer signals and then begin uploading. The mechanism therefore does not require synchronized arrivals.
 
 With sufficient staging and forwarding capacity, this upload head start is preserved under readiness skew and shortens the operation when it advances critical-path data delivery. Output queuing and PFC pauses contribute to $T_{\rm extra}$. The gain depends on the last rank to finish and the available overlap, rather than a fixed fraction of RTT for every arrival pattern.
