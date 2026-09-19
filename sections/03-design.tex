@@ -8,7 +8,7 @@ Figure~\ref{fig:design-overview} contrasts the baseline's wait-before-send seque
 \input{figures/design-overview}
 INC maintains a bitmap of ready ranks and a bounded queue of early data for each communication round. A generation identifies the Dispatch or Combine operation, and a buffer epoch identifies a particular use of a receive buffer. All participating ranks and the traffic controlled by their pre-barrier must be covered by the INC node.
 
-Receive buffers are allocated and registered symmetrically during initialization. INC obtains their layout, address mappings, sizes, and access permissions once. Token routes and identifiers determine destinations and buffer offsets without global receive counts. This allows data to enter preallocated receive buffers while the final expert layout is being computed.
+Receive buffers are allocated and registered symmetrically during initialization. INC obtains their layout, address mappings, sizes, and access permissions once. Each token carries routing information and an identifier that locate its slot in the destination's preallocated buffer. INC can write tokens into these slots before all receive counts are known; the destination can arrange them by expert afterward.
 
 A rank sends \ready{} after its local input is available and the previous use of its receive buffer has finished. READY identifies the rank, generation, and buffer epoch. The node uses it to confirm that the buffer is writable for the current round. Deployment can be within or across nodes; any path that bypasses INC needs the corresponding readiness protection before it writes destination memory.
 
