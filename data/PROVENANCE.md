@@ -52,12 +52,14 @@ active step per rank and window; prefill samples its single active step.
 
 The prebarrier-overview and prebarrier-timing figures are protocol schematics,
 not measured traces. Both have native draw.io, SVG, and PDF sources.
-The reference splits READY into local issue time, one-way traversal L, and
-endpoint observation. INC retains local issue time and overlaps upload with
-the readiness wait. Its reference saving is L + T_exit - T_extra;
-T_extra includes retained readiness processing and additional buffering or
-forwarding delays. The data-transfer and post-barrier work are held equal
-in the reference. L is half the network RTT only for symmetric paths.
+The reference splits READY into T_local (preparing, issuing, and checking
+signals) and T_signal (network signal exchange). With equal local processing,
+data-transfer, and post-barrier costs, upload covering the signal-transfer
+interval gives a reference saving of approximately T_signal - T_extra.
+T_extra is added critical-path delay from INC processing, buffering, and
+forwarding waits. Concurrent announcements over symmetric paths give
+T_signal approximately half a network RTT. Unequal readiness and limited
+forwarding capacity can change the available overlap.
 
 ## Local revision history
 

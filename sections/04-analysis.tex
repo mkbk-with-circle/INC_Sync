@@ -12,10 +12,10 @@ Let $T_{\rm ready}$ be the pre-barrier duration, $T_{\rm data}$ the data-transfe
 
 Following Swift's separation of processing and network delay~\cite{swift}, consider a reference with simultaneous rank readiness and comparable communication paths:
 \begin{equation}
- T_{\rm ready}=T_{\rm issue}+L+T_{\rm exit}.
+ T_{\rm ready}=T_{\rm local}+T_{\rm signal}.
  \label{eq:ready}
 \end{equation}
-Here $T_{\rm issue}$ is the local work to prepare and issue READY, $L$ is its one-way network traversal, and $T_{\rm exit}$ is the time from the arrival of the last required READY until the rank exits the pre-barrier and can send DATA.
+Here $T_{\rm local}$ includes preparing, issuing, and checking readiness signals. $T_{\rm signal}$ is the network time for the required signal exchange. With concurrent announcements and symmetric paths, this exchange requires one one-way traversal, approximately half a network RTT.
 
 \subsection{Latency Reduction from Early Upload}
 \label{sec:readiness-analysis}
@@ -23,19 +23,19 @@ In the baseline, ranks finish the entire READY stage before sending DATA. With I
 
 \input{figures/timing}
 
-Using the same reference data-transfer duration and subsequent completion work, the INC schedule is
+To isolate the benefit of overlap, we retain the same local processing cost, data-transfer duration, and post-barrier work in the reference model. When early upload covers the signal-transfer interval, the INC latency is
 \begin{equation}
- T_{\rm INC}=T_{\rm issue}+T_{\rm data}+T_{\rm post}+T_{\rm extra}.
+ T_{\rm INC}\approx T_{\rm local}+T_{\rm data}+T_{\rm post}+T_{\rm extra}.
  \label{eq:inc}
 \end{equation}
-The local issue time remains. $T_{\rm extra}$ includes readiness processing still required at INC or the endpoints and additional delay from buffering or waiting to forward. The ordinary source-to-destination traversal of DATA is already included in $T_{\rm data}$.
+$T_{\rm extra}$ is the additional critical-path delay introduced by INC processing, buffering, and forwarding waits. The ordinary source-to-destination DATA transfer is already included in $T_{\rm data}$; local processing remains accounted for in $T_{\rm local}$.
 
 The reference difference is therefore
 \begin{equation}
- \Delta T=L+T_{\rm exit}-T_{\rm extra}.
+ \Delta T\approx T_{\rm signal}-T_{\rm extra}.
  \label{eq:gain}
 \end{equation}
-The network component is one serialized READY traversal, $L$, which is approximately half a network RTT for symmetric paths. The net benefit also depends on how much endpoint observation work is replaced and how much processing and waiting INC adds. Half a network RTT is not half the measured pre-barrier duration.
+Early upload thus hides approximately half a network RTT in this reference case, less the added INC delay. The saving comes from overlapping signal transmission with data movement, while the post-barrier remains unchanged.
 
 \subsection{Overlap with Unequal Readiness}
 \label{sec:skew}
