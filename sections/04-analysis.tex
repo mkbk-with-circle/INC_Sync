@@ -9,9 +9,9 @@ Following Swift's separation of endpoint and network delay~\cite{swift}, we dist
  T_{\rm msg}=T_{\rm sender}+T_{\rm network}+T_{\rm receiver}.
  \label{eq:message}
 \end{equation}
-The network term includes propagation, serialization, and queuing. The endpoint terms include initiating the send and detecting the received signal. We use this decomposition to analyze EP synchronization, rather than adopting Swift's timestamping procedure.
+Here, $T_{\rm sender}$ is the time to issue the send, $T_{\rm network}$ includes link propagation, packet transmission, and network queuing, and $T_{\rm receiver}$ is the time to detect the received message.
 
-A barrier additionally waits for participating ranks to become ready and for required local work to finish. Concurrent messages are awaited together, so the last required arrival determines completion. The measured barrier duration therefore cannot be treated as network propagation time or as the time INC necessarily saves.
+For a barrier, each rank waits until all required signals have arrived and local synchronization has finished. Its duration therefore depends on both message delay and when other ranks send their signals; it is not simply $T_{\rm network}$.
 
 \subsection{Overlapping the Pre-Barrier}
 \label{sec:readiness-analysis}
