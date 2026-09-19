@@ -3,6 +3,61 @@
   "method": "For each sampled rank step, sum dispatch_pre and combine_pre, divide by same-rank gpu_clock_span_us, average ranks within a client window, then report mean and sample standard deviation across three windows.",
   "rows": [
     {
+      "topology": "1n8",
+      "ep": 8,
+      "workload": "decode_c1",
+      "tokens_per_rank": [1],
+      "active_steps_per_window": [1, 1, 1],
+      "run_values_percent": [9.19813878545939, 9.152938124270333, 9.43493482765308],
+      "mean_percent": 9.262003912460935,
+      "between_window_std_percent": 0.15145824842139438,
+      "source": "data/h200/20260912/gpu3/results/processed_snapshot_sync/snap_c1_r{1,2,3}-steps.json"
+    },
+    {
+      "topology": "1n8",
+      "ep": 8,
+      "workload": "decode_c64",
+      "tokens_per_rank": [8],
+      "active_steps_per_window": [8, 8, 8],
+      "run_values_percent": [9.410679496266289, 9.383435382834788, 9.18910654971524],
+      "mean_percent": 9.327740476272105,
+      "between_window_std_percent": 0.12083080991037845,
+      "source": "data/h200/numbers/outline_shares.json"
+    },
+    {
+      "topology": "1n8",
+      "ep": 8,
+      "workload": "decode_c128",
+      "tokens_per_rank": [16],
+      "active_steps_per_window": [8, 8, 8],
+      "run_values_percent": [8.116994065670873, 7.8673627146576255, 7.834427467868055],
+      "mean_percent": 7.939594749398851,
+      "between_window_std_percent": 0.15451236416742875,
+      "source": "data/h200/numbers/outline_shares.json"
+    },
+    {
+      "topology": "1n8",
+      "ep": 8,
+      "workload": "decode_c256",
+      "tokens_per_rank": [32],
+      "active_steps_per_window": [8, 8, 8],
+      "run_values_percent": [7.965824481232541, 7.346968570311586, 7.523834592172827],
+      "mean_percent": 7.612209214572318,
+      "between_window_std_percent": 0.31875259219909235,
+      "source": "data/h200/20260912/gpu3/results/processed_snapshot_sync/snap_c256_r{1,2,3}-steps.json"
+    },
+    {
+      "topology": "2n4",
+      "ep": 8,
+      "workload": "decode_c64",
+      "tokens_per_rank": [8],
+      "active_steps_per_window": [8, 8, 8],
+      "run_values_percent": [16.71845988507914, 16.821873342124793, 16.630779525717873],
+      "mean_percent": 16.723704250973935,
+      "between_window_std_percent": 0.09565479181655884,
+      "source": "data/h200/numbers/outline_shares.json"
+    },
+    {
       "topology": "2n2",
       "ep": 4,
       "workload": "decode_c64",

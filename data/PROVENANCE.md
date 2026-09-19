@@ -6,7 +6,7 @@
 |:---|:---|:---|
 | Pre-barrier duration/share, entry-cost.tex | h200/numbers/paired_control_share.json, pre fields | EP8; T=8/32/64/128 |
 | Pre-barrier constants | h200/numbers/pre_min_fits_t64.json | EP4/8/16; all listed T |
-| GPU-step shares, inference-share.tex | h200/numbers/outline_shares.json, e2e[].pre_share_percent | Qwen3-30B-A3B; 1n8 and 2n4 |
+| GPU-step shares, inference-share.tex | h200/numbers/e2e_prebarrier_expanded.json | Qwen3-30B-A3B; 1n8 C1/64/128/256 and 2n4 C64/128 |
 | Serving coverage, Table tab:serving-coverage | h200/numbers/e2e_prebarrier_expanded.json | Cross-node EP4/8/16 decode and EP8 prefill |
 | Same-image trace check | h200/numbers/POST_STAGES.md | EP8/T8 total operator differences across three runs |
 
@@ -31,10 +31,13 @@ Qwen3-30B-A3B BF16, H2048/E128/topk8, TP1/EP8, vLLM 0.27 and DeepEP V2 Direct.
 The serving build includes tracing and an expert-padding correctness fix.
 Each active rank contributes 48 Dispatch and 48 Combine intervals per sampled
 decode step. Sum pre-barriers and divide by the same rank's GPU-step time, then
-average over ranks and three client windows on one server instance.
+average over ranks and three client windows on one server instance. This is a
+GPU-step share, not the single-operator denominator used by entry-cost.tex.
 
-The 1n8 shares are 9.33% and 7.94% at concurrency 64 and 128; 2n4 shares are
-16.72% and 15.19%. These characterize the recorded software baseline.
+The 1n8 shares are 9.26%, 9.33%, 7.94%, and 7.61% at concurrency 1, 64, 128,
+and 256. The C1 windows have one active rank. The 2n4 shares are 16.72% and
+15.19% at concurrency 64 and 128. These characterize the recorded software
+baseline.
 
 The expanded cross-node summary reports same-rank pre-barrier/GPU-step shares.
 At 16 tokens/rank, EP4/8/16 decode shares are 14.75%, 15.19%, and 15.04%.

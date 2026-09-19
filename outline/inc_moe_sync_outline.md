@@ -125,16 +125,18 @@ H200 跨机 EP8 Direct：
 
 ### 5.4 Pre-Barriers in MoE Serving
 
-Qwen3-30B-A3B，BF16、TP1/EP8 Direct，实际路由。主图比较单机 1n8 与跨机 2n4：
+Qwen3-30B-A3B，BF16、TP1/EP8 Direct，实际路由。这里的占比是一个 sampled GPU step 内 48 次 Dispatch 与 48 次 Combine 的 pre-barrier 累计时间；不同于 §5.2 的单算子占比。
 
 | 拓扑 | 并发 | 实测 token/rank | D+C pre-barrier 占 GPU step |
 |:---|---:|---:|---:|
-| 单机 1n8 | 64 | 8 | 9.33% |
-| 跨机 2n4 | 64 | 8 | 16.72% |
-| 单机 1n8 | 128 | 16 | 7.94% |
-| 跨机 2n4 | 128 | 16 | 15.19% |
+| 单机 1n8 | 1 | 1 | (9.26 ± 0.15)% |
+| 单机 1n8 | 64 | 8 | (9.33 ± 0.12)% |
+| 单机 1n8 | 128 | 16 | (7.94 ± 0.15)% |
+| 单机 1n8 | 256 | 32 | (7.61 ± 0.32)% |
+| 跨机 2n4 | 64 | 8 | (16.72 ± 0.10)% |
+| 跨机 2n4 | 128 | 16 | (15.19 ± 0.05)% |
 
-每个 decode step 含 48 次 Dispatch 与 48 次 Combine；三个 client 窗口复用同一 server 实例。
+C1 是低负载锚点，每个窗口只有一个 active rank；三个 client 窗口复用同一 server 实例。
 
 扩展跨机对照：
 
