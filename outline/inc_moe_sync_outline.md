@@ -15,15 +15,23 @@
 
 说明 Dispatch → expert compute → Combine；定义 token、rank、topk 和路由。路由决定各目标的数据量，通信 staging 提供落点，最终 expert 布局可依赖 count 交换。
 
-### 2.2 Synchronization in DeepEP V2 Direct
+### 2.2 Synchronization Overhead in Small-Batch EP
 
 按执行顺序解释：入口就绪 barrier → DATA 与元数据处理 → TMA 等待、本地汇合、GIN flush/fence → 全 EP 完成 signal 交换。区分接收资源可写、输入完整可见、buffer 可复用三个条件。
 
 主论证针对跨机 Direct。Hybrid、LL、NCCL EP HT 的边界不同，仅用于说明适用范围，不把 Direct 的双同步行为推广到所有 EP 实现。
 
-### 2.3 Synchronization at Small Batch Sizes
-
 固定 EP 规模时，payload 随 token 数缩小，控制交换仍面向同一组 rank。例如 EP8 在 T/rank=8 时前同步约占算子 20%，到 T=128 降至约 5%，绝对时长仍约 15 µs。这一现象引出“协调能否与 DATA 重叠”的问题。
+
+### 2.3 Opportunities for In-Network Computing
+
+**INC 背景**：网内计算允许网络设备在转发过程中维护状态、聚合信息并执行有限计算，已有工作将其用于集合归约和 MoE 通信。本文利用状态汇总、数据暂存和完成通知能力；可编程存储、容量保障与保序通知是实现条件，并非所有交换机天然具备。
+
+**前同步机会**：本地数据就绪可以早于全体就绪。rank 可先向已预留的网络暂存区上传，INC 同时汇总 READY；目标写入仍等待所需就绪条件及可写资源满足。
+
+**后同步机会**：INC 掌握目标的预期流量并跟踪输出进度，在尾数据后追加有序完成通知，从而缩短基线中数据收尾后才发起的端点完成交换。观察到通知必须意味着覆盖数据对目标可见；真正的全局依赖仍需保留。
+
+**Key Insight**：同步条件必须得到满足，但同步通信不必与数据传输串行执行。利用数据路径上的网内计算节点，可以将就绪汇总与提前上传重叠，并将目标完成通知附着于尾数据，从而缩短同步在通信关键路径上暴露的时间。第 3 章展开安全暂存、资源隔离和保序完成的设计。
 
 ## 3. Design — 设计
 

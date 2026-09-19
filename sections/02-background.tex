@@ -9,7 +9,7 @@ Routing determines the amount of traffic sent to each destination. Communication
 
 Three events must remain distinct. Receive resources must be writable before remote delivery. Required input must be complete and visible before a consumer reads it. A buffer becomes reusable only after its last consumer finishes. A notification that establishes data arrival does not necessarily establish safe buffer reuse.
 
-\subsection{Synchronization in DeepEP V2 Direct}
+\subsection{Synchronization Overhead in Small-Batch EP}
 \label{sec:epsynchronization}
 Cross-node DeepEP V2 Direct exposes coordination at both ends of Dispatch and Combine~\cite{deepepcode}. An entry barrier coordinates participating ranks before payload injection. Dispatch then exchanges counts and computes layout information alongside data movement. Combine reuses routing established during Dispatch.
 
@@ -19,8 +19,17 @@ The entry barrier is not explained solely by an unknown compact output address: 
 
 Other EP paths use different control structures. Hybrid Dispatch finishes with scale-up coordination after forwarding; LL can transfer into reserved slots without an independent entry barrier; NCCL EP HT exchanges routing metadata before Dispatch~\cite{deepepcode,ncclllcode,ncclhtcode}. Their costs cannot be inferred from the two-boundary Direct schedule. We use single-node Direct as a scale-up reference and cross-node Direct as the primary design scenario.
 
-\subsection{Synchronization at Small Batch Sizes}
-\label{sec:smallbatch}
 Reducing the number of tokens reduces payload work without reducing the EP participant count. The readiness and completion exchanges can therefore remain significant when the transfer is short. Decode commonly operates in this regime because each active request contributes one token per step and the requests are distributed across serving ranks.
 
 Our EP8 measurements illustrate the effect: entry synchronization is close to 15\us{} across the measured small-batch points, but its share falls from about 20\% at eight tokens per rank to about 5\% at 128. Section~\ref{sec:evidence} gives the measurement boundaries, uncertainty, and serving results. The observation motivates overlapping control with transfer. It does not imply that the entire measured interval can be removed.
+
+\subsection{Opportunities for In-Network Computing}
+\label{sec:incopportunity}
+In-network computing (INC) enables network devices to maintain state, aggregate information, and perform limited computation as traffic passes through them. Existing systems use these capabilities for collective reduction and MoE communication~\cite{sharp,switchml,dysharp}. Readiness aggregation and progress tracking suggest another use: coordinating data delivery within the network. Our design also requires bounded programmable storage and ordered notification support; these capabilities are implementation requirements, rather than properties of every switch.
+
+At entry, local data readiness can precede group readiness. A rank whose data and source resources are ready could upload into reserved network storage while the network aggregates readiness announcements. Delivery to the destination would still wait for the required readiness and writable resources. This organization allows the source-to-network transfer to overlap the readiness exchange.
+
+At completion, a network node that knows the expected traffic and tracks output progress could append a notification to the destination's final data. With an ordering contract that makes the covered data visible before the notification is observed, this can shorten the separate endpoint completion exchange in the baseline. Destination-local completion can release a consumer only when its dependencies permit; any genuine global dependency remains.
+
+\paragraph{Key insight.}
+Synchronization conditions must be satisfied, but synchronization communication need not execute serially with data transfer. A computing node on the data path can overlap readiness aggregation with early upload and attach destination completion notifications to trailing data, reducing the coordination time exposed on the communication critical path. Safe staging and ordered completion are the design requirements developed next.
