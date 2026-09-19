@@ -34,7 +34,7 @@ With network capacity reserved, \sys{} can start uploading at $r_i+\delta_i$, wh
  o_d=\max\left\{\max_i(r_i+a_i),\lambda_d\right\}.
  \label{eq:release}
 \end{equation}
-The source-to-node transfer can overlap this wait. Delivery still waits for the required participants and a writable destination.
+The source-to-node transfer can overlap this wait. Here $a_i$ includes receipt of the complete READY/count-vector message; $\lambda_d$ refers to reserved staging that does not depend on global counts. Count-vector aggregation does not gate delivery, but its residual delay can postpone DONE.
 
 For an ordered output sequence, let $A_k$ be unit $k$'s arrival at the node, $s_k$ its service time, and $E_k$ its output completion. A non-preemptive service model gives
 \begin{equation}
@@ -58,7 +58,7 @@ Let $c_j$ be sender $j$'s completion of the waits preceding tail signaling, $w_{
 \end{equation}
 The local term has no network propagation. Let $\tau_d$ be the time all required data is visible at $d$. With other local dependencies unchanged, baseline consumption is no earlier than $\max(\tau_d,z_d)$.
 
-For \sys{}, let $\tau'_d$ be data visibility and $\eta_d$ the notification lag that preserves Equation~\eqref{eq:visible}. The tail comparison is
+For \sys{}, let $\tau'_d$ be data visibility and $\eta_d$ the notification lag that preserves Equation~\eqref{eq:visible}, including any wait for finalized receive counts. The tail comparison is
 \begin{equation}
  \Delta T_{\rm tail,d}=\max(\tau_d,z_d)-(\tau'_d+\eta_d).
  \label{eq:tailgain}

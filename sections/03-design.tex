@@ -8,39 +8,41 @@ Figure~\ref{fig:design-overview} contrasts the baseline with our two changes: up
 \input{figures/design-overview}
 The logical \sys{} node observes all readiness announcements and data covered by its completion decisions. For each generation it maintains (i) a participant bitmap, (ii) sealed per-destination traffic plans, (iii) output progress, (iv) destination memory descriptors, and (v) bounded staging. A generation identifies the communication instance, direction, and buffer epoch. The EP membership is known; routing determines the per-destination traffic. We assume reliable delivery with an ordering guarantee: data covered by \done{} is visible in GPU memory before \done{} is observed.
 
-Before upload, the source obtains admission to network staging. Each destination makes the appropriate receive slot available and publishes its address, capacity, access rights, and epoch. The design can use a reserved landing layout like the baseline Direct path. If a computed layout is required for a write, its readiness is an additional release condition.
+Before upload, the source obtains admission to network staging. Each destination publishes its reserved staging region, capacity, access rights, and epoch. Staging addresses must be resolvable without global receive counts, for example using a source-reserved region and a per-destination record ordinal. Each token carries its routing information and record identity, allowing INC to determine its destinations and staging positions as it arrives. Compact expert placement can be computed separately.
 
 All traffic counted by the node must pass through its observation and completion domain. With multiple rails or nodes, progress must be partitioned and joined explicitly. Any local bypass requires a separate completion check at the consumer. The single-node measurements in Section~\ref{sec:e2e} are reference measurements; the design does not assume that an Ethernet node observes local NVLink traffic.
 
 \subsection{Readiness Aggregation and Early Upload}
 \label{sec:early-upload}
-After routing and local preparation, a rank publishes \ready{} and its traffic-plan information, then uploads admitted \data{} without waiting for peer announcements to return. The node records each participant idempotently and holds early data. Once the required readiness announcements and destination write conditions are satisfied, it forwards buffered and arriving data subject to output capacity.
+After routing and local preparation, source $s$ sends \ready{} together with a count vector: element $d$ gives its planned number of output records for destination $d$. It then uploads admitted \data{} without waiting for other ranks. INC marks a source ready only after accepting its complete vector; duplicate announcements are ignored. The node buffers early data and begins accumulating vectors as they arrive.
+
+Once all required \ready{} messages have arrived and destination staging is writable, INC parses token routes and fans out buffered and arriving data, subject to output capacity. Vector accumulation proceeds in parallel and need not finish before fan-out starts. Thus, readiness receipt gates forwarding, while finalized counts gate completion notification. Local routing and count-vector construction remain source-side work.
 
 The readiness dependency remains: the network cannot deliver into an unready destination. What changes is that the source-to-node transfer can proceed while readiness is being aggregated. The node's location permits this transfer to share the eventual data path. Whether the head start reduces operation latency depends on the slowest required source and the output queue, as analyzed in Section~\ref{sec:readiness-analysis}.
 
-For Dispatch, counts and final expert offsets can be computed alongside transfers into reserved staging. Multicast may replicate a token at the network node if the selected data plane supports it. The timing mechanism does not require a reduction in payload bytes.
+For Dispatch, global receive counts and final expert offsets can be computed alongside transfers into reserved staging. Count-vector entries must match the records actually emitted by fan-out, including any replication. Hardware can pipeline the integer additions with upload and forwarding; any remaining aggregation delay is included in completion latency. Multicast bandwidth savings are separate from the synchronization mechanism.
 
 \subsection{Completion Notification}
 \label{sec:completion-design}
-For generation $g$, source $s$ announces the planned number $n_{g,s,d}$ of unique output records for destination $d$. Once all relevant plans are sealed, the expected count is
+For Dispatch generation $g$, the count vector from source $s$ contains $n_{g,s,d}$ unique output records for destination $d$. INC accumulates these vectors to obtain
 \begin{equation}
  N_{g,d}=\sum_s n_{g,s,d}.
  \label{eq:count}
 \end{equation}
-Zero-traffic sources must also seal their plans. Counts refer to a consistent unit, such as unique records or fragment ranges. Input packets, multicast replicas, and reduced outputs require their own accounting.
+The expected count becomes valid only after every required source has supplied its complete vector and all additions have finished. A zero entry explicitly reports no traffic; silence does not. Planned counts and output progress use the same record unit, with a fragmented record counted only when all its fragments have been submitted. Input packets, multicast replicas, and reduced outputs require their own accounting.
 
-The node appends \done$(g,d)$ after the expected output has entered the appropriate ordered delivery channel. At the receiver, the required contract is
+The node appends \done$(g,d)$ only when $N_{g,d}$ is valid and all $N_{g,d}$ records have entered the appropriate ordered delivery channel. If data finishes first, DONE waits for the final count; a destination with zero expected records is notified once its count is valid and it is ready. At the receiver, the required contract is
 \begin{equation}
  \operatorname{observe}_d(\done(g,d))
  \Rightarrow
  \bigwedge_{x\in\mathcal{D}_{g,d}}\operatorname{visible}_d(x),
  \label{eq:visible}
 \end{equation}
-where $\mathcal{D}_{g,d}$ is the complete expected input. Output byte counts determine when a notification may be generated; the transport and receiver must separately establish this visibility implication.
+where $\mathcal{D}_{g,d}$ is the complete expected input. Output progress determines when a notification may be generated; the transport and receiver must separately establish this visibility implication.
 
 NCCL GIN's strong-signal ordering applies to preceding PUTs to the same peer on the same context~\cite{gindocs}. A network-generated notification needs an equivalent delivery contract. Separate contexts or rails require a join, and a subsequent local forwarding hop requires its own visibility check. The distinction is about the ordering domain, not simply whether communication is within or across nodes.
 
-Reliable delivery and duplicate suppression must precede logical progress accounting. Retransmitted fragments must not make a counter reach its target while another fragment is missing. An ordered end marker can seal a stream when its length is not known in advance, but that marker's cost must be included in the latency comparison.
+Reliable delivery and duplicate suppression must precede logical progress accounting. Retransmitted fragments must not make a counter reach its target while another fragment is missing.
 
 \done$(g,d)$ proves completion for destination $d$, rather than completion of all consumers in the EP group. A successor can use it only when destination-local completion, layout readiness, and the remaining local dependencies are sufficient. Applications that require a genuine global join retain it.
 
