@@ -1,39 +1,37 @@
 \section{Latency Analysis}
 \label{sec:model}
-We model one complete Dispatch or Combine operation, from locally available inputs to completion on all participating ranks. Following Swift~\cite{swift}, we distinguish processing time from network traversal time and apply that distinction to the operation's execution order.
+We describe a complete Dispatch or Combine operation as three stages: READY, data transfer, and post-barrier. The baseline executes them in sequence. INC allows upload to proceed during READY collection, followed by the post-barrier.
 
-\subsection{Operation Latency}
+\subsection{Three-Stage Model}
 \label{sec:delay-model}
-Consider a reference case in which ranks become ready together. Let $L$ be the one-way network propagation and fixed forwarding delay. Let $S$ be the time to transmit the operation's full payload at its bottleneck rate, accounting for concurrent traffic from all ranks. Thus, $S$ describes the collective data pipeline rather than a single flow.
+Let $T_{\rm ready}$ be the pre-barrier duration, $T_{\rm data}$ the data-transfer phase, and $T_{\rm post}$ the post-barrier and subsequent local epilogue. The data phase includes the sender-side work needed to enter the post-barrier. Along the baseline operation's critical path,
+\begin{equation}
+ T_{\rm base}=T_{\rm ready}+T_{\rm data}+T_{\rm post}.
+ \label{eq:base}
+\end{equation}
+These intervals describe one execution sequence. They are not assembled from independently selected per-rank measurements. Following Swift~\cite{swift}, each stage can contain both processing and network delay; in particular, $T_{\rm ready}$ includes signal handling and peer waiting as well as network transmission.
 
-Let $H_{\rm base}$ and $H_{\rm INC}$ denote processing time exposed on the critical path before and during delivery, including endpoint work and, for INC, readiness handling and buffering. Let $C$ denote the subsequent delivery confirmation and local epilogue. Under the same payload rate and the same $C$, the reference schedules are
-\begin{align}
- T_{\rm base}&=H_{\rm base}
- +\underbrace{L}_{\text{pre-barrier}}
- +\underbrace{(S+L)}_{\text{data delivery}}+C,
- \label{eq:base}\\
- T_{\rm INC}&=H_{\rm INC}+(S+L)+C.
- \label{eq:inc}
-\end{align}
-These are operation completion times. The terms describe successive work on the critical path, not sums of independently selected per-rank measurements.
-
-\subsection{How Early Upload Creates Overlap}
+\subsection{Overlapping READY and Data Transfer}
 \label{sec:readiness-analysis}
-In the baseline, a rank receives peer readiness signals before sending data. This exposes a control traversal ahead of the payload. With INC, READY travels toward the network node while data follows it. If all required readiness signals reach the node before the corresponding data must be forwarded, token transmission proceeds without waiting for readiness signals to return to the source. Figure~\ref{fig:timing} illustrates this execution order.
+Figure~\ref{fig:timing} shows the change in execution order. In Direct, DATA starts after READY finishes. With INC, a rank starts uploading while INC collects readiness signals. Early data can travel to INC or wait in its buffers; writes to the destination begin only after the required ranks and receive buffers are ready.
 
 \input{figures/timing}
 
-For the reference schedule, the difference is
+For an ideal parallel schedule with the same stage workloads and no extra delay to forwarding, the operation takes
 \begin{equation}
- \Delta T=L+H_{\rm base}-H_{\rm INC}.
+ T_{\rm INC}^{\rm ref}=
+ \max(T_{\rm ready},T_{\rm data})+T_{\rm post}+T_{\rm extra},
+ \label{eq:inc}
+\end{equation}
+where $T_{\rm extra}$ is additional INC processing time that remains on the critical path. When $T_{\rm ready}\leq T_{\rm data}$ and readiness collection fits within the data phase, the post-barrier follows the overlapping stages. In this full-overlap reference,
+\begin{equation}
+ \Delta T^{\rm ref}=T_{\rm ready}-T_{\rm extra}.
  \label{eq:gain}
 \end{equation}
-With simultaneous readiness and unchanged forwarding throughput, early upload can hide one one-way network traversal, as illustrated in Figure~\ref{fig:timing}(A--B). For symmetric network paths, this is approximately half a network RTT before additional processing overhead. The net benefit includes $H_{\rm base}-H_{\rm INC}$. The reference assumes sufficient staging, no PFC pause, and the same subsequent work $C$ in both designs.
+Thus, early upload can hide the READY stage rather than leaving it ahead of data transfer. Under simultaneous readiness and symmetric network paths, the hidden network component can be one one-way traversal, approximately half a network RTT. The pre-barrier's measured duration also contains processing and waiting time.
 
-\subsection{Unequal Readiness and Backpressure}
+\subsection{When the Overlap Shortens the Operation}
 \label{sec:skew}
-When ranks become ready at different times, early ranks can fill INC staging while the remaining ranks prepare. Forwarding still waits for the required READY signals. The benefit depends on which data are ready at that point and whether the output link can forward them promptly.
+The parallel reference requires enough staging and forwarding bandwidth for READY collection to fit within the data phase without extending it. If buffered data must wait longer at INC, that wait extends the actual data-transfer phase. Output queuing and PFC pauses can likewise reduce the overlap.
 
-A late rank may dominate the operation's completion time, and accumulated data may queue at an INC output. PFC can further delay upload. In these cases, the comparison must follow the actual data-delivery and operation-finish times; the reference value $L$ is not a fixed saving. Likewise, a pre-barrier measurement includes local work and peer waiting in addition to propagation.
-
-For measurements, the operation completes when the last participating rank finishes. Earlier delivery at one destination contributes to an overall speedup only if it advances that completion time. This connects the readiness-overlap mechanism to the operator and inference metrics in Section~\ref{sec:evidence}.
+With unequal rank readiness, early ranks can upload while later ranks prepare, but forwarding still waits for all required READY signals. Operation latency is determined by the last rank to finish. The benefit therefore depends on whether the overlap advances that finish time, together with any change in the subsequent completion work.

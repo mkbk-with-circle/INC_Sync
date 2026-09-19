@@ -38,8 +38,10 @@ The 1n8 shares are 9.33% and 7.94% at concurrency 64 and 128; 2n4 shares are
 
 The prebarrier-overview and prebarrier-timing figures are protocol schematics,
 not measured traces. Both have native draw.io, SVG, and PDF sources.
-The aligned-readiness reference uses a common payload rate and subsequent work.
-Its saving is L + H_base - H_INC; readiness skew and backpressure are discussed separately.
+The three-stage reference compares serial READY/DATA/post-barrier with parallel
+READY and DATA followed by post-barrier. When READY fits inside DATA without
+extending its duration, the saving is T_ready - T_extra. The post-barrier duration
+is the same in both reference schedules. Queuing and backpressure can extend DATA.
 
 ## Local revision history
 

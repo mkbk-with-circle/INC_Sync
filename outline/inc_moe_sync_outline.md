@@ -53,24 +53,27 @@ PFC 在缓存溢出前暂停 DATA，并预留 headroom 接纳暂停生效前的�
 
 ## 4. Latency Analysis — 时延分析
 
-### 4.1 Operation Latency
+### 4.1 Three-Stage Model
 
-建模一次完整 Dispatch/Combine，从输入本地可用到所有 rank 完成。借鉴 [Swift](https://doi.org/10.1145/3387514.3406591) 区分处理与网络时延。
+一次完整 Dispatch/Combine 分为 READY、DATA、post-barrier 三阶段。DATA 阶段包含发起后同步前必需的发送侧工作；post-barrier 项包含后续本地收尾。基线按顺序执行：
 
-参考条件：rank 同时就绪、无明显拥塞，INC 维持基线数据转发速率。L 为单向传播和固定转发时延，S 为整次通信在瓶颈速率下传输全部 payload 的时间；H 为关键路径上未重叠的处理时间，C 为后续交付确认和本地收尾。
+**T_base = T_ready + T_data + T_post。**
 
-- 基线：T_base = H_base + L + (S + L) + C。
-- INC：T_INC = H_INC + (S + L) + C。
+三项对应同一执行路径上的连续阶段，不拼接不同 rank 的最短时长。借鉴 Swift 的分解，阶段内既包含处理也包含网络时延。
 
-### 4.2 How Early Upload Creates Overlap
+### 4.2 Overlapping READY and Data Transfer
 
-![就绪等待与上传重叠](figures/prebarrier-timing.png)
+![READY 与上传重叠的原始时序对照](figures/prebarrier-timing.png)
 
-基线先完成 READY 的端点间传播，再启动数据；INC 让 READY 与后续 DATA 一起向网络节点前进，条件满足后继续转发。因此参考收益为 **L + H_base − H_INC**。只有未被额外处理和排队抵消的提前量，才会缩短操作完成时间。
+INC 使 READY 与 DATA 上传并行。数据可以先到 INC，目标写入仍需等 READY 收齐。阶段工作量相同、转发未被额外延迟的参考模型为：
 
-### 4.3 Unequal Readiness and Backpressure
+**T_INC_ref = max(T_ready, T_data) + T_post + T_extra。**
 
-rank 到达不一致时，早到数据可在 INC 等待；真正收益取决于晚到 rank、出口排队和 PFC。完整操作以最后一个 rank 完成为准，某个目标提前收到数据不必然等于全局操作加速。
+当 T_ready ≤ T_data 且 READY 被 DATA 阶段完全覆盖时，收益为 **T_ready − T_extra**。T_extra 是未被重叠的新增 INC 处理时间。参与者同时就绪、路径对称时，其中可隐藏的网络部分可为一次单向传播，约半个网络 RTT。
+
+### 4.3 When the Overlap Shortens the Operation
+
+满重叠要求暂存和出口带宽足够，READY 在影响转发前完成。若就绪等待、排队或 PFC 拉长 DATA 阶段，应使用实际数据阶段时长。错峰就绪时早到 rank 可以先上传，但操作仍以最后一个 rank 完成为准。
 
 ## 5. Evaluation — 实验评估
 
