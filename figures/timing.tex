@@ -33,7 +33,7 @@
 \draw[ctrlarrow] (3.6,2.72)--(6.4,3.02);
 \draw[ctrlarrow] (3.6,2.72)--(.8,3.02);
 \node[smalllabel,align=center] at (3.6,3.44) {\done{} follows final \data{}\\on each ordered output};
-\node[anchor=west] at (.4,4.02) {No sender release wait; no new endpoint exchange.};
+\node[anchor=west] at (.4,4.02) {No extra endpoint exchange for DONE.};
 \end{scope}
 \begin{scope}[shift={(0,0)}]
 \node[paneltitle] at (.1,.15) {(a) Unequal ranks: endpoint exchanges};
@@ -69,7 +69,7 @@
 \node[anchor=west] at (.4,4.18) {Skew coverage is not an additional fixed saving.};
 \end{scope}
 \end{tikzpicture}
-\caption{Idealized projection of the two-boundary design, not a measured Direct trace. Solid arrows carry \data{}; dashed arrows carry control. The left-hand reference assumes an exposed tail-signal interval of approximately $L$ after data arrival; actual Direct timing follows Equation~\eqref{eq:tailgain}. \sys{} overlaps readiness with upload and appends ordered \done{} at each destination's tail. Early data is buffered under skew. Required local completion and buffer ownership are retained.}
+\caption{Idealized projection of the two-boundary design, not a measured Direct trace. Solid arrows carry \data{}; dashed arrows carry control. The left-hand reference assumes an exposed tail-signal interval of approximately $L$ after data arrival; actual Direct timing follows Equation~\eqref{eq:tailgain}. \sys{} overlaps readiness with upload and appends ordered \done{} at each destination's tail. Early data is buffered under skew. Local transfer completion and safe buffer reuse remain required.}
 \Description{Four timing panels compare endpoint and network coordination. The top pair shows unequal readiness and buffering; the lower pair shows aligned readiness as an ideal reference. Solid arrows are data and dashed arrows are control.}
 \label{fig:timing}
 \end{figure*}

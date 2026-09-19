@@ -51,7 +51,7 @@ Applying the same service model with baseline injections delayed to $g_i$ gives 
 \label{sec:directtail}
 Direct waits for applicable asynchronous operations, GIN completion, and local coordination before its tail signals~\cite{deepepcode,gdakicode}. GIN flush establishes completion obligations such as safe reuse of PUT source buffers; it does not itself timestamp destination GPU visibility~\cite{ginheader,gindocs}.
 
-Let $c_j$ be sender $j$'s completion of the waits preceding tail signaling, $w_{j,d}$ the subsequent signal delay, and $v_d$ final observation overhead. Baseline notification releases $d$ at
+Let $c_j$ be sender $j$'s completion of the waits preceding tail signaling, $w_{j,d}$ the subsequent signal delay, and $v_d$ final observation overhead. Destination $d$ observes the baseline completion notification at
 \begin{equation}
  z_d=\max_{j\in\mathcal{R}_d\cup\{d\}}(c_j+w_{j,d})+v_d.
  \label{eq:tailsignal}
@@ -63,9 +63,9 @@ For \sys{}, let $\tau'_d$ be data visibility and $\eta_d$ the notification lag t
  \Delta T_{\rm tail,d}=\max(\tau_d,z_d)-(\tau'_d+\eta_d).
  \label{eq:tailgain}
 \end{equation}
-If payload arrival is unchanged, the saving is the exposed control wait $\max(0,z_d-\tau_d)$ less the notification lag. Staging, output congestion, a completion-domain join, or a required acknowledgment can increase the lag and reduce or reverse the saving.
+If payload arrival is unchanged, the saving is the exposed control wait $\max(0,z_d-\tau_d)$ less the notification lag. Staging, output congestion, waiting for all forwarding paths to finish, or a required acknowledgment can increase the lag and reduce or reverse the saving.
 
-The measured post-barrier signal window in Section~\ref{sec:completion-eval} starts at local signal initiation and ends after the expected signals are observed. It does not measure $\tau_d$, and it is not the exposed wait in Equation~\eqref{eq:tailgain}. Estimating that wait requires observing data visibility and successor release on a common, valid timing basis.
+The measured post-barrier signal window in Section~\ref{sec:completion-eval} starts at local signal initiation and ends after the expected signals are observed. It does not measure $\tau_d$, and it is not the exposed wait in Equation~\eqref{eq:tailgain}. Estimating that wait requires observing data visibility and the start of dependent computation using comparable timestamps.
 
 \paragraph{Symmetric reference.}
 \label{sec:ideal}
@@ -89,6 +89,6 @@ For $k\in\{0,1,2\}$ eligible boundaries the same reference yields
  \Delta T_k\simeq kL-\epsilon_k.
  \label{eq:eligible}
 \end{equation}
-Figure~\ref{fig:analytical} sweeps the extra cost instead of fitting it to a baseline measurement. It shows the break-even overhead in this schedule. Across general schedules, the full readiness, service, and release equations determine the result; benefits at independently measured boundaries cannot simply be added.
+Figure~\ref{fig:analytical} sweeps the extra cost instead of fitting it to a baseline measurement. It shows the break-even overhead in this schedule. Across general schedules, the readiness, forwarding, and computation-start equations determine the result; benefits at independently measured boundaries cannot simply be added.
 
 \input{figures/analytical}

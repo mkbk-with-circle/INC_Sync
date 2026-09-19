@@ -1,53 +1,51 @@
 \section{Design}
 \label{sec:design}
-\sys{} coordinates readiness during data upload and generates destination completion notifications on the managed network path. This section describes those operations and the resource contracts they require.
+\sys{} collects readiness signals while ranks upload data and notifies each destination when its input is complete.
 
 \subsection{Overview and Assumptions}
 \label{sec:overview}
-Figure~\ref{fig:design-overview} contrasts the baseline with our two changes: uploading during readiness aggregation and appending completion notifications to trailing data.
+Figure~\ref{fig:design-overview} shows the two changes: uploading while collecting \ready{} and sending \done{} after the last data for each destination.
 \input{figures/design-overview}
-The \sys{} node receives readiness signals and data from all participating ranks. For each communication round, it keeps track of (i) which ranks are ready, (ii) how many records each rank will send to each destination, (iii) how many records have been forwarded to each destination, and (iv) which round owns each destination buffer. It also buffers early-arriving data within a fixed capacity. A generation identifier distinguishes communication rounds and their buffer uses. We assume reliable, ordered delivery: observing \done{} means that all data it covers is visible in the destination GPU's memory.
+INC tracks (i) which ranks are ready, (ii) how many tokens or reduced results each destination should receive, (iii) how many have been forwarded, and (iv) which communication round uses each receive buffer. It also buffers early-arriving data. A generation identifies a Dispatch or Combine round; a buffer epoch distinguishes successive uses of the same buffer. We assume reliable, ordered delivery: a destination observes \done{} only after the associated data is visible in its GPU memory.
 
-Receive buffers are allocated and registered symmetrically during initialization. Their layout, address mappings, capacities, and access information are established with INC once. Each token carries routing and record information that determines its destination and staging offset without global receive counts. For each generation, \ready{} confirms that the designated receive region is free from prior use and writable; it does not republish the memory descriptors. Sources upload directly, subject to PFC backpressure on network staging. Compact expert placement can be computed separately.
+Receive buffers are allocated and registered symmetrically during initialization. INC obtains their layout, address mappings, sizes, and access permissions once. Each token carries routing information and an identifier used to compute its destination buffer offset without global receive counts. \ready{} confirms that the previous round has finished using the receive buffer and that it is writable for the current round. Sources upload directly; PFC pauses DATA when network buffers approach capacity.
 
-The design can apply within or across nodes, provided all traffic covered by \done{} passes through INC and ordered delivery extends to the destination GPU. Hierarchical or multi-rail paths require completion tracking across all forwarding stages; observing an intermediate hop is insufficient. We study cross-node Direct as the baseline scenario, without assuming that its results establish benefits for other topologies.
+The design applies within or across nodes if all relevant traffic passes through INC and data-before-DONE ordering holds through to the destination GPU. With multiple forwarding stages or network rails, completion tracking must include every stage. Our baseline experiments use cross-node Direct.
 
 \subsection{Readiness Aggregation and Early Upload}
 \label{sec:early-upload}
-After routing and local preparation, rank $s$ sends \ready{} together with its buffer epoch and a count vector: element $d$ gives its planned number of output records for destination $d$. It then uploads \data{} without a staging-credit request or a wait for other ranks. INC marks the rank ready only after accepting the complete message for the current generation; duplicate or stale announcements do not update the state. The node buffers early data and begins accumulating vectors as they arrive.
+After computing its routes and local token counts, rank $s$ sends \ready{} with its buffer epoch and a count vector. Element $d$ specifies how many token copies it will send to destination $d$. The rank then uploads \data{} without waiting for other ranks. INC accepts one complete READY/count-vector message per rank and round, ignores duplicates and old messages, and sums the vectors as they arrive.
 
-Once all required \ready{} messages have arrived and destination staging is writable, INC parses token routes and fans out buffered and arriving data, subject to output capacity. Vector accumulation proceeds in parallel and need not finish before fan-out starts. Thus, readiness receipt gates forwarding, while finalized counts gate completion notification. Local routing and count-vector construction remain source-side work.
+Once all required \ready{} messages arrive and destination buffers are writable, INC reads each token's route and forwards it to the specified destinations. Forwarding can start before the vector sum finishes; INC needs the final count only when deciding to send \done{}. Both the announced counts and the forwarding counters count the token copies sent to each destination.
 
-The readiness dependency remains: the network cannot deliver into an unready destination. What changes is that the source-to-node transfer can proceed while readiness is being aggregated. The node's location permits this transfer to share the eventual data path. Whether the head start reduces operation latency depends on the slowest required source and the output queue, as analyzed in Section~\ref{sec:readiness-analysis}.
-
-For Dispatch, global receive counts and final expert offsets can be computed alongside transfers into reserved staging. Count-vector entries must match the records actually emitted by fan-out, including any replication. Hardware can pipeline the integer additions with upload and forwarding; any remaining aggregation delay is included in completion latency. Multicast bandwidth savings are separate from the synchronization mechanism.
+This allows upload to overlap waiting for other ranks. The latency reduction depends on rank readiness times and network queuing (Section~\ref{sec:readiness-analysis}). Global receive counts and final expert-buffer offsets can be computed while tokens enter the preallocated receive buffers. Hardware can pipeline the vector additions with transfer, although any unfinished additions delay \done{}.
 
 \subsection{Completion Notification}
 \label{sec:completion-design}
-For Dispatch generation $g$, source $s$ sends a count vector with \ready{}, where $n_{g,s,d}$ is the number of output records planned for destination $d$. INC sums these vectors while forwarding data:
+For Dispatch round $g$, let $n_{g,s,d}$ be the token count sent by source $s$ for destination $d$. INC sums the count vectors to obtain the expected receive count:
 \begin{equation}
  N_{g,d}=\sum_s n_{g,s,d}.
  \label{eq:count}
 \end{equation}
-The total is final once all required vectors, including zero counts, have been received and aggregated. INC tracks forwarded records in the same units, counting each record once and only after all its fragments enter the ordered output channel.
+Every source supplies a vector, including destinations for which it sends no tokens. INC also counts forwarded tokens, incrementing the counter once per token copy after its complete payload has been submitted for delivery.
 
-INC appends \done$(g,d)$ when (i) $N_{g,d}$ is final, (ii) destination $d$ is ready, and (iii) all $N_{g,d}$ records have entered that channel. The delivery path must preserve data-before-notification ordering through to destination memory:
+INC sends \done$(g,d)$ when (i) it has summed the count vectors from all required sources, (ii) destination $d$ is ready, and (iii) it has submitted all $N_{g,d}$ token payloads for delivery. DONE must become visible only after those payloads are visible in destination memory:
 \begin{equation}
  \operatorname{observe}_d(\done(g,d))
  \Rightarrow
  \bigwedge_{x\in\mathcal{D}_{g,d}}\operatorname{visible}_d(x),
  \label{eq:visible}
 \end{equation}
-where $\mathcal{D}_{g,d}$ is the expected input at $d$. Thus, \done{} establishes input availability for that destination; any additional application dependencies still apply.
+where $\mathcal{D}_{g,d}$ denotes the expected input at $d$. DONE confirms that this input is available; the destination must still satisfy any other dependencies before computation.
 
-For Combine, INC retains the expected contributor set established during Dispatch. Contributors are identified by route slot, distinguishing experts even on the same rank. INC reduces their weighted partials~\cite{dysharp,switchml} and appends \done{} only after all expected contributions for the covered tokens have arrived and their reduced outputs have entered the ordered output channel.
+For Combine, INC uses the expert assignments recorded during Dispatch to determine which outputs are expected for each token. Each expert output carries its top-$k$ slot index, distinguishing experts on the same rank. INC sums the weighted expert outputs~\cite{dysharp,switchml} and sends DONE after all expected outputs have arrived and all reduced results for the destination have been submitted for delivery, with the same ordering guarantee.
 
 \subsection{Buffer Management and Progress}
 \label{sec:resources}
-A destination sends \ready{} only after prior users of the designated receive region have finished. This commits the region to the announced generation and epoch. After observing \done{} and satisfying local requirements, Dispatch can compact the received records for expert computation; Combine can release the reduced result to its consumer. The last consumer releases the region locally; a subsequent \ready{} authorizes reuse for the next generation. Emitting \done{} alone never permits overwrite.
+A destination sends \ready{} only after the previous computation has finished using its receive buffer. It keeps that buffer reserved for the current round. After DONE and any remaining local dependencies, Dispatch can arrange the received tokens for expert computation; Combine can pass the reduced results to the next computation. The buffer becomes reusable after its last reader finishes, and the next READY confirms this. DONE alone does not permit overwrite.
 
-The sender also retains its source buffer until the transport has finished reading it. Generating target notification in the network decouples the target's release from the sender's completion path; it does not remove source-lifetime tracking. Different generations therefore require separate ownership state.
+A sender likewise keeps its source buffer until the transport has finished reading it. Generating DONE at INC does not change this requirement. Generation and epoch identifiers prevent signals from one round from authorizing writes in another.
 
-Network capacity covers early arrivals, input/output imbalance after release, and any reduction accumulators. Staging occupancy drives PFC backpressure~\cite{pfc}, pausing upstream DATA before capacity is exhausted. Headroom covers data already in flight until the pause takes effect. Upload resumes on the same path when space becomes available; no per-generation credit exchange is required.
+INC needs space for early-arriving tokens, data waiting to be forwarded, and partial sums during Combine. Buffer occupancy triggers PFC~\cite{pfc} before overflow, with spare capacity (headroom) for data already in flight when a pause is sent. Transmission resumes on the same path when space becomes available.
 
-\ready{} and count-vector messages use a separately provisioned control class that retains progress when DATA is paused. Otherwise, a full staging queue could block the readiness messages required to drain it. Resource limits must feed backpressure before overflow, including limits on reduction state. Pauses can reduce overlap or throughput. Recovery from endpoint or network-node failure is outside the assumed reliable-delivery model.
+READY and count vectors use a separate traffic class with reserved resources, so they can still arrive when DATA is paused. This prevents a full data buffer from blocking the signals needed to start forwarding. Exhaustion of partial-sum storage must also pause incoming data before overflow. Such pauses can reduce overlap or throughput. The design assumes reliable delivery and does not address endpoint or INC-node failure recovery.

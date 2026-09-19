@@ -37,29 +37,29 @@ rank 通过集合操作或点对点写入与轮询，交换路由、计数及就
 
 ![Direct 与 INC 对照：上传与就绪汇总重叠，完成通知紧跟尾数据](figures/inc-overview.png)
 
-INC 节点维护本轮参与者、逐目标流量计划、输出进度、目标 buffer epoch 和有上限的暂存。受其完成判定覆盖的数据必须经过该节点；多 rail 和本地 bypass 需要明确的完成域与汇合。
+INC 记录哪些 rank 已就绪、各目标预期接收和已转发的 token／归约结果数量，以及各接收 buffer 用于哪一轮。INC 同时缓存早到数据。generation 标识一次 Dispatch 或 Combine，epoch 区分同一 buffer 的不同轮使用。所有相关数据必须经过 INC；多级转发或多 rail 路径需要确认每一段都已完成。
 
-接收 buffer 在初始化时按 symmetric memory 分配、注册，布局、地址映射和访问权限一次性提供给 INC。token 的路由与记录标识确定目标和 staging 偏移，不依赖全局计数。每轮 READY 确认指定区域已结束上一轮使用、允许写入，generation/epoch 区分轮次，无需重复发布描述符。发送端直接上传，INC 暂存压力由 PFC 回压控制。观察到 DONE 必须保证覆盖数据已对目标 GPU 可见。
+接收 buffer 在初始化时按 symmetric memory 分配、注册，布局、地址映射和访问权限一次性提供给 INC。token 的路由和标识确定目标 buffer 及写入偏移，不依赖全局计数。READY 确认上一轮已用完接收 buffer、本轮可以写入。发送端直接上传，INC 缓存压力由 PFC 回压控制。
 
 ### 3.2 Readiness Aggregation and Early Upload
 
 rank 完成本地路由、计数和接收区复用检查后，将 READY、epoch 与逐目标 count vector 一起发送，随后直接上传 DATA，不申请暂存额度。INC 收到本轮完整消息才标记其就绪，并从第一份向量到达起流式累加；重复或过期消息不更新状态。所需 READY 收齐且目标 staging 可写后立即按路由 fan-out，不必等待向量求和结束。
 
-全局接收计数与最终紧凑布局可和数据上传、转发并行处理。硬件加法可流水执行，但残余求和延迟仍计入 DONE 时延；本地路由和计数成本仍保留。向量计数必须匹配实际 fan-out 的输出记录，组播带宽收益不作为同步贡献。
+全局接收计数和 expert buffer 中的最终位置可与数据传输并行计算。硬件加法可流水执行，未完成的求和仍会延迟 DONE。预期计数和转发计数都按各目标实际接收的 token 副本计数。
 
 ### 3.3 Completion Notification
 
-INC 对所有 source 的 count vector 求和，得到各目标预期接收量。仅当完整向量收齐、求和结束且该目标预期记录已全部进入有序输出通道，才追加 DONE。若数据先发完，DONE 等待计数确定；零流量也需显式报告。保证：
+INC 对所有 source 的 count vector 求和，得到各目标应接收的 token 数，并在完整 token payload 提交发送后更新转发计数，每份 token 副本只计一次。DONE 的条件是：(i) 所有向量求和完成，(ii) 目标已就绪，(iii) 预期 token payload 已全部提交发送。保证：
 
 **目标观察到 DONE ⇒ 本轮覆盖的全部数据已对目标 GPU 可见。**
 
-计数必须排除重传重复；跨 QP/rail 的完成域需要汇合。逐目标 DONE 仅在目标本地输入完成足以释放后继计算时替代全局尾协调；真正的全局依赖仍保留。
+DONE 表示该目标的输入数据已到齐；开始计算前仍需满足其他依赖。
 
-Combine 复用 Dispatch 的 contributor 集合，按 route-slot 区分贡献，执行既有网内归约，再跟踪 reduced result 的输出完成。归约算术及节省流量的机制沿用前作。
+Combine 根据 Dispatch 中记录的 expert 分配，确定每个 token 应收到哪些 expert outputs。输出携带 top-k slot，即使 expert 位于同一 rank 也能区分。INC 对加权输出求和，所有预期输出到齐且目标的 reduced results 全部提交发送后，按相同保序要求发送 DONE。
 
 ### 3.4 Buffer Management and Progress
 
-generation/epoch 隔离各轮资源。DONE 允许消费；最后一个消费者结束后本地释放区域，下一轮 READY 确认其可复用。发送端仍需保证 transport 不再读取源 buffer。
+收到 DONE 并满足其他依赖后，Dispatch 将 token 按 expert 排列以便计算；Combine 将归约结果交给后续计算。最后一次读取结束后才能复用接收 buffer，下一轮 READY 确认这一点。发送 buffer 则需等传输层读取完成后才能复用。
 
 INC 暂存占用触发 PFC，在溢出前暂停上游 DATA，并为暂停生效前的在途数据预留 headroom；空间恢复后沿原路径继续，无需每轮 credit 交换。READY/count vector 使用独立控制优先级和预留资源，避免被 DATA 暂停而无法放行。归约状态等资源限制也需联动回压；压力下重叠和吞吐可能下降。
 

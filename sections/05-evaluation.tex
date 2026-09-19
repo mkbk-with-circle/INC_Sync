@@ -55,7 +55,7 @@ For fixed EP8, the inspected tail-signal loop sends to the same rank set regardl
 \label{sec:e2e}
 We measure Qwen3-30B-A3B in BF16 with vLLM 0.27 and DeepEP V2 Direct. The model has $H=2048$, 128 experts, and $\topk=8$. The serving setup uses actual model routing, TP=1, and EP8; requests have 128 input and 128 output tokens. We compare one node with eight ranks to two nodes with four ranks each at concurrency 64 and 128.
 
-The serving build includes measurement instrumentation and an expert-padding correctness fix. The sampled decode step is checked for 48 Dispatch and 48 Combine records per active rank. Pre-barrier intervals are paired with each rank's own GPU step, then averaged over ranks and three client windows. The windows share a server instance; they are not independent server restarts.
+The serving build includes measurement instrumentation and an expert-padding correctness fix. The sampled decode step is checked for 48 Dispatch and 48 Combine trace entries per active rank. Pre-barrier intervals are paired with each rank's own GPU step, then averaged over ranks and three client windows. The windows share a server instance; they are not independent server restarts.
 
 \input{figures/inference-share}
 
@@ -63,4 +63,4 @@ At concurrency 64, the measured pre-barrier share is 9.33\% on one node and 16.7
 
 These shares use GPU step time, not request latency. Their aggregation also differs from the microbenchmark rank-minimum statistic, and the model's hidden size and expert count differ from the microbenchmark. We do not combine their absolute times or convert the shares to a speedup. The post-barrier signal window was not instrumented per layer in the serving experiment, so its end-to-end share remains unmeasured.
 
-The current evidence establishes baseline coordination costs. Measuring the design's benefit requires an implementation and observations of destination data visibility and consumer release, as distinguished in Equation~\eqref{eq:tailgain}.
+The current evidence establishes baseline coordination costs. Measuring the design's benefit requires an implementation and observations of destination data visibility and the start of dependent computation, as distinguished in Equation~\eqref{eq:tailgain}.
