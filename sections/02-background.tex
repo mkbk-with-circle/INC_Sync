@@ -19,7 +19,7 @@ At fixed EP size, fewer tokens reduce payload work while coordination still invo
 
 \subsection{Opportunities for In-Network Computing}
 \label{sec:incopportunity}
-In-network computing (INC) allows switches and other network devices to compute while forwarding data, for example by summing values from multiple GPUs. Prior work uses this capability for collective reduction and MoE communication~\cite{sharp,switchml,dysharp}. We use these devices to aggregate readiness signals, buffer early-arriving data, and send ordered completion notifications.
+In-network computing (INC) allows switches and other network devices to compute while forwarding data, for example by summing values from multiple GPUs. These devices can also retain temporary state across packets, such as which ranks are ready and how much data has been forwarded to each destination. Prior work uses in-network computation for collective reduction and MoE communication~\cite{sharp,switchml,dysharp}. We use this state to aggregate readiness signals and track completion, together with network buffering to overlap synchronization with data transfer.
 
 At entry, a locally ready rank can upload into reserved network storage while INC aggregates readiness announcements; destination delivery still waits for the required readiness and writable resources. At completion, INC can track expected output and append an ordered notification to the destination's final data. The notification must imply data visibility, and genuine global dependencies remain.
 
