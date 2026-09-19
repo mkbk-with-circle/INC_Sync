@@ -8,9 +8,10 @@ Figure~\ref{fig:design-overview} shows the two changes: uploading while collecti
 \input{figures/design-overview}
 INC tracks (i) which ranks are ready, (ii) how many tokens or reduced results each destination should receive, (iii) how many have been forwarded, and (iv) which communication round uses each receive buffer. It also buffers early-arriving data. A generation identifies a Dispatch or Combine round; a buffer epoch distinguishes successive uses of the same buffer. We assume reliable, ordered delivery: a destination observes \done{} only after the associated data is visible in its GPU memory.
 
-Receive buffers are allocated and registered symmetrically during initialization. INC obtains their layout, address mappings, sizes, and access permissions once. Each token carries routing information and an identifier used to compute its destination buffer offset without global receive counts. \ready{} confirms that the previous round has finished using the receive buffer and that it is writable for the current round. Sources upload directly; PFC pauses DATA when network buffers approach capacity.
+Receive buffers are allocated and registered symmetrically during initialization. INC obtains their layout, address mappings, sizes, and access permissions once. Each token carries routing information and an identifier used to compute its destination buffer offset without global receive counts. \ready{} confirms that the previous round has finished using the receive buffer and that it is writable for the current round. Sources upload directly; PFC pauses DATA transferring when network buffers approach capacity.
 
-The design applies within or across nodes if all relevant traffic passes through INC and data-before-DONE ordering holds through to the destination GPU. With multiple forwarding stages or network rails, completion tracking must include every stage. Our baseline experiments use cross-node Direct.
+The design applies within or across nodes if all relevant traffic passes through INC and data-before-DONE ordering holds through to the destination GPU. With multiple forwarding stages or network rails, completion tracking must include every stage. 
+% Our baseline experiments use cross-node Direct.
 
 \subsection{Readiness Aggregation and Early Upload}
 \label{sec:early-upload}
@@ -42,6 +43,6 @@ For Combine, INC uses the expert assignments recorded during Dispatch to determi
 
 \subsection{Buffer Management and Progress}
 \label{sec:resources}
-\ready{} confirms that the receive buffer is available for the current round. The buffer remains reserved until its last reader finishes; DONE confirms data arrival, not permission to overwrite. Senders retain source buffers until the transport finishes reading them. Generation and buffer-epoch checks reject stale signals.
+\ready{} confirms that the receive buffer is available for the current round. The buffer remains reserved until its last reader finishes; DONE confirms data arrival, not permission to overwrite. Source buffers are retained until the sender finishes reading them. Generation and buffer-epoch checks reject stale signals. Generation and buffer-epoch checks reject stale signals.
 
 INC uses PFC~\cite{pfc} to pause DATA before token buffers or Combine partial-sum storage fill up, reserving headroom for data already in flight. Transmission resumes when space becomes available. READY and count vectors use a separate traffic class with reserved resources, preventing DATA pauses from blocking the signals needed to start forwarding. Backpressure protects finite storage but can reduce overlap or throughput.

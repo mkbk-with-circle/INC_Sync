@@ -15,7 +15,8 @@ EP implementations organize these exchanges differently. NCCL EP HT gathers rout
 \label{sec:epsynchronization}
 Cross-node DeepEP V2 Direct places coordination at both ends of Dispatch and Combine~\cite{deepepcode}. A pre-barrier precedes payload injection. Dispatch exchanges counts and computes layout alongside data movement; Combine reuses the established routing. After completing the required sender-side work, ranks exchange completion signals across the EP group in a post-barrier.
 
-The Direct path preallocates communication buffers, and changes to its synchronization must preserve safe buffer reuse and data visibility. Opportunities to overlap pre-barrier and post-barrier communication with data transfer exist within or across nodes, provided the relevant traffic passes through INC and data-before-DONE ordering holds. Cross-node Direct is our primary measurement scenario.
+The Direct path preallocates communication buffers, and changes to its synchronization must preserve safe buffer reuse and data visibility. Opportunities to overlap pre-barrier and post-barrier communication with data transfer exist within or across nodes, provided the relevant traffic passes through INC and data-before-DONE ordering holds.
+% Cross-node Direct is our primary measurement scenario.
 
 At fixed EP size, fewer tokens reduce payload work while coordination still involves the same ranks. Our EP8 measurements show a pre-barrier duration of approximately 15\us{}, occupying about 20\% of the operator at eight tokens per rank and 5\% at 128. This motivates overlap, although the measured interval is not entirely removable. Section~\ref{sec:evidence} presents the methodology and results.
 
