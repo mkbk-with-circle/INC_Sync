@@ -3,7 +3,7 @@
 \centering
 \begin{tikzpicture}
 \begin{axis}[width=\columnwidth,height=5.4cm,
- xlabel={Tokens per rank},ylabel={Signal window (\(\mu\mathrm{s}\))},
+ xlabel={Tokens per rank},ylabel={Post-barrier signal window (\(\mu\mathrm{s}\))},
  xmode=log,log basis x=2,xtick={8,16,32,64,128},xticklabels={8,16,32,64,128},
  xmin=6,xmax=170,ymin=9,ymax=16,
  grid=major,grid style={black!10},axis lines=left,
@@ -21,7 +21,7 @@
 \addlegendentry{Combine}
 \end{axis}
 \end{tikzpicture}
-\caption{EP8 completion-signal observations, without a fitted curve. Each point has three runs except $T=32$, which pools six runs from two batches. Error bars show between-run standard deviation.}
+\caption{EP8 post-barrier signal-window observations, without a fitted curve. Each point has three runs except $T=32$, which pools six runs from two batches. Error bars show between-run standard deviation.}
 \label{fig:completion-cost}
-\Description{Dispatch and Combine completion-signal points with error bars at six token counts. Means are near fourteen microseconds at eight and sixteen tokens, and around eleven to twelve microseconds at higher measured counts. The thirty-two-token point has the largest run variation. No fitted curve is shown.}
+\Description{Dispatch and Combine post-barrier signal-window points with error bars at six token counts. Means are near fourteen microseconds at eight and sixteen tokens, and around eleven to twelve microseconds at higher measured counts. The thirty-two-token point has the largest run variation. No fitted curve is shown.}
 \end{figure}

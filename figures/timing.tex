@@ -16,7 +16,7 @@
 \draw[dataarrow] (5.7,\y)--(1.1,{\y+.6});}
 \draw[ctrlarrow] (1.1,3.62)--(5.7,4.17);
 \draw[ctrlarrow] (5.7,3.62)--(1.1,4.17);
-\node[smalllabel] at (3.4,3.94) {completion exchange};
+\node[smalllabel] at (3.4,3.94) {post-barrier exchange};
 \draw[<->] (6.1,1.05)--(6.1,1.65) node[midway,right,align=left] {pre\,$\simeq L$};
 \draw[<->] (6.1,3.62)--(6.1,4.17) node[midway,right,align=left] {post\,$\simeq L$};
 \end{scope}
@@ -45,7 +45,7 @@
 \foreach \y in {1.65,1.88,2.11,2.48} \draw[dataarrow] (5.7,\y)--(1.1,{\y+.6});
 \draw[ctrlarrow] (1.1,3.2)--(5.7,3.8);
 \draw[ctrlarrow] (5.7,3.72)--(1.1,4.32);
-\node[smalllabel,align=center] at (3.4,4.15) {Readiness and completion\\still traverse between endpoints};
+\node[smalllabel,align=center] at (3.4,4.15) {Pre- and post-barrier signals\\traverse between endpoints};
 \end{scope}
 \begin{scope}[shift={(8.8,0)}]
 \node[paneltitle] at (.1,.15) {(b) Unequal ranks: bounded staging};

@@ -5,7 +5,7 @@
 ## 1. Introduction — 引言
 
 - **问题**：小 batch 缩短了 payload 阶段，但跨 rank 协调的成本不会等比例下降。
-- **研究场景**：DeepEP V2 跨机 Direct Dispatch/Combine，具有入口 barrier 和发送收尾之后的全 EP 完成信号交换。
+- **研究场景**：DeepEP V2 跨机 Direct Dispatch/Combine，具有 pre-barrier 和发送收尾之后的全 EP 完成信号交换。
 - **方法**：rank 本地就绪后上传至 INC 暂存；INC 汇总 READY 后放行，并在逐目标尾包后追加 DONE。
 - **贡献**：基线同步测量、网内协调设计及其时延分析。引言用一个真实推理结果说明动机，完整数据放在 §5；当前没有 INC 原型加速测量。
 
@@ -15,13 +15,13 @@
 
 说明 Dispatch → expert compute → Combine；定义 token、rank、topk 和路由。路由决定各目标的数据量，通信 staging 提供落点，最终 expert 布局可依赖 count 交换。
 
-rank 通过集合操作或点对点写入与轮询，交换路由、计数及就绪/完成信息。典型组织方式包括：NCCL EP HT 先汇总路由再传数据；DeepEP V2 Direct 先做就绪同步，再将计数处理与数据传输并行；LL 利用预留槽位和细粒度信号，无需独立入口 barrier。这些路径都需保证接收资源可写、数据对消费者可见及 buffer 安全复用。
+rank 通过集合操作或点对点写入与轮询，交换路由、计数及就绪/完成信息。典型组织方式包括：NCCL EP HT 先汇总路由再传数据；DeepEP V2 Direct 先做就绪同步，再将计数处理与数据传输并行；LL 利用预留槽位和细粒度信号，无需独立 pre-barrier。这些路径都需保证接收资源可写、数据对消费者可见及 buffer 安全复用。
 
 ### 2.2 Synchronization in DeepEP V2 Direct
 
-跨机 Direct 的路径：入口 barrier → DATA 与元数据处理 → 发送收尾及本地汇合 → 全 EP 完成 signal 交换。本文聚焦这条路径，保留资源可写、数据可见和 buffer 安全复用的要求。
+跨机 Direct 的路径：pre-barrier → DATA 与元数据处理 → 发送收尾及本地汇合 → 全 EP post-barrier 信号交换。本文聚焦这条路径，保留资源可写、数据可见和 buffer 安全复用的要求。
 
-固定 EP 规模时，token 减少会缩短 payload，却不减少参与协调的 rank。EP8 前同步约 15 µs，占比从 T/rank=8 时的约 20% 降至 T=128 时的约 5%，说明小 batch 下有必要减少暴露的同步开销。
+固定 EP 规模时，token 减少会缩短 payload，却不减少参与协调的 rank。EP8 pre-barrier 约 15 µs，占比从 T/rank=8 时的约 20% 降至 T=128 时的约 5%，说明小 batch 下有必要减少暴露的同步开销。
 
 ### 2.3 Opportunities for In-Network Computing
 
@@ -71,13 +71,13 @@ generation/epoch 隔离各轮资源。DONE 允许消费；最后一个消费者�
 
 借鉴 [Swift](https://doi.org/10.1145/3387514.3406591) 的端点/fabric 分解，定义本地就绪、DATA 注入、目标数据可见和消费者释放时刻。实测 barrier 包含端点处理和等待，不能直接等同于网络 RTT。
 
-### 4.2 Readiness Overlap
+### 4.2 Overlapping the Pre-Barrier
 
 先讨论各 rank 不同时就绪的一般情况：基线等自己与 peer 就绪后才发送，INC 允许已准入的源先上传，目标写入仍等 READY 和目标资源到齐。暂存、慢 rank 和出口服务共同决定完成时间，不能将提前上传量直接换算为加速。
 
 ![基线与 INC 的时序对照](figures/inc-benefits-redrawn.png)
 
-### 4.3 Completion Overlap
+### 4.3 Overlapping the Post-Barrier
 
 将发送端收尾完成、目标数据可见、完成通知被观察作为不同事件。对比同一目标的释放时刻：
 
@@ -92,16 +92,16 @@ generation/epoch 隔离各轮资源。DONE 允许消费；最后一个消费者�
 ### 5.1 Experimental Setup and Methodology
 
 - H200：两台各八卡，机内 NVSwitch，机间八轨 400GbE RoCE；跨机使用 GDAKI3/TC162，DeepEP V2 Direct。
-- 微基准：H=7168、topk=8、E=256、BF16、balanced/uniform。每档三次独立进程、每次 200 次有效迭代；后同步 T=32 合并两批共六轮。
+- 微基准：H=7168、topk=8、E=256、BF16、balanced/uniform。每档三次独立进程、每次 200 次有效迭代；post-barrier T=32 合并两批共六轮。
 - 每次迭代取该阶段耗时最短的 rank；占比除以该 rank 同次 trace-on 算子时长。均值误差表示轮间标准差，不把不同 rank 的阶段占比相加。
 - 总算子时延来自 trace-off，阶段来自 trace-on。推理的 GPU-step 占比使用同 rank/step 配对并跨 rank 平均，与微基准 rank-min 统计不同。
 - 实测使用通信插桩；推理还含 expert-padding 正确性修复。所有数值均为已有软件基线观测。
 
-### 5.2 Entry Synchronization
+### 5.2 Pre-Barrier
 
-主图同时展示前同步绝对时长和算子占比。EP8 的前同步维持约 15 µs，占比随 T 增大而下降。
+主图同时展示 pre-barrier 绝对时长和算子占比。EP8 的 pre-barrier 维持约 15 µs，占比随 T 增大而下降。
 
-| T/rank | Dispatch 前同步占比 | Combine 前同步占比 |
+| T/rank | Dispatch pre-barrier 占比 | Combine pre-barrier 占比 |
 |---:|---:|---:|
 | 8 | (20.57 ± 0.06)% | (19.84 ± 0.13)% |
 | 32 | (12.25 ± 0.17)% | (12.26 ± 0.26)% |
@@ -116,13 +116,13 @@ generation/epoch 隔离各轮资源。DONE 允许消费；最后一个消费者�
 | 8 | 8/32/64/96/128 | 14.96 | 14.94 | 0.16 |
 | 16 | 8/32/96/128 | 18.36 | 18.28 | 0.09 |
 
-EP8 的 T=64 是后续不同插桩批次补测。不同 EP 配置也改变每机卡数与网络并发，不据此外推任意 rank 数的规律。来源：[配对数值](../data/h200/numbers/PAIRED_CONTROL_SHARE.md)、[前同步常数记录](../data/h200/numbers/PRE_MIN_FITS_T64.md)；[主图源码](../figures/entry-cost.tex)。
+EP8 的 T=64 是后续不同插桩批次补测。不同 EP 配置也改变每机卡数与网络并发，不据此外推任意 rank 数的规律。来源：[配对数值](../data/h200/numbers/PAIRED_CONTROL_SHARE.md)、[pre-barrier 常数记录](../data/h200/numbers/PRE_MIN_FITS_T64.md)；[主图源码](../figures/entry-cost.tex)。
 
-### 5.3 Completion Signaling
+### 5.3 Post-Barrier
 
-计时从本地完成 signal 发起到全部预期 signal 被观察到，排除此前的 flush。保留轮间波动，不再展示宽 post 拟合。
+此处 post-barrier 数据仅指信号交换窗口：从本地发起信号到收齐全部预期信号，排除此前的 flush 和本地汇合。保留轮间波动，不再展示宽 post 拟合。
 
-| T/rank | Dispatch signal (µs) | Combine signal (µs) |
+| T/rank | Dispatch post-barrier (µs) | Combine post-barrier (µs) |
 |---:|---:|---:|
 | 8 | 13.97 ± 0.04 | 13.56 ± 0.24 |
 | 16 | 13.98 ± 0.23 | 13.78 ± 0.18 |
@@ -135,16 +135,16 @@ T=8/16 约为 14 µs，已测 T≥32 约为 11–12 µs；T=32 的慢轮次全�
 
 ### 5.4 Synchronization in MoE Inference
 
-Qwen3-30B-A3B，BF16，EP8 Direct，decode 输入/输出各 128 token。比较同一 EP 规模和并发下的单机与跨机前同步占比。
+Qwen3-30B-A3B，BF16，EP8 Direct，decode 输入/输出各 128 token。比较同一 EP 规模和并发下的单机与跨机 pre-barrier 占比。
 
-| 拓扑 | 并发 | 实测 token/rank | D+C 前同步占 GPU step |
+| 拓扑 | 并发 | 实测 token/rank | D+C pre-barrier 占 GPU step |
 |:---|---:|---:|---:|
 | 单机 1n8 | 64 | 8 | 9.33% |
 | 跨机 2n4 | 64 | 8 | 16.72% |
 | 单机 1n8 | 128 | 16 | 7.94% |
 | 跨机 2n4 | 128 | 16 | 15.19% |
 
-跨机约 15%–17%，单机约 8%–9%。这是采样 GPU step 的占比，不是请求延迟或 INC 加速上限；三次 client 窗口复用服务实例，未测真实模型中窄完成 signal 的逐层占比。来源：[端到端数值](../data/h200/numbers/E2E.md)、[前同步分项](../data/h200/numbers/outline_shares.json)；[主图源码](../figures/inference-share.tex)。
+跨机约 15%–17%，单机约 8%–9%。这是采样 GPU step 的占比，不是请求延迟或 INC 加速上限；三次 client 窗口复用服务实例，未测真实模型中 post-barrier signal 窗口的逐层占比。来源：[端到端数值](../data/h200/numbers/E2E.md)、[pre-barrier 分项](../data/h200/numbers/outline_shares.json)；[主图源码](../figures/inference-share.tex)。
 
 ## 6. Related Work — 相关工作
 

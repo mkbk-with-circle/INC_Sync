@@ -20,7 +20,7 @@ For EP communication we use the same separation of event boundaries:
 \end{equation}
 Here $\ell$ includes propagation, serialization, and network queuing; the endpoint terms include initiation and observation outside those boundaries. A collective waits for its required messages, so concurrent peer transfers enter a maximum rather than a sum. A measured barrier also contains readiness skew and local work. Its duration cannot be substituted for a one-way propagation delay.
 
-\subsection{Readiness Overlap}
+\subsection{Overlapping the Pre-Barrier}
 \label{sec:readiness-analysis}
 Let $r_i$ denote source $i$'s local readiness and $\mathcal{R}_i$ the peers whose announcements it requires. If $u_{j,i}$ includes announcement initiation and delivery and $v_i$ is final observation or local joining, the baseline source starts at
 \begin{equation}
@@ -47,7 +47,7 @@ Applying the same service model with baseline injections delayed to $g_i$ gives 
 
 \input{figures/timing}
 
-\subsection{Completion Overlap}
+\subsection{Overlapping the Post-Barrier}
 \label{sec:directtail}
 Direct waits for applicable asynchronous operations, GIN completion, and local coordination before its tail signals~\cite{deepepcode,gdakicode}. GIN flush establishes completion obligations such as safe reuse of PUT source buffers; it does not itself timestamp destination GPU visibility~\cite{ginheader,gindocs}.
 
@@ -65,7 +65,7 @@ For \sys{}, let $\tau'_d$ be data visibility and $\eta_d$ the notification lag t
 \end{equation}
 If payload arrival is unchanged, the saving is the exposed control wait $\max(0,z_d-\tau_d)$ less the notification lag. Staging, output congestion, a completion-domain join, or a required acknowledgment can increase the lag and reduce or reverse the saving.
 
-The measured signal window in Section~\ref{sec:completion-eval} starts at local signal initiation and ends after the expected signals are observed. It does not measure $\tau_d$, and it is not the exposed wait in Equation~\eqref{eq:tailgain}. Estimating that wait requires observing data visibility and successor release on a common, valid timing basis.
+The measured post-barrier signal window in Section~\ref{sec:completion-eval} starts at local signal initiation and ends after the expected signals are observed. It does not measure $\tau_d$, and it is not the exposed wait in Equation~\eqref{eq:tailgain}. Estimating that wait requires observing data visibility and successor release on a common, valid timing basis.
 
 \paragraph{Symmetric reference.}
 \label{sec:ideal}

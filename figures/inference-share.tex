@@ -4,7 +4,7 @@
 \begin{tikzpicture}
 \begin{axis}[width=\columnwidth,height=5.4cm,
  ybar,bar width=12pt,symbolic x coords={64,128},xtick=data,
- xlabel={Request concurrency},ylabel={Entry share of GPU step (\%)},
+ xlabel={Request concurrency},ylabel={Pre-barrier share of GPU step (\%)},
  enlarge x limits=0.45,ymin=0,ymax=22,
  grid=major,grid style={black!10},
  tick label style={font=\footnotesize},label style={font=\footnotesize},
@@ -17,7 +17,7 @@
 \addlegendentry{2 nodes}
 \end{axis}
 \end{tikzpicture}
-\caption{Qwen3-30B-A3B decode at fixed EP8. Entry intervals for Dispatch and Combine are paired with the same rank's GPU step. Error bars describe three client windows, not server restarts.}
+\caption{Qwen3-30B-A3B decode at fixed EP8. Pre-barrier intervals for Dispatch and Combine are paired with the same rank's GPU step. Error bars describe three client windows, not server restarts.}
 \label{fig:inference-share}
-\Description{Grouped bars compare one-node and two-node EP8 decode at request concurrency sixty-four and one hundred twenty-eight. Single-node entry shares are around eight to nine percent, and cross-node shares around fifteen to seventeen percent.}
+\Description{Grouped bars compare one-node and two-node EP8 decode at request concurrency sixty-four and one hundred twenty-eight. Single-node pre-barrier shares are around eight to nine percent, and cross-node shares around fifteen to seventeen percent.}
 \end{figure}

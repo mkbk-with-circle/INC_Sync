@@ -6,19 +6,19 @@ We measure synchronization in the baseline Direct path and its contribution to M
 \label{sec:setup}
 Each measurement node has eight H200 GPUs connected by NVSwitch and eight 400\,GbE RoCE interfaces. Cross-node experiments use GIN's GDAKI backend and traffic class 162. The software stack uses PyTorch 2.13, CUDA 13, NCCL 2.31.2, and DeepEP V2 based on commit \texttt{01dc3aaa}~\cite{deepepcode}. Hybrid is disabled. Local communication available within Direct is retained.
 
-Microbenchmarks use $H=7168$, $\topk=8$, 256 experts, BF16, and balanced uniform routing. $T$ denotes source tokens per rank. Each point has three independent process runs with 200 active iterations per run, except the completion measurements at $T=32$, which pool two three-run batches. Error bars show standard deviation across process-run means.
+Microbenchmarks use $H=7168$, $\topk=8$, 256 experts, BF16, and balanced uniform routing. $T$ denotes source tokens per rank. Each point has three independent process runs with 200 active iterations per run, except the post-barrier measurements at $T=32$, which pool two three-run batches. Error bars show standard deviation across process-run means.
 
 Communication paths retain their baseline algorithms with measurement instrumentation. Total operator latency uses trace-off runs. Phase durations and the denominators for phase shares come from the same trace-on runs. For each iteration and phase, we select the rank with the shortest observed phase and divide by that rank's operator span. We then average the iteration shares and the run means. This is a rank-minimum observation, not a measurement of an ideal barrier with simultaneous arrivals; it can still contain peer waiting. Independently selected phases are not additive.
 
-The entry-share sweep and the completion-window sweep were acquired in separate campaigns on the post-stage ABI image. The entry constants across EP sizes use the original campaign, supplemented by the EP8 $T=64$ measurements. Instrumentation and run-order effects are not assumed to vanish. We preserve per-run values and configuration provenance and do not infer speedups by subtracting trace-on phases from trace-off totals.
+The pre-barrier share sweep and the post-barrier signal-window sweep were acquired in separate campaigns on the post-stage ABI image. The pre-barrier constants across EP sizes use the original campaign, supplemented by the EP8 $T=64$ measurements. Instrumentation and run-order effects are not assumed to vanish. We preserve per-run values and configuration provenance and do not infer speedups by subtracting trace-on phases from trace-off totals.
 
-\subsection{Entry Synchronization}
+\subsection{Pre-Barrier}
 \label{sec:entry-eval}
-Figure~\ref{fig:entry-cost} reports entry duration and share at EP8. Dispatch and Combine remain close to 15\us{} across $T=8,32,64,128$. Their shares fall from 20.57\% and 19.84\% at $T=8$ to 4.88\% and 5.05\% at $T=128$. The fixed entry cost consequently matters most when payload work is short.
+Figure~\ref{fig:entry-cost} reports pre-barrier duration and share at EP8. Both operators remain near 15\us{} at all four measured token counts. Their shares fall from 20.57\% and 19.84\% at $T=8$ to 4.88\% and 5.05\% at $T=128$. The fixed pre-barrier cost consequently matters most when payload work is short.
 
 \input{figures/entry-cost}
 
-We also summarize the entry durations at EP4, EP8, and EP16 with a separate constant for each configuration (Table~\ref{tab:entry-constants}). All available small-batch points listed in the table participate in the estimate, including $T=96$ and the later EP8 $T=64$ point. The largest departure of a token-count mean from its configuration's constant is 0.16\us{}. This is an in-sample description, not a held-out prediction.
+We also summarize the pre-barrier durations at EP4, EP8, and EP16 with a separate constant for each configuration (Table~\ref{tab:entry-constants}). All available small-batch points listed in the table participate in the estimate, including $T=96$ and the later EP8 $T=64$ point. The largest departure of a token-count mean from its configuration's constant is 0.16\us{}. This is an in-sample description, not a held-out prediction.
 
 \begin{table}[t]
 \centering
@@ -33,15 +33,15 @@ EP & Fitted $T$ & Dispatch & Combine & Max. dev.\\
 16 & 8/32/96/128 & 18.36 & 18.28 & 0.09\\
 \bottomrule
 \end{tabular}
-\caption{Entry constants and maximum deviation of per-$T$ run means, in \(\mu\mathrm{s}\). Each $T$ has three process runs. EP8 additionally uses the later, differently instrumented $T=64$ batch.}
+\caption{Pre-barrier constants and maximum deviation of per-$T$ run means, in \(\mu\mathrm{s}\). Each $T$ has three process runs. EP8 additionally uses the later, differently instrumented $T=64$ batch.}
 \label{tab:entry-constants}
 \end{table}
 
 The fitted constants increase across the measured configurations. However, EP4/8/16 also change the number of GPUs per node, traffic destinations, and network concurrency. These three estimates do not establish a general dependence on rank count.
 
-\subsection{Completion Signaling}
+\subsection{Post-Barrier}
 \label{sec:completion-eval}
-The enclosing post-barrier timer can start when an early warp finishes its work, while other warps still transfer data. It therefore includes payload work and completion waits. We instead time the inner window from signal initiation, after the local flush and join, to observation of all expected signals. This window includes GPU initiation and polling as well as possible waiting for peers.
+The original enclosing timer, named post-barrier in the instrumentation, can start when an early warp finishes its work, while other warps still transfer data. It therefore includes payload work and completion waits. We report the post-barrier signal window: from signal initiation, after the local flush and join, to observation of all expected signals. This window includes GPU initiation and polling as well as possible waiting for peers.
 
 Figure~\ref{fig:completion-cost} uses the repeated four-point campaign and subsequent $T=16,32,96$ measurements. At $T=8$ and 16, Dispatch is approximately 14\us{} and Combine is 13.6--13.8\us{}. The measured means at $T\geq32$ lie around 11--12\us{}. Each of these points has three runs, with six retained runs at $T=32$.
 
@@ -55,12 +55,12 @@ For fixed EP8, the inspected tail-signal loop sends to the same rank set regardl
 \label{sec:e2e}
 We measure Qwen3-30B-A3B in BF16 with vLLM 0.27 and DeepEP V2 Direct. The model has $H=2048$, 128 experts, and $\topk=8$. The serving setup uses actual model routing, TP=1, and EP8; requests have 128 input and 128 output tokens. We compare one node with eight ranks to two nodes with four ranks each at concurrency 64 and 128.
 
-The serving build includes measurement instrumentation and an expert-padding correctness fix. The sampled decode step is checked for 48 Dispatch and 48 Combine records per active rank. Entry intervals are paired with each rank's own GPU step, then averaged over ranks and three client windows. The windows share a server instance; they are not independent server restarts.
+The serving build includes measurement instrumentation and an expert-padding correctness fix. The sampled decode step is checked for 48 Dispatch and 48 Combine records per active rank. Pre-barrier intervals are paired with each rank's own GPU step, then averaged over ranks and three client windows. The windows share a server instance; they are not independent server restarts.
 
 \input{figures/inference-share}
 
-At concurrency 64, the measured entry share is 9.33\% on one node and 16.72\% across two nodes. At concurrency 128, it is 7.94\% and 15.19\%, respectively (Figure~\ref{fig:inference-share}). Entry synchronization remains a substantial part of the observed cross-node decode step, even with real routing and the other work of the serving stack.
+At concurrency 64, the measured pre-barrier share is 9.33\% on one node and 16.72\% across two nodes. At concurrency 128, it is 7.94\% and 15.19\%, respectively (Figure~\ref{fig:inference-share}). Pre-barrier remains a substantial part of the observed cross-node decode step, even with real routing and the other work of the serving stack.
 
-These shares use GPU step time, not request latency. Their aggregation also differs from the microbenchmark rank-minimum statistic, and the model's hidden size and expert count differ from the microbenchmark. We do not combine their absolute times or convert the shares to a speedup. Narrow completion signaling was not instrumented per layer in the serving experiment, so its end-to-end share remains unmeasured.
+These shares use GPU step time, not request latency. Their aggregation also differs from the microbenchmark rank-minimum statistic, and the model's hidden size and expert count differ from the microbenchmark. We do not combine their absolute times or convert the shares to a speedup. The post-barrier signal window was not instrumented per layer in the serving experiment, so its end-to-end share remains unmeasured.
 
 The current evidence establishes baseline coordination costs. Measuring the design's benefit requires an implementation and observations of destination data visibility and consumer release, as distinguished in Equation~\eqref{eq:tailgain}.

@@ -5,7 +5,7 @@
 \centering
 \begin{tikzpicture}
 \begin{axis}[width=\linewidth,height=5.0cm,
- title={(a) Entry duration},xlabel={Tokens per rank},ylabel={Duration (\(\mu\mathrm{s}\))},
+ title={(a) Pre-barrier duration},xlabel={Tokens per rank},ylabel={Duration (\(\mu\mathrm{s}\))},
  xmode=log,log basis x=2,xtick={8,32,64,128},xticklabels={8,32,64,128},
  xmin=6,xmax=170,ymin=0,ymax=18,
  grid=major,grid style={black!10},axis lines=left,
@@ -25,7 +25,7 @@
 \centering
 \begin{tikzpicture}
 \begin{axis}[width=\linewidth,height=5.0cm,
- title={(b) Share of operator},xlabel={Tokens per rank},ylabel={Entry share (\%)},
+ title={(b) Share of operator},xlabel={Tokens per rank},ylabel={Pre-barrier share (\%)},
  xmode=log,log basis x=2,xtick={8,32,64,128},xticklabels={8,32,64,128},
  xmin=6,xmax=170,ymin=0,ymax=24,
  grid=major,grid style={black!10},axis lines=left,
@@ -40,7 +40,7 @@
 \end{axis}
 \end{tikzpicture}
 \end{minipage}
-\caption{H200 cross-node EP8 Direct. Entry duration stays close to 15\us{} while its operator share decreases. Both use the selected rank's trace-on measurements; error bars are standard deviations across three run means. Lines connect measured points.}
+\caption{H200 cross-node EP8 Direct. Pre-barrier duration stays close to 15\us{} while its operator share decreases. Both use the selected rank's trace-on measurements; error bars are standard deviations across three run means. Lines connect measured points.}
 \label{fig:entry-cost}
-\Description{Two panels show entry synchronization versus tokens per rank. Duration stays near fifteen microseconds for Dispatch and Combine, while operator share declines from about twenty percent to about five percent. Error bars describe three process runs.}
+\Description{Two panels show pre-barrier versus tokens per rank. Duration stays near fifteen microseconds for Dispatch and Combine, while operator share declines from about twenty percent to about five percent. Error bars describe three process runs.}
 \end{figure*}

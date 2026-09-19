@@ -10,7 +10,7 @@ The seven section files are ordered in `main.tex`. Figures are native TikZ/PGFPl
 sources compiled with the paper. No experiment runner or external plot-generation
 step is required.
 
-Evaluation uses entry costs, narrow completion-signal observations, and GPU-step entry
+Evaluation uses pre-barrier costs, post-barrier signal-window observations, and GPU-step pre-barrier
 shares. Numeric sources and aggregation rules are listed in `data/PROVENANCE.md`.
 The broad post envelope is excluded from synchronization fitting.
 
