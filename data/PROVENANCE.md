@@ -59,10 +59,10 @@ The plotted share is not request latency; a post-barrier signal-window share was
 
 - `design-overview.tex`: schematic protocol participants and state; no measured time scale.
 - `timing.tex`: unequal-readiness comparison first, aligned-readiness reference second.
-- `analytical.tex`: reference equation `gain/L = k - epsilon/L`, with overhead swept rather than measured.
+- `analytical.tex` is a historical sensitivity plot, no longer included in the manuscript.
 - The three evaluation plots contain measured baseline values and error bars.
-- Swift supplies the endpoint/fabric decomposition method; its packet timestamps are not
-  the same as the EP phase markers.
+- Swift motivates separating endpoint and network delay. The manuscript uses its own
+  message-delay terms and does not reproduce Swift's packet timestamps.
 
 The source-defined tail boundary is documented in [TAIL_PATH_AUDIT.md](TAIL_PATH_AUDIT.md).
 No INC prototype, net speedup, non-regression guarantee, or direct measurement of the

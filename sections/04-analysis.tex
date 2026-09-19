@@ -1,94 +1,66 @@
 \section{Latency Analysis}
 \label{sec:model}
-We compare when data becomes consumable under the baseline and the design. All required local dependencies are retained. Ranks may become ready at different times, and staging and output capacity are finite.
+We compare when the baseline and INC make the required input available for the next computation. The comparison includes rank readiness, data delivery, and completion notification.
 
 \subsection{Delay Model}
 \label{sec:delay-model}
-Swift separates a measured packet round trip into endpoint and fabric components~\cite{swift}. If $t_1$ and $t_6$ are local stack transmission and acknowledgment reception, $t_2$ and $t_4$ delimit remote endpoint processing, and $t_5$ is local NIC acknowledgment reception, then
-\begin{align}
- R_{\rm e2e}&=t_6-t_1,\\
- D_{\rm endpoint}&=(t_4-t_2)+(t_6-t_5),\\
- D_{\rm fabric}&=R_{\rm e2e}-D_{\rm endpoint}.
- \label{eq:swift}
-\end{align}
-The remote duration can be returned to the sender without comparing clock origins across machines. Clock units still need to be compatible, and unmeasured transmit queuing can remain in the fabric residual.
-
-For EP communication we use the same separation of event boundaries:
+Following Swift's separation of endpoint and network delay~\cite{swift}, we distinguish the time spent issuing a message, transporting it through the network, and observing it at the receiver:
 \begin{equation}
- d_{i,d}=p_i^{\rm tx}+\ell_{i,d}+p_d^{\rm rx}.
+ T_{\rm msg}=T_{\rm sender}+T_{\rm network}+T_{\rm receiver}.
  \label{eq:message}
 \end{equation}
-Here $\ell$ includes propagation, serialization, and network queuing; the endpoint terms include initiation and observation outside those boundaries. A collective waits for its required messages, so concurrent peer transfers enter a maximum rather than a sum. A measured barrier also contains readiness skew and local work. Its duration cannot be substituted for a one-way propagation delay.
+The network term includes propagation, serialization, and queuing. The endpoint terms include initiating the send and detecting the received signal. We use this decomposition to analyze EP synchronization, rather than adopting Swift's timestamping procedure.
+
+A barrier additionally waits for participating ranks to become ready and for required local work to finish. Concurrent messages are awaited together, so the last required arrival determines completion. The measured barrier duration therefore cannot be treated as network propagation time or as the time INC necessarily saves.
 
 \subsection{Overlapping the Pre-Barrier}
 \label{sec:readiness-analysis}
-Let $r_i$ denote source $i$'s local readiness and $\mathcal{R}_i$ the peers whose announcements it requires. If $u_{j,i}$ includes announcement initiation and delivery and $v_i$ is final observation or local joining, the baseline source starts at
+Let $r_i$ be the time rank $i$ becomes locally ready, and $\mathcal{R}_i$ the peers it waits for. Let $u_{j,i}$ include the time to issue and deliver rank $j$'s READY to $i$, and $v_i$ the time for $i$ to observe the signals and finish its local synchronization. The baseline starts sending data at
 \begin{equation}
  g_i=\max\left\{r_i,\max_{j\in\mathcal{R}_i}(r_j+u_{j,i})\right\}+v_i.
  \label{eq:gate}
 \end{equation}
-An empty peer set contributes no remote wait. This expression preserves local readiness even when all remote announcements arrive earlier.
 
-Absent a PFC pause, \sys{} can start uploading at $r_i+\delta_i$, where $\delta_i$ includes the announcement and upload preparation. If $a_i$ is the readiness delay to the node and $\lambda_d$ is destination $d$'s buffer-reuse readiness, delivery opens at
+With INC, rank $i$ can start uploading at $r_i+\delta_i$, where $\delta_i$ is its READY and upload preparation time, provided PFC has not paused the link. Let $a_i$ be the time to send its complete READY/count-vector message to INC, and $\lambda_d$ the time destination $d$'s buffer becomes writable. INC can start forwarding to $d$ at
 \begin{equation}
  o_d=\max\left\{\max_i(r_i+a_i),\lambda_d\right\}.
  \label{eq:release}
 \end{equation}
-The source-to-node transfer can overlap this wait. Here $a_i$ includes receipt of the complete READY/count-vector message; $\lambda_d$ refers to the current epoch of preallocated symmetric staging and does not depend on global counts. READY certifies this reuse condition. Count-vector aggregation does not gate delivery, but its residual delay can postpone DONE.
+Here $i$ ranges over the required participants. READY confirms buffer readiness; buffer addresses are fixed during initialization. INC does not wait for the count-vector sum before forwarding.
 
-For an ordered output sequence, let $A_k$ be unit $k$'s arrival at the node, $s_k$ its service time, and $E_k$ its output completion. A non-preemptive service model gives
-\begin{equation}
- E_k=\max\{A_k,o_d,E_{k-1}\}+s_k.
- \label{eq:queue}
-\end{equation}
-The modeled units must match the implementation's packet or fragment boundaries. Downstream propagation and visibility then determine consumption time. PFC pauses caused by finite staging delay $A_k$ and can reduce the upload overlap.
-
-Applying the same service model with baseline injections delayed to $g_i$ gives the comparison schedule. Early upload can advance completion, but a late source or a saturated output may consume the head start. The amount buffered is therefore not a latency saving by itself. Figure~\ref{fig:timing} illustrates both aligned and unequal readiness.
+The difference is that data can already be traveling to INC while READY messages are being collected. Once forwarding starts, buffered tokens compete for the output link with newly arriving tokens. Output queuing, late ranks, and PFC pauses determine how much of the upload overlap reduces final delivery time. Figure~\ref{fig:timing} illustrates both unequal and simultaneous readiness.
 
 \input{figures/timing}
 
 \subsection{Overlapping the Post-Barrier}
 \label{sec:directtail}
-Direct waits for applicable asynchronous operations, GIN completion, and local coordination before its tail signals~\cite{deepepcode,gdakicode}. GIN flush establishes completion obligations such as safe reuse of PUT source buffers; it does not itself timestamp destination GPU visibility~\cite{ginheader,gindocs}.
-
-Let $c_j$ be sender $j$'s completion of the waits preceding tail signaling, $w_{j,d}$ the subsequent signal delay, and $v_d$ final observation overhead. Destination $d$ observes the baseline completion notification at
+In Direct, ranks finish the required sender-side work before exchanging post-barrier signals~\cite{deepepcode,gdakicode}. Let $c_j$ be the time rank $j$ can issue its signal, $w_{j,d}$ the time to issue and deliver it to $d$, and $v_d$ the final observation time at $d$. The destination observes all required signals at
 \begin{equation}
  z_d=\max_{j\in\mathcal{R}_d\cup\{d\}}(c_j+w_{j,d})+v_d.
  \label{eq:tailsignal}
 \end{equation}
-The local term has no network propagation. Let $\tau_d$ be the time all required data is visible at $d$. With other local dependencies unchanged, baseline consumption is no earlier than $\max(\tau_d,z_d)$.
+The set includes the destination's own local completion, with no network propagation for that term. Let $\tau_d$ be the time all required data is visible in its memory. The baseline communication is complete at $\max(\tau_d,z_d)$.
 
-For \sys{}, let $\tau'_d$ be data visibility and $\eta_d$ the notification lag that preserves Equation~\eqref{eq:visible}, including any wait for finalized receive counts. The tail comparison is
+For INC, let $\tau'_d$ be the corresponding data-visibility time and $\eta_d$ the remaining delay until DONE is observed. This includes any unfinished count aggregation and the cost of delivering an ordered notification. The difference in communication completion times is
 \begin{equation}
  \Delta T_{\rm tail,d}=\max(\tau_d,z_d)-(\tau'_d+\eta_d).
  \label{eq:tailgain}
 \end{equation}
-If payload arrival is unchanged, the saving is the exposed control wait $\max(0,z_d-\tau_d)$ less the notification lag. Staging, output congestion, waiting for all forwarding paths to finish, or a required acknowledgment can increase the lag and reduce or reverse the saving.
+If data arrives at the same time in both designs, INC saves the post-barrier wait remaining after data visibility, less its notification delay. Changes in data delivery, forwarding across multiple paths, and notification processing must also be included. Any additional computation dependencies remain unchanged.
 
-The measured post-barrier signal window in Section~\ref{sec:completion-eval} starts at local signal initiation and ends after the expected signals are observed. It does not measure $\tau_d$, and it is not the exposed wait in Equation~\eqref{eq:tailgain}. Estimating that wait requires observing data visibility and the start of dependent computation using comparable timestamps.
+The measured post-barrier window in Section~\ref{sec:completion-eval} runs from signal initiation to signal observation. It does not locate $\tau_d$, so that entire window cannot be substituted for the saving above.
 
-\paragraph{Symmetric reference.}
+\paragraph{Ideal reference.}
 \label{sec:ideal}
-To illustrate the two opportunities, assume simultaneous readiness, one-way fabric delay $L$, payload injection duration $S$, unchanged service and local work $P$, and an exposed tail-control delay of $L$. The baseline schedule is
+Consider simultaneous readiness, one-way network delay $L$, payload transmission duration $S$, and unchanged local processing time $P$. Suppose the baseline exposes one separate control traversal before data and another after data becomes visible:
 \begin{equation}
  T_{\rm base}=P+L+(S+L)+L=P+S+3L.
  \label{eq:base}
 \end{equation}
-If readiness reaches the network node before the following data and the node can sustain the same service rate, early upload removes the first serialized $L$. Ordered output notification removes the separate tail traversal in this reference. With incremental overhead $\epsilon$,
+If INC receives READY before the following data, sustains the same forwarding rate, and finishes counting before notification is needed, upload can overlap the first traversal and DONE can accompany the final data delivery. With additional INC overhead $\epsilon$,
 \begin{align}
  T_{\rm INC}&=P+S+L+\epsilon,\\
  \Delta T&=2L-\epsilon.
  \label{eq:gain}
 \end{align}
-The reference opportunity is one fabric RTT before added cost. It requires the stated readiness, service, and exposed-tail conditions; geometric placement alone does not establish it.
-
-\paragraph{Added overhead.}
-\label{sec:sensitivity}
-For $k\in\{0,1,2\}$ eligible boundaries the same reference yields
-\begin{equation}
- \Delta T_k\simeq kL-\epsilon_k.
- \label{eq:eligible}
-\end{equation}
-Figure~\ref{fig:analytical} sweeps the extra cost instead of fitting it to a baseline measurement. It shows the break-even overhead in this schedule. Across general schedules, the readiness, forwarding, and computation-start equations determine the result; benefits at independently measured boundaries cannot simply be added.
-
-\input{figures/analytical}
+Thus, the ideal opportunity is one network RTT before additional overhead. Unequal readiness, queuing, and backpressure must instead be evaluated using the actual data and notification times; measured pre-barrier and post-barrier durations are not directly additive savings.
