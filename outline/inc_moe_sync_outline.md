@@ -55,25 +55,33 @@ PFC 在缓存溢出前暂停 DATA，并预留 headroom 接纳暂停生效前的�
 
 ### 4.1 Three-Stage Model
 
-一次完整 Dispatch/Combine 分为 READY、DATA、post-barrier 三阶段。DATA 阶段包含发起后同步前必需的发送侧工作；post-barrier 项包含后续本地收尾。基线按顺序执行：
+完整 Dispatch/Combine 分为 READY、DATA、post-barrier。DATA 包含进入后同步前必需的发送侧工作；后同步项包含本地收尾。
 
 **T_base = T_ready + T_data + T_post。**
 
-三项对应同一执行路径上的连续阶段，不拼接不同 rank 的最短时长。借鉴 Swift 的分解，阶段内既包含处理也包含网络时延。
+借鉴 Swift 区分处理与网络时延，在参与者同时就绪的参考条件下：
 
-### 4.2 Overlapping READY and Data Transfer
+**T_ready = T_issue + L + T_observe。**
 
-![READY 与上传重叠的原始时序对照](figures/prebarrier-timing.png)
+T_issue 是本地准备并发出 READY 的时间；L 是 READY 的单向网络传播；T_observe 是接收后检查信号与完成本地同步的时间。
 
-INC 使 READY 与 DATA 上传并行。数据可以先到 INC，目标写入仍需等 READY 收齐。阶段工作量相同、转发未被额外延迟的参考模型为：
+### 4.2 Overlapping the Wait for READY
 
-**T_INC_ref = max(T_ready, T_data) + T_post + T_extra。**
+![READY 与上传重叠的时序对照](figures/prebarrier-timing.png)
 
-当 T_ready ≤ T_data 且 READY 被 DATA 阶段完全覆盖时，收益为 **T_ready − T_extra**。T_extra 是未被重叠的新增 INC 处理时间。参与者同时就绪、路径对称时，其中可隐藏的网络部分可为一次单向传播，约半个网络 RTT。
+INC 保留本地发起工作，随后让 DATA 上传与 READY 传播重叠；目标写入仍等就绪条件满足。在参考数据传输和后同步工作相同的条件下：
 
-### 4.3 When the Overlap Shortens the Operation
+**T_INC = T_issue + T_data + T_post + T_extra。**
 
-满重叠要求暂存和出口带宽足够，READY 在影响转发前完成。若就绪等待、排队或 PFC 拉长 DATA 阶段，应使用实际数据阶段时长。错峰就绪时早到 rank 可以先上传，但操作仍以最后一个 rank 完成为准。
+T_extra 包括仍需执行的就绪处理及额外缓存／放行等待。DATA 自身的源到目标传播已包含在 T_data 中。
+
+**收益 ΔT = L + T_observe − T_extra。**
+
+网络部分的参考收益是 L：对称路径下约半个网络 RTT。其含义不是整个实测 pre-barrier 时长的一半，净收益还取决于观察工作和新增处理成本。
+
+### 4.3 Readiness Skew and Forwarding Delays
+
+参考条件为同时就绪、数据速率与后续工作相同。就绪等待、出口排队或 PFC 造成的额外传输延迟计入 T_extra。错峰时早到 rank 可先上传，但最终收益取决于是否提前了最后一个 rank 的完成时间。
 
 ## 5. Evaluation — 实验评估
 

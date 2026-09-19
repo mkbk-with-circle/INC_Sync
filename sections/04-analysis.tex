@@ -1,37 +1,44 @@
 \section{Latency Analysis}
 \label{sec:model}
-We describe a complete Dispatch or Combine operation as three stages: READY, data transfer, and post-barrier. The baseline executes them in sequence. INC allows upload to proceed during READY collection, followed by the post-barrier.
+We model a complete Dispatch or Combine operation as READY, data transfer, and post-barrier. INC starts upload after issuing READY, overlapping data movement with the wait for peer readiness.
 
 \subsection{Three-Stage Model}
 \label{sec:delay-model}
-Let $T_{\rm ready}$ be the pre-barrier duration, $T_{\rm data}$ the data-transfer phase, and $T_{\rm post}$ the post-barrier and subsequent local epilogue. The data phase includes the sender-side work needed to enter the post-barrier. Along the baseline operation's critical path,
+Let $T_{\rm ready}$ be the pre-barrier duration, $T_{\rm data}$ the data-transfer phase, and $T_{\rm post}$ the post-barrier and subsequent local epilogue. The data phase includes the sender-side work needed to enter the post-barrier. The baseline executes these stages in sequence:
 \begin{equation}
  T_{\rm base}=T_{\rm ready}+T_{\rm data}+T_{\rm post}.
  \label{eq:base}
 \end{equation}
-These intervals describe one execution sequence. They are not assembled from independently selected per-rank measurements. Following Swift~\cite{swift}, each stage can contain both processing and network delay; in particular, $T_{\rm ready}$ includes signal handling and peer waiting as well as network transmission.
 
-\subsection{Overlapping READY and Data Transfer}
+Following Swift's separation of processing and network delay~\cite{swift}, consider a reference with simultaneous rank readiness and comparable communication paths:
+\begin{equation}
+ T_{\rm ready}=T_{\rm issue}+L+T_{\rm observe}.
+ \label{eq:ready}
+\end{equation}
+Here $T_{\rm issue}$ is the local work to prepare and issue READY, $L$ is its one-way network traversal, and $T_{\rm observe}$ is the subsequent signal checking and local synchronization before DATA starts. These terms describe the critical execution path; per-rank minimum measurements are reported separately in Section~\ref{sec:evidence}.
+
+\subsection{Overlapping the Wait for READY}
 \label{sec:readiness-analysis}
-Figure~\ref{fig:timing} shows the change in execution order. In Direct, DATA starts after READY finishes. With INC, a rank starts uploading while INC collects readiness signals. Early data can travel to INC or wait in its buffers; writes to the destination begin only after the required ranks and receive buffers are ready.
+In the baseline, ranks finish the entire READY stage before sending DATA. With INC, each rank issues READY and starts uploading. READY and DATA travel toward the network node together; INC holds any early data until the required signals have arrived and destination buffers are writable. Figure~\ref{fig:timing} illustrates this change in timing.
 
 \input{figures/timing}
 
-For an ideal parallel schedule with the same stage workloads and no extra delay to forwarding, the operation takes
+Using the same reference data-transfer duration and subsequent completion work, the INC schedule is
 \begin{equation}
- T_{\rm INC}^{\rm ref}=
- \max(T_{\rm ready},T_{\rm data})+T_{\rm post}+T_{\rm extra},
+ T_{\rm INC}=T_{\rm issue}+T_{\rm data}+T_{\rm post}+T_{\rm extra}.
  \label{eq:inc}
 \end{equation}
-where $T_{\rm extra}$ is additional INC processing time that remains on the critical path. When $T_{\rm ready}\leq T_{\rm data}$ and readiness collection fits within the data phase, the post-barrier follows the overlapping stages. In this full-overlap reference,
+The local issue time remains. $T_{\rm extra}$ includes readiness processing still required at INC or the endpoints and additional delay from buffering or waiting to forward. The ordinary source-to-destination traversal of DATA is already included in $T_{\rm data}$.
+
+The reference difference is therefore
 \begin{equation}
- \Delta T^{\rm ref}=T_{\rm ready}-T_{\rm extra}.
+ \Delta T=L+T_{\rm observe}-T_{\rm extra}.
  \label{eq:gain}
 \end{equation}
-Thus, early upload can hide the READY stage rather than leaving it ahead of data transfer. Under simultaneous readiness and symmetric network paths, the hidden network component can be one one-way traversal, approximately half a network RTT. The pre-barrier's measured duration also contains processing and waiting time.
+The network component is one serialized READY traversal, $L$, which is approximately half a network RTT for symmetric paths. The net benefit also depends on how much endpoint observation work is replaced and how much processing and waiting INC adds. Half a network RTT is not half the measured pre-barrier duration.
 
-\subsection{When the Overlap Shortens the Operation}
+\subsection{Readiness Skew and Forwarding Delays}
 \label{sec:skew}
-The parallel reference requires enough staging and forwarding bandwidth for READY collection to fit within the data phase without extending it. If buffered data must wait longer at INC, that wait extends the actual data-transfer phase. Output queuing and PFC pauses can likewise reduce the overlap.
+The reference uses simultaneous readiness, the same payload rate, and the same post-barrier work. Sufficient staging and forwarding capacity allow upload to proceed while READY is collected. If INC must hold data longer or drain a congested output, the additional wait contributes to $T_{\rm extra}$; PFC pauses can have the same effect.
 
-With unequal rank readiness, early ranks can upload while later ranks prepare, but forwarding still waits for all required READY signals. Operation latency is determined by the last rank to finish. The benefit therefore depends on whether the overlap advances that finish time, together with any change in the subsequent completion work.
+When ranks become ready at different times, early ranks can upload while later ranks prepare. Forwarding still waits for the required READY signals. The full operation finishes with the last participating rank, so the benefit depends on whether early upload advances that completion time. The one-way-traversal reference is interpreted under its stated timing conditions.

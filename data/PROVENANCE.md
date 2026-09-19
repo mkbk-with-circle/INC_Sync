@@ -38,10 +38,12 @@ The 1n8 shares are 9.33% and 7.94% at concurrency 64 and 128; 2n4 shares are
 
 The prebarrier-overview and prebarrier-timing figures are protocol schematics,
 not measured traces. Both have native draw.io, SVG, and PDF sources.
-The three-stage reference compares serial READY/DATA/post-barrier with parallel
-READY and DATA followed by post-barrier. When READY fits inside DATA without
-extending its duration, the saving is T_ready - T_extra. The post-barrier duration
-is the same in both reference schedules. Queuing and backpressure can extend DATA.
+The reference splits READY into local issue time, one-way traversal L, and
+endpoint observation. INC retains local issue time and overlaps upload with
+the readiness wait. Its reference saving is L + T_observe - T_extra;
+T_extra includes retained readiness processing and additional buffering or
+forwarding delays. The data-transfer and post-barrier work are held equal
+in the reference. L is half the network RTT only for symmetric paths.
 
 ## Local revision history
 
