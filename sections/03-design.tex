@@ -18,7 +18,7 @@ In Direct, a rank waits for peer readiness before sending data. With \sys{}, it 
 
 INC records which ranks are ready and buffers data that arrives early. Once all required READY signals have arrived and destination buffers are writable, INC forwards both buffered and incoming data according to their routes.
 
-The benefit comes from moving data while readiness is being collected. While baseline sources are still waiting for peer signals, data can already be in flight to INC or buffered there. This overlap can shorten delivery time when INC has sufficient buffer space and forwarding bandwidth.
+The benefit comes from moving data while readiness is being collected. While baseline sources are still waiting for peer signals, data can already be in flight to INC or buffered there. Figure~\ref{fig:timing} illustrates how this overlap can advance data delivery when INC has sufficient buffer space and forwarding bandwidth.
 
 \subsection{Buffer Management and Backpressure}
 \label{sec:resources}

@@ -28,7 +28,7 @@ For the reference schedule, the difference is
  \Delta T=L+H_{\rm base}-H_{\rm INC}.
  \label{eq:gain}
 \end{equation}
-Early upload hides one serialized one-way traversal. Its net benefit also depends on the difference in exposed processing time. The reference assumes sufficient staging, no PFC pause, and an INC forwarding rate that sustains the baseline data pipeline. It also assumes that both designs require the same subsequent work $C$.
+With simultaneous readiness and unchanged forwarding throughput, early upload can hide one one-way network traversal, as illustrated in Figure~\ref{fig:timing}(A--B). For symmetric network paths, this is approximately half a network RTT before additional processing overhead. The net benefit includes $H_{\rm base}-H_{\rm INC}$. The reference assumes sufficient staging, no PFC pause, and the same subsequent work $C$ in both designs.
 
 \subsection{Unequal Readiness and Backpressure}
 \label{sec:skew}
