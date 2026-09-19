@@ -6,9 +6,7 @@
 \label{sec:overview}
 Figure~\ref{fig:design-overview} contrasts the baseline with our two changes: uploading during readiness aggregation and appending completion notifications to trailing data.
 \input{figures/design-overview}
-The logical \sys{} node observes all readiness announcements and data covered by its completion decisions. For each generation it maintains (i) a participant bitmap, (ii) sealed per-destination traffic plans, (iii) output progress, (iv) destination memory descriptors, and (v) bounded staging. A generation identifies the communication instance, direction, and buffer epoch. The EP membership is known; routing determines the per-destination traffic.
-
-The intended node sits at a common point on the managed paths. It requires programmable storage and an output interface that can provide reliable, ordered delivery to GPU memory. An FPGA network node with attached memory is a possible platform. A switch packet buffer alone does not establish these capabilities. This paper specifies the logical protocol; it does not provide a wire format or an ASIC implementation.
+The logical \sys{} node observes all readiness announcements and data covered by its completion decisions. For each generation it maintains (i) a participant bitmap, (ii) sealed per-destination traffic plans, (iii) output progress, (iv) destination memory descriptors, and (v) bounded staging. A generation identifies the communication instance, direction, and buffer epoch. The EP membership is known; routing determines the per-destination traffic. We assume reliable delivery with an ordering guarantee: data covered by \done{} is visible in GPU memory before \done{} is observed.
 
 Before upload, the source obtains admission to network staging. Each destination makes the appropriate receive slot available and publishes its address, capacity, access rights, and epoch. The design can use a reserved landing layout like the baseline Direct path. If a computed layout is required for a write, its readiness is an additional release condition.
 
