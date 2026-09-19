@@ -10,7 +10,7 @@ The logical \sys{} node observes all readiness announcements and data covered by
 
 Receive buffers are allocated and registered symmetrically during initialization. Their layout, address mappings, capacities, and access information are established with INC once. Each token carries routing and record information that determines its destination and staging offset without global receive counts. For each generation, \ready{} confirms that the designated receive region is free from prior use and writable; it does not republish the memory descriptors. Sources upload directly, subject to PFC backpressure on network staging. Compact expert placement can be computed separately.
 
-All traffic counted by the node must pass through its observation and completion domain. With multiple rails or nodes, progress must be partitioned and joined explicitly. Any local bypass requires a separate completion check at the consumer. The single-node measurements in Section~\ref{sec:e2e} are reference measurements; the design does not assume that an Ethernet node observes local NVLink traffic.
+The design can apply within or across nodes, provided all traffic covered by \done{} passes through INC and ordered delivery extends to the destination GPU. Hierarchical or multi-rail paths require completion tracking across all forwarding stages; observing an intermediate hop is insufficient. We study cross-node Direct as the baseline scenario, without assuming that its results establish benefits for other topologies.
 
 \subsection{Readiness Aggregation and Early Upload}
 \label{sec:early-upload}
