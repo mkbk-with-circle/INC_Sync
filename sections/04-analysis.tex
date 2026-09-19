@@ -29,19 +29,19 @@ Let $r_i$ denote source $i$'s local readiness and $\mathcal{R}_i$ the peers whos
 \end{equation}
 An empty peer set contributes no remote wait. This expression preserves local readiness even when all remote announcements arrive earlier.
 
-With network capacity reserved, \sys{} can start uploading at $r_i+\delta_i$, where $\delta_i$ includes the announcement and upload preparation. If $a_i$ is the readiness delay to the node and $\lambda_d$ is destination $d$'s write/layout readiness, delivery opens at
+Absent a PFC pause, \sys{} can start uploading at $r_i+\delta_i$, where $\delta_i$ includes the announcement and upload preparation. If $a_i$ is the readiness delay to the node and $\lambda_d$ is destination $d$'s buffer-reuse readiness, delivery opens at
 \begin{equation}
  o_d=\max\left\{\max_i(r_i+a_i),\lambda_d\right\}.
  \label{eq:release}
 \end{equation}
-The source-to-node transfer can overlap this wait. Here $a_i$ includes receipt of the complete READY/count-vector message; $\lambda_d$ refers to reserved staging that does not depend on global counts. Count-vector aggregation does not gate delivery, but its residual delay can postpone DONE.
+The source-to-node transfer can overlap this wait. Here $a_i$ includes receipt of the complete READY/count-vector message; $\lambda_d$ refers to the current epoch of preallocated symmetric staging and does not depend on global counts. READY certifies this reuse condition. Count-vector aggregation does not gate delivery, but its residual delay can postpone DONE.
 
 For an ordered output sequence, let $A_k$ be unit $k$'s arrival at the node, $s_k$ its service time, and $E_k$ its output completion. A non-preemptive service model gives
 \begin{equation}
  E_k=\max\{A_k,o_d,E_{k-1}\}+s_k.
  \label{eq:queue}
 \end{equation}
-The modeled units must match the implementation's packet or fragment boundaries. Downstream propagation and visibility then determine consumption time. Finite staging constrains $A_k$ through admission and backpressure.
+The modeled units must match the implementation's packet or fragment boundaries. Downstream propagation and visibility then determine consumption time. PFC pauses caused by finite staging delay $A_k$ and can reduce the upload overlap.
 
 Applying the same service model with baseline injections delayed to $g_i$ gives the comparison schedule. Early upload can advance completion, but a late source or a saturated output may consume the head start. The amount buffered is therefore not a latency saving by itself. Figure~\ref{fig:timing} illustrates both aligned and unequal readiness.
 

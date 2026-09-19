@@ -37,13 +37,13 @@ rank 通过集合操作或点对点写入与轮询，交换路由、计数及就
 
 ![Direct 与 INC 对照：上传与就绪汇总重叠，完成通知紧跟尾数据](figures/inc-overview.png)
 
-INC 节点维护本轮参与者、逐目标流量计划、输出进度、目标内存描述符和有上限的暂存。受其完成判定覆盖的数据必须经过该节点；多 rail 和本地 bypass 需要明确的完成域与汇合。
+INC 节点维护本轮参与者、逐目标流量计划、输出进度、目标 buffer epoch 和有上限的暂存。受其完成判定覆盖的数据必须经过该节点；多 rail 和本地 bypass 需要明确的完成域与汇合。
 
-上传前获得网络暂存额度；写出前目标本轮 staging 必须可写，且地址不依赖全局接收计数，例如使用 source 预留区域与记录序号。token 携带路由和记录标识，INC 流式解析后确定目标及写入位置。观察到 DONE 必须保证覆盖数据已对目标 GPU 可见。
+接收 buffer 在初始化时按 symmetric memory 分配、注册，布局、地址映射和访问权限一次性提供给 INC。token 的路由与记录标识确定目标和 staging 偏移，不依赖全局计数。每轮 READY 确认指定区域已结束上一轮使用、允许写入，generation/epoch 区分轮次，无需重复发布描述符。发送端直接上传，INC 暂存压力由 PFC 回压控制。观察到 DONE 必须保证覆盖数据已对目标 GPU 可见。
 
 ### 3.2 Readiness Aggregation and Early Upload
 
-rank 完成本地路由和计数后，将 READY 与逐目标 count vector 一起发送，随后上传已准入 DATA。INC 收到某 source 的完整向量才标记其就绪，并从第一份向量到达起流式累加。所需 READY 收齐且目标 staging 可写后立即按路由 fan-out，不必等待向量求和结束。
+rank 完成本地路由、计数和接收区复用检查后，将 READY、epoch 与逐目标 count vector 一起发送，随后直接上传 DATA，不申请暂存额度。INC 收到本轮完整消息才标记其就绪，并从第一份向量到达起流式累加；重复或过期消息不更新状态。所需 READY 收齐且目标 staging 可写后立即按路由 fan-out，不必等待向量求和结束。
 
 全局接收计数与最终紧凑布局可和数据上传、转发并行处理。硬件加法可流水执行，但残余求和延迟仍计入 DONE 时延；本地路由和计数成本仍保留。向量计数必须匹配实际 fan-out 的输出记录，组播带宽收益不作为同步贡献。
 
@@ -59,9 +59,9 @@ Combine 复用 Dispatch 的 contributor 集合，按 route-slot 区分贡献，�
 
 ### 3.4 Buffer Management and Progress
 
-generation/epoch 隔离各轮资源。DONE 允许消费；最后一个消费者结束后才允许复用。发送端仍需保证 transport 不再读取源 buffer。
+generation/epoch 隔离各轮资源。DONE 允许消费；最后一个消费者结束后本地释放区域，下一轮 READY 确认其可复用。发送端仍需保证 transport 不再读取源 buffer。
 
-容量覆盖早到数据、进出速率失配和归约 accumulator。容量不足时同路背压；READY 等控制消息必须有独立进展保证。PFC 不能替代容量准入与死锁分析，也不保证压力下吞吐不变。
+INC 暂存占用触发 PFC，在溢出前暂停上游 DATA，并为暂停生效前的在途数据预留 headroom；空间恢复后沿原路径继续，无需每轮 credit 交换。READY/count vector 使用独立控制优先级和预留资源，避免被 DATA 暂停而无法放行。归约状态等资源限制也需联动回压；压力下重叠和吞吐可能下降。
 
 ## 4. Latency Analysis — 时延分析
 
@@ -73,7 +73,7 @@ generation/epoch 隔离各轮资源。DONE 允许消费；最后一个消费者�
 
 ### 4.2 Overlapping the Pre-Barrier
 
-先讨论各 rank 不同时就绪的一般情况：基线等自己与 peer 就绪后才发送，INC 允许已准入的源先上传，目标写入仍等 READY 和目标资源到齐。暂存、慢 rank 和出口服务共同决定完成时间，不能将提前上传量直接换算为加速。
+先讨论各 rank 不同时就绪的一般情况：基线等自己与 peer 就绪后才发送，INC 允许本地就绪的源直接上传，目标写入仍等 READY 和目标资源到齐。PFC 暂停会延迟数据到达 INC；暂存、慢 rank 和出口服务共同决定完成时间，不能将提前上传量直接换算为加速。
 
 ![基线与 INC 的时序对照](figures/inc-benefits-redrawn.png)
 
