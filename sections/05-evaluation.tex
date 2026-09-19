@@ -6,9 +6,7 @@ We ask three questions: how pre-barrier cost changes with token count, how it ap
 \label{sec:setup}
 Each node has eight H200 GPUs connected by NVSwitch and eight 400\,GbE RoCE interfaces. Cross-node runs use GIN's GDAKI backend, traffic class 162, PyTorch 2.13, CUDA 13, NCCL 2.31.2, and DeepEP V2 based on commit \texttt{01dc3aaa}~\cite{deepepcode}. Direct is selected with Hybrid disabled; available local communication within Direct is retained.
 
-Microbenchmarks fix $H=7168$, $\topk=8$, 256 experts, BF16, and balanced uniform routing. $T$ denotes tokens per rank. Each point has three independent process runs with 200 active iterations per run. Error bars show the standard deviation across run means.
-
-For each iteration, we report the shortest pre-barrier interval across ranks and pair it with the same rank's trace-on operator time. Ratios are averaged within each run and then across runs. This rank-minimum statistic avoids assigning arrival skew from a slower rank to the protocol cost, but it may still contain waiting at the selected rank. A same-image EP8/T8 check changes total operator time by 3.9--5.0\% for Dispatch and 1.7--3.8\% for Combine across three runs; phase shares therefore use paired trace-on numerator and denominator.
+Microbenchmarks use $H=7168$, $\topk=8$, 256 experts, BF16, and balanced uniform routing. $T$ denotes tokens per rank. Each configuration has three process runs with 200 measured iterations. For each iteration, we report the shortest pre-barrier across ranks and normalize it by the same rank's trace-on operator time. Results are averaged over iterations and runs; error bars show variation across run means.
 
 The EP8 token sweep and the EP-size comparison are separate campaigns. \autoref{fig:entry-cost} uses $T=8,32,64,128$ from one instrumented image. \autoref{tab:entry-constants} uses its listed points from the original campaign plus a later EP8/T64 batch; its constants are fitted only to those values.
 
