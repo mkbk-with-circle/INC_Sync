@@ -1,6 +1,6 @@
 # Manuscript source
 
-**Overlapping MoE Synchronization with Data Transfer through In-Network Coordination**
+**Overlapping MoE Synchronization and Data Transfer with In-Network Computing**
 
 Compile with PDFLaTeX and BibTeX using `make`; the output is `build/main.pdf`.
 `make check` additionally checks references and layout, with optional Poppler font

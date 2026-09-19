@@ -1,4 +1,4 @@
-# Overlapping MoE Synchronization with Data Transfer through In-Network Coordination
+# Overlapping MoE Synchronization and Data Transfer with In-Network Computing
 
 > 主线：在具有入口与尾部协调的 EP 路径上，将 READY 汇总与数据上传重叠，并在目标数据输出完成后生成有序 DONE，减少控制等待在关键路径上的暴露。
 

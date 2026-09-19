@@ -1,7 +1,7 @@
 # INC-Sync
 
-本文仓库包含论文 **Overlapping MoE Synchronization with Data Transfer through
-In-Network Coordination** 的 LaTeX 源码、outline、论文使用的图，以及经过整理和审查的
+本文仓库包含论文 **Overlapping MoE Synchronization and Data Transfer with
+In-Network Computing** 的 LaTeX 源码、outline、论文使用的图，以及经过整理和审查的
 基线数据。
 
 仓库有意不包含实验运行脚本、Dockerfile、第三方源码、原始 trace、临时文件和历史 build
