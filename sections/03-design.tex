@@ -14,13 +14,11 @@ A rank sends \ready{} after its local input is available and the previous use of
 
 \subsection{Early Upload and Readiness Aggregation}
 \label{sec:early-upload}
-Each rank sends READY, then uploads locally available tokens with their routing information. Dispatch counts and other metadata follow the library's normal processing schedule. READY does not wait for a complete count vector.
+In Direct, a rank waits for peer readiness before sending data. With \sys{}, it sends READY and immediately starts uploading locally available data to INC. This applies to token activations in Dispatch and expert outputs in Combine.
 
-INC accepts one readiness announcement per rank and round, ignoring duplicate and stale announcements. Before all required ranks are ready, arriving data stays in network staging. After readiness is complete, INC forwards buffered and newly arriving tokens to their destinations at the available output rate. The forwarding condition is the same for every packet in the round: the required ranks have announced readiness and the destination buffer matches the announced epoch.
+INC records which ranks are ready and buffers data that arrives early. Once all required READY signals have arrived and destination buffers are writable, INC forwards both buffered and incoming data according to their routes.
 
-For Dispatch, the destination arranges received tokens into expert inputs using the routing and count metadata. For Combine, the same upload-and-forward sequence carries expert outputs back to their token owners for combination. Delivery acknowledgments and local processing determine when received data can be consumed and source buffers can be reused.
-
-The source-to-INC transfer overlaps readiness collection. This can advance destination delivery when the output link can drain early data without introducing an equal or larger delay.
+The benefit comes from moving data while readiness is being collected. While baseline sources are still waiting for peer signals, data can already be in flight to INC or buffered there. This overlap can shorten delivery time when INC has sufficient buffer space and forwarding bandwidth.
 
 \subsection{Buffer Management and Backpressure}
 \label{sec:resources}
