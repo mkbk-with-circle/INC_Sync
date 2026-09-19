@@ -11,11 +11,11 @@ EP implementations organize these steps differently. NCCL EP HT gathers routing 
 
 \subsection{Pre-Barriers in DeepEP V2 Direct}
 \label{sec:epsynchronization}
-Direct Dispatch and Combine enter a pre-barrier before token transmission~\cite{deepepcode}. Each rank waits for readiness from the participating group and completes the required local synchronization. Dispatch subsequently exchanges counts and computes layout information alongside data movement; Combine uses routing established during Dispatch.
+DeepEP V2 Direct uses GPU-initiated transfers and preallocated receive buffers~\cite{deepepcode}. In Dispatch, separate warps process token counts and layout metadata alongside token transmission. Combine reuses the routing information established during Dispatch.
 
-The Direct path preallocates communication buffers. This permits a distinction between moving data toward the destination and writing it into the destination buffer. An INC node can support that distinction within or across nodes when it covers the relevant traffic and preserves the required delivery order.
+Both operations perform a pre-barrier before these transfers begin. Each rank waits for the participating ranks to become ready and completes the required local synchronization. Consequently, even a rank with available input data must wait for peer readiness before sending its tokens.
 
-At fixed EP size, fewer tokens reduce data-transfer work while coordination still involves the same ranks. Our cross-node EP8 measurements show a pre-barrier duration near 15\us{}, occupying about 20\% of operator time at eight tokens per rank and 5\% at 128. Section~\ref{sec:evidence} reports the measurement method and results.
+This waiting cost is significant at small batches. In our cross-node EP8 measurements, the pre-barrier remains near 15\us{}, occupying about 20\% of operator time at eight tokens per rank and 5\% at 128. Section~\ref{sec:evidence} reports the measurements. The opportunity is to begin moving locally ready tokens while readiness is still being collected.
 
 \subsection{Opportunities for In-Network Computing}
 \label{sec:incopportunity}

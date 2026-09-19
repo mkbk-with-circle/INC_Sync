@@ -19,9 +19,9 @@
 
 ### 2.2 Pre-Barriers in DeepEP V2 Direct
 
-Direct Dispatch/Combine 在 token 发送前等待参与 rank 就绪并完成本地同步。预分配 buffer 使地址可知，但目标 buffer 本轮是否允许覆盖仍需确认。
+Direct 已采用 GPU 发起传输和预分配接收 buffer。Dispatch 由不同 warps 并行处理计数／布局和 token 传输，Combine 复用 Dispatch 建立的路由。
 
-固定 EP8，T/rank 从 8 增至 128 时，pre-barrier 约保持 15 µs，占比从约 20% 降至约 5%。这说明小 batch 下提前上传的机会值得研究。
+这些传输在 pre-barrier 之后开始：每个 rank 等待参与者就绪并完成本地同步，因此本地已有 token 也不能提前发送。固定 EP8，T/rank 从 8 增至 128 时，pre-barrier 约保持 15 µs，占比从约 20% 降至约 5%。由此引出在收集 READY 时先上传本地数据的机会。
 
 ### 2.3 Opportunities for In-Network Computing
 
